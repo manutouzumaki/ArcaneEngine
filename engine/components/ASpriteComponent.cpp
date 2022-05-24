@@ -1,5 +1,6 @@
 #include "ASpriteComponent.h"
 #include "../util/ADefines.h"
+#include <imgui.h>
 
 ASpriteComponent::ASpriteComponent(ASprite *sprite)
 {
@@ -35,6 +36,12 @@ void ASpriteComponent::update(float dt)
         lastTransform = gameObject->transform;
         isDirty = true;
     } 
+}
+
+void ASpriteComponent::imgui()
+{
+    ImGui::ColorPicker4("Color Picker", (float*)&color, 0);
+    isDirty = true;
 }
 
 glm::vec4 ASpriteComponent::getColor()

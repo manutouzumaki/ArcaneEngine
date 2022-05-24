@@ -24,6 +24,7 @@ public:
     ATransform transform;
 
     int getZIndex();
+    void imgui();
 private:
     const char *name;
     AArray<AComponent *> components;

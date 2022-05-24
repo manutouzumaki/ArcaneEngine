@@ -17,6 +17,8 @@
 AWindow *AWindow::instance = nullptr;
 AScene *AWindow::currentScene = nullptr;
 
+void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
+
 AWindow *AWindow::get()
 {
     if(instance == nullptr)
@@ -99,6 +101,7 @@ void AWindow::init()
     glfwSetMouseButtonCallback(window, AMouseListener::mouseButtonCallback);
     glfwSetScrollCallback(window, AMouseListener::mouseScrollCallback);
     glfwSetKeyCallback(window, AKeyListener::keyCallback);
+    glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
@@ -111,17 +114,16 @@ void AWindow::init()
         return;
     }
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
     // TODO: Imgui Test
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 130");
-
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    ImGui_ImplOpenGL3_Init("#version 330");
 
     changeScene(0);
 }
@@ -136,18 +138,6 @@ void AWindow::loop()
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-        
-        // TODO: ImGui Test
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        bool show_demo_window = true;
-        if (show_demo_window)
-        {
-            ImGui::ShowDemoWindow(&show_demo_window);
-        } 
-        ImGui::Render();
-        
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -155,15 +145,43 @@ void AWindow::loop()
         {
             currentScene->update(dt);
         }
-        
-        // TODO: Imgui Test
+
+
+        // TODO: ImGui Test
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        currentScene->sceneImgui();
+        bool show_demo_window = true;
+        if (show_demo_window)
+        {
+            ImGui::ShowDemoWindow(&show_demo_window);
+        } 
+        ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         
         glfwSwapBuffers(window); 
-
         endTime = ATime::getTime();
         dt = endTime - beginTime;
         beginTime = endTime;
     }
+}
+
+void AWindow::setWidth(int width)
+{
+    get()->width = width;
+}
+void AWindow::setHeight(int height)
+{
+    get()->height = height;
+}
+
+
+static void frameBufferSizeCallback(GLFWwindow *window, int width, int height)
+{
+    AWindow::setWidth(width);
+    AWindow::setHeight(height);
+    glViewport(0, 0, width, height);
 }
 

@@ -1,8 +1,10 @@
 #include "AScene.h"
+#include <imgui.h>
 
 AScene::AScene()
 {
     camera = nullptr;
+    activeGameObject = nullptr;
     isRunning = false;
 }
 
@@ -38,4 +40,15 @@ void AScene::addGameObject(AGameObject *gameObject)
 ACamera *AScene::getCamera()
 {
     return camera;
+}
+
+void AScene::sceneImgui()
+{
+    if(activeGameObject)
+    {
+        ImGui::Begin("Inspector");
+        activeGameObject->imgui();
+        ImGui::End();
+    }
+    imgui();
 }

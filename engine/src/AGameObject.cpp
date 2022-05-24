@@ -68,3 +68,12 @@ int AGameObject::getZIndex()
 {
     return zIndex;
 }
+
+
+void AGameObject::imgui()
+{
+    for(int i = 0; i < components.size(); ++i)
+    {
+        components[i]->imgui();
+    }
+}

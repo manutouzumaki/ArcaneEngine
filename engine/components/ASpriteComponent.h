@@ -12,8 +12,9 @@ public:
     ASpriteComponent(ASprite *sprite);
     ASpriteComponent(glm::vec4 color);
     ~ASpriteComponent();
-    void start();
-    void update(float dt);
+    void start() override;
+    void update(float dt) override;
+    void imgui() override;
     glm::vec4 getColor();
     ATexture *getTexture();
     glm::vec2 *getTexCoords();

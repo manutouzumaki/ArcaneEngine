@@ -14,6 +14,7 @@ protected:
     ACamera *camera;
     bool isRunning;
     AArray<AGameObject *> gameObjects;
+    AGameObject *activeGameObject;
 public:
     AScene();
     virtual void init();
@@ -23,6 +24,8 @@ public:
 
     void addGameObject(AGameObject *gameObject);
     ACamera *getCamera();
+    void sceneImgui();
+    virtual void imgui() {}
 };
 
 #endif

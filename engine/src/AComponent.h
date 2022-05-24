@@ -9,7 +9,8 @@ class AComponent
 {
 public:
     virtual void start() {}
-    virtual void update(float dt) = 0; 
+    virtual void update(float dt) {}; 
+    virtual void imgui() {}
     AGameObject *gameObject;
     AString name;
 };

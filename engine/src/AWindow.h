@@ -26,6 +26,8 @@ public:
     static void changeScene(int index);
     static AScene *getScene();
     void run();
+    static void setWidth(int width);
+    static void setHeight(int height);
 };
 
 #endif

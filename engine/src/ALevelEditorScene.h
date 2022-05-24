@@ -9,6 +9,7 @@ public:
     ALevelEditorScene();
     void init() override;
     void update(float dt) override;
+    void imgui() override;
     ~ALevelEditorScene() override;
 private:
     AGameObject *hero;

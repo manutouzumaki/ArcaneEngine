@@ -2,6 +2,7 @@
 #include "../util/ADefines.h"
 #include "../util/AAssetPool.h"
 
+#include <imgui.h>
 #include <stdio.h>
 #include <glad/glad.h>
 
@@ -39,7 +40,7 @@ void ALevelEditorScene::init()
 
     ASpritesheet *sprites = AAssetPool::getSpritesheet("colorsSpritesheet");
     ASpritesheet *characterSprites = AAssetPool::getSpritesheet("characterSpritesheet");
-
+    
     float size = 20.0f;
     int width = WINDOW_WIDTH / (int)size;
     int height = WINDOW_HEIGHT / (int)size;    
@@ -57,6 +58,7 @@ void ALevelEditorScene::init()
     hero->addComponent("ASpriteComponent", new ASpriteComponent(characterSprites->getSprite(31)));
     
     addGameObject(hero);
+    activeGameObject = hero;
 }
 
 void ALevelEditorScene::update(float dt)
@@ -80,4 +82,11 @@ void ALevelEditorScene::update(float dt)
     }
 
     renderer.render();
+}
+
+void ALevelEditorScene::imgui()
+{
+    ImGui::Begin("Test Window");
+    ImGui::Text("Hellow World");   
+    ImGui::End();
 }
