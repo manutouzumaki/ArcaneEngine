@@ -1,7 +1,8 @@
 #include "ASpritesheet.h"
 #include <glm/glm.hpp>
 
-ASpritesheet::ASpritesheet(ATexture *texture, int spriteWidth, int spriteHeight, int numSprites, int spacing)
+ASpritesheet::ASpritesheet(const char *name, ATexture *texture, int spriteWidth, int spriteHeight, int numSprites, int spacing)
+//ASpritesheet::ASpritesheet(ATexture *texture, int spriteWidth, int spriteHeight, int numSprites, int spacing)
 {
     this->texture = texture;
     int currentX = 0;
@@ -18,7 +19,10 @@ ASpritesheet::ASpritesheet(ATexture *texture, int spriteWidth, int spriteHeight,
         texCoords[1] = glm::vec2(rightX, bottomY);
         texCoords[2] = glm::vec2(leftX, bottomY);
         texCoords[3] = glm::vec2(leftX, topY);
-        sprites.add(new ASprite(texture, texCoords));
+
+        ASprite *newSprite = new ASprite(texture, texCoords, (int)sprites.size());
+        newSprite->setTileSheet(name);
+        sprites.add(newSprite);
 
         currentX += spriteWidth + spacing;
         if(currentX >= texture->getWidth())

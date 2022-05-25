@@ -1,5 +1,6 @@
 #include "ASpriteComponent.h"
 #include "../util/ADefines.h"
+
 #include <imgui.h>
 
 ASpriteComponent::ASpriteComponent(ASprite *sprite)
@@ -11,7 +12,7 @@ ASpriteComponent::ASpriteComponent(ASprite *sprite)
 
 ASpriteComponent::ASpriteComponent(glm::vec4 color)
 {
-    this->sprite = new ASprite(nullptr);
+    this->sprite = new ASprite(nullptr, 0);
     this->color = color;
     this->isDirty = true;
 }
@@ -44,6 +45,37 @@ void ASpriteComponent::imgui()
     isDirty = true;
 }
 
+void ASpriteComponent::serialize(TiXmlElement *parent)
+{
+    TiXmlElement *root = new TiXmlElement("ASpriteComponent");
+    parent->LinkEndChild(root);
+    
+    TiXmlText *type = new TiXmlText("ASpriteComponent");
+    root->LinkEndChild(type);
+
+    TiXmlElement *color = new TiXmlElement("Color");
+    color->SetDoubleAttribute("r", this->color.r);
+    color->SetDoubleAttribute("g", this->color.g);
+    color->SetDoubleAttribute("b", this->color.b);
+    color->SetDoubleAttribute("a", this->color.a);
+    root->LinkEndChild(color);  
+    if(this->sprite->getTexture())
+    {
+        TiXmlElement *texture = new TiXmlElement("Sprite");
+        texture->SetAttribute("index", this->sprite->getIndex());
+        TiXmlText *name = new TiXmlText(this->sprite->getTileSheet());
+        texture->LinkEndChild(name);
+        root->LinkEndChild(texture);
+    }
+    else
+    {
+        TiXmlElement *texture = new TiXmlElement("Sprite");
+        TiXmlText *notFound = new TiXmlText("NOT_FOUND");
+        texture->LinkEndChild(notFound);
+        root->LinkEndChild(texture);
+    }
+}
+
 glm::vec4 ASpriteComponent::getColor()
 {
     return color;
@@ -73,3 +105,6 @@ void ASpriteComponent::setSprite(ASprite *sprite)
     this->sprite = sprite; 
     isDirty = true;
 }
+
+
+

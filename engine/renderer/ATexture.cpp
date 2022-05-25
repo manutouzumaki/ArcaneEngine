@@ -61,3 +61,9 @@ int ATexture::getHeight()
 {
     return height;
 }
+
+const char *ATexture::getPath()
+{
+    return filePath;
+}
+

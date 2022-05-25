@@ -1,6 +1,9 @@
 #ifndef ASTRING_H
 #define ASTRING_H
 
+int StringLength(const char *string);
+bool StringCompare(const char *A, const char *B, int Size);
+
 class AString
 {
 public:

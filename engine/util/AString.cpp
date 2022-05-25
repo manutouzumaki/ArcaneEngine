@@ -12,6 +12,22 @@ int StringLength(const char *string)
     return counter;
 }
 
+bool StringCompare(const char *A, const char *B, int Size)
+{
+    bool Result = true;
+    for(int Index = 0;
+        Index < Size;
+        ++Index)
+    {
+        if(*A++ != *B++)
+        {
+            Result = false;
+            break;
+        } 
+    }
+    return Result;
+}
+
 AString::AString(const char *string)
 {
     id = AHash::murMur64A(string, StringLength(string), 123);

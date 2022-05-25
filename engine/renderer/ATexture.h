@@ -10,6 +10,7 @@ public:
     unsigned int getID();
     int getWidth();
     int getHeight();
+    const char *getPath();
 private:
     const char *filePath;
     unsigned int textureID;

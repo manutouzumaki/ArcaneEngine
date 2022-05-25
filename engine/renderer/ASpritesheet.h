@@ -7,7 +7,7 @@
 class ASpritesheet
 {
 public:
-    ASpritesheet(ATexture *texture, int spriteWidth, int spriteHeight, int numSprites, int spacing);
+    ASpritesheet(const char *name, ATexture *texture, int spriteWidth, int spriteHeight, int numSprites, int spacing);
     ~ASpritesheet();
     ASprite *getSprite(int index);
 private:

@@ -25,6 +25,7 @@ public:
 
     int getZIndex();
     void imgui();
+    void serialize();
 private:
     const char *name;
     AArray<AComponent *> components;

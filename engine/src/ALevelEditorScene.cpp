@@ -1,4 +1,5 @@
 #include "ALevelEditorScene.h"
+#include "AFactory.h"
 #include "../util/ADefines.h"
 #include "../util/AAssetPool.h"
 
@@ -6,6 +7,17 @@
 #include <stdio.h>
 #include <glad/glad.h>
 
+
+struct Vector2
+{
+public:
+    Vector2(float x, float y)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    float x, y;
+};
 
 ALevelEditorScene::ALevelEditorScene()
 {
@@ -28,8 +40,10 @@ void loadResources()
     AAssetPool::addTexture("heroTexture", "../assets/textures/poolGuy.png");
     AAssetPool::addTexture("colorsTexture", "../assets/textures/colors.png");
     AAssetPool::addTexture("characterTexture", "../assets/textures/character.png");
-    AAssetPool::addSpritesheet("colorsSpritesheet", new ASpritesheet(AAssetPool::getTexture("colorsTexture"), 16, 16, 32, 0));
-    AAssetPool::addSpritesheet("characterSpritesheet", new ASpritesheet(AAssetPool::getTexture("characterTexture"), 77, 77, 32, 0));
+    AAssetPool::addSpritesheet("colorsSpritesheet",
+                               new ASpritesheet("colorsSpritesheet", AAssetPool::getTexture("colorsTexture"), 16, 16, 32, 0));
+    AAssetPool::addSpritesheet("characterSpritesheet",
+                               new ASpritesheet("characterSpritesheet", AAssetPool::getTexture("characterTexture"), 77, 77, 32, 0));
 }
 
 void ALevelEditorScene::init()
@@ -48,15 +62,19 @@ void ALevelEditorScene::init()
     {
         for(int y = 0; y < height; ++y)
         {
-            AGameObject *obj = new AGameObject("obj", ATransform(glm::vec2((float)x * size, (float)y * size), glm::vec2(size, size)), 1);
+            AGameObject *obj = new AGameObject("obj", ATransform(glm::vec2((float)x * size, (float)y * size), glm::vec2(size, size)), 0);
             obj->addComponent("ASpriteComponent", new ASpriteComponent(glm::vec4(x/(float)width, y/(float)height, 0.0f, 0.6f)));
             addGameObject(obj);
         }
     }
-
-    hero = new AGameObject("hero", ATransform(glm::vec2(0, 0), glm::vec2(100, 100)), 0);
+#if 0
+    hero = new AGameObject("hero", ATransform(glm::vec2(0, 0), glm::vec2(100, 100)), 1);
     hero->addComponent("ASpriteComponent", new ASpriteComponent(characterSprites->getSprite(31)));
     
+    addGameObject(hero);
+#endif
+
+    hero = AFactory::CreateGameObject();
     addGameObject(hero);
     activeGameObject = hero;
 }
@@ -64,17 +82,7 @@ void ALevelEditorScene::init()
 void ALevelEditorScene::update(float dt)
 { 
 
-    printf("%d FPS\n", (int)(1.0f/dt));
- 
-    ASpritesheet *characterSprites = AAssetPool::getSpritesheet("characterSpritesheet");
-    ASpriteComponent *sprite = (ASpriteComponent *)hero->getComponent("ASpriteComponent");
-    static float counter = 16.0f;
-    sprite->setSprite(characterSprites->getSprite((int)counter));
-    counter += dt * 8.0f;
-    if(counter >= 16.0f + 8.0f)
-    {
-        counter = 16.0;
-    }
+    //printf("%d FPS\n", (int)(1.0f/dt));
 
     for(int i = 0; i < gameObjects.size(); ++i)
     {
