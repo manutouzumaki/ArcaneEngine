@@ -5,14 +5,16 @@
 #include "../components/ASpriteComponent.h"
 
 #include <stdlib.h>
+#include <string.h>
 
-AGameObject *AFactory::CreateGameObject()
-{
-    TiXmlDocument doc( "../assets/saves/tinyXmlTest.xml");
-    doc.LoadFile();
+AGameObject *AFactory::CreateGameObject(TiXmlElement *gameObject)
+{  
+    int NameSize = StringLength(gameObject->GetText());
+    char *name = (char *)malloc(NameSize + 1);
+    StringCopy(name, NameSize, gameObject->GetText());
+    name[NameSize] = '\0';
 
-    const char *name = doc.FirstChildElement()->GetText();
-    TiXmlElement *transform = doc.FirstChildElement()->FirstChildElement(); 
+    TiXmlElement *transform = gameObject->FirstChildElement(); 
     TiXmlElement *components = transform->NextSiblingElement();
     TiXmlElement *zIndexNode = components->NextSiblingElement();
 
@@ -24,7 +26,7 @@ AGameObject *AFactory::CreateGameObject()
     float ySca = (float)atof(scale->Attribute("y"));
     int zIndex = (int)atof(zIndexNode->Attribute("value"));
     
-    AGameObject *obj = new AGameObject(name, ATransform(glm::vec2(xPos, yPos), glm::vec2(xSca, ySca)), zIndex);
+    AGameObject *obj = new AGameObject((const char *)name, ATransform(glm::vec2(xPos, yPos), glm::vec2(xSca, ySca)), zIndex);
     for(TiXmlElement *component = components->FirstChildElement();
         component != nullptr;
         component = component->NextSiblingElement())
@@ -40,20 +42,22 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
     {
         TiXmlElement *color = component->FirstChildElement();
         TiXmlElement *sprite = color->NextSiblingElement();
-        
+        float r = (float)atof(color->Attribute("r"));
+        float g = (float)atof(color->Attribute("g"));
+        float b = (float)atof(color->Attribute("b"));
+        float a = (float)atof(color->Attribute("a"));
+        glm::vec4 colorVec = glm::vec4(r, g, b, a); 
         if(StringCompare(sprite->GetText(), "NOT_FOUND", StringLength("NOT_FOUND")))
         {
-            float r = (float)atof(color->Attribute("r"));
-            float g = (float)atof(color->Attribute("g"));
-            float b = (float)atof(color->Attribute("b"));
-            float a = (float)atof(color->Attribute("a"));
-            return new ASpriteComponent(glm::vec4(r, g, b, a));
+            return new ASpriteComponent(colorVec);
         }
         else
         {
             ASpritesheet *sprites = AAssetPool::getSpritesheet(sprite->GetText());
             int index = (int)atof(sprite->Attribute("index"));
-            return new ASpriteComponent(sprites->getSprite(index));
+            ASpriteComponent *spriteCom = new ASpriteComponent(sprites->getSprite(index));
+            spriteCom->setColor(colorVec);
+            return spriteCom;
         }
     }
     else

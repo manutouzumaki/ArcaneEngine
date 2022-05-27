@@ -20,6 +20,7 @@ public:
     glm::vec2 *getTexCoords();
     void setColor(glm::vec4 color);
     void setSprite(ASprite *sprite);
+    ASprite *getSprite();
     bool isDirty;
 private:
     glm::vec4 color;

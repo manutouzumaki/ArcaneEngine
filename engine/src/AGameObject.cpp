@@ -16,6 +16,7 @@ AGameObject::AGameObject(const char *name, ATransform transform, int zIndex)
 
 AGameObject::~AGameObject()
 {
+    free((void *)this->name);
     for(int i = 0; i < components.size(); ++i)
     {
         delete components[i];
@@ -79,20 +80,16 @@ void AGameObject::imgui()
     }
 }
 
-void AGameObject::serialize()
+void AGameObject::serialize(TiXmlElement *parent)
 {
-    TiXmlDocument doc;
-    TiXmlDeclaration *decl = new TiXmlDeclaration("1.0f", "", "");
-    doc.LinkEndChild(decl);
-
     TiXmlElement *root = new TiXmlElement("AGameObject");
-    doc.LinkEndChild(root);
+    parent->LinkEndChild(root);
     TiXmlText *name = new TiXmlText(this->name);
     root->LinkEndChild(name);
     TiXmlElement *transform = new TiXmlElement("Transform");
     TiXmlElement *position = new TiXmlElement("Position");
     position->SetDoubleAttribute("x", this->transform.position.x);
-    position->SetDoubleAttribute("y", this->transform.position.x);
+    position->SetDoubleAttribute("y", this->transform.position.y);
     transform->LinkEndChild(position);
     TiXmlElement *scale = new TiXmlElement("Scale");
     scale->SetDoubleAttribute("x", this->transform.scale.x);
@@ -107,9 +104,7 @@ void AGameObject::serialize()
     root->LinkEndChild(components);
     TiXmlElement *zIndex = new TiXmlElement("ZIndex");
     zIndex->SetAttribute("value", this->zIndex);
-    root->LinkEndChild(zIndex);
-    
-    doc.SaveFile("../assets/saves/tinyXmlTest.xml"); 
+    root->LinkEndChild(zIndex);    
 }
 
 

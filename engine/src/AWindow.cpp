@@ -1,9 +1,11 @@
+#include <glad/glad.h>
 #include "AWindow.h"
 
 #include "AMouseListener.h"
 #include "AKeyListener.h"
 #include "../util/ATime.h"
 #include "../util/ADefines.h"
+#include "../renderer/ADebugDraw.h"
 
 #include "ALevelEditorScene.h"
 #include "ALevelScene.h"
@@ -71,6 +73,10 @@ void AWindow::run()
 {
     init();
     loop();
+    
+    currentScene->close();
+
+    ADebugDraw::shutDown();
 
     // TODO: Imgui Test
     ImGui_ImplOpenGL3_Shutdown();
@@ -87,15 +93,20 @@ void AWindow::init()
     glfwDefaultWindowHints();
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-    glfwWindowHint(GLFW_MAXIMIZED   , GLFW_FALSE);
+    glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
     window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "test", nullptr, nullptr);
+    // FULL SCREEN
+    //window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "test", glfwGetPrimaryMonitor(), nullptr);
     if(window == nullptr)
     {
         printf("Failed to create GLFW window\n");
         glfwTerminate();
         return;
     }
+    
+    width = WINDOW_WIDTH;
+    height = WINDOW_HEIGHT;
 
     glfwSetCursorPosCallback(window, AMouseListener::mousePosCallback);
     glfwSetMouseButtonCallback(window, AMouseListener::mouseButtonCallback);
@@ -121,11 +132,13 @@ void AWindow::init()
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImGui::StyleColorsDark();
+    ImGui::StyleColorsClassic();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+    
     changeScene(0);
+
 }
 
 void AWindow::loop()
@@ -138,11 +151,15 @@ void AWindow::loop()
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-        glClearColor(0, 0, 0, 1);
+
+        ADebugDraw::beginFrame();
+
+        glClearColor(0.9f, 0.9f, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if(dt >= 0.0f)
         {
+            ADebugDraw::draw();
             currentScene->update(dt);
         }
 
@@ -166,6 +183,16 @@ void AWindow::loop()
         dt = endTime - beginTime;
         beginTime = endTime;
     }
+}
+
+int AWindow::getWidth()
+{
+    return get()->width;
+}
+
+int AWindow::getHeight()
+{
+    return get()->height;
 }
 
 void AWindow::setWidth(int width)

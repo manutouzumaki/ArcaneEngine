@@ -1,6 +1,10 @@
 #include "AMouseListener.h"
+#include "AWindow.h"
 
+#include "../src/AWindow.h"
+#include <glm/glm.hpp>
 #include <stdio.h>
+
 AMouseListener *AMouseListener::instance = nullptr;
 
 AMouseListener::AMouseListener()
@@ -29,7 +33,7 @@ AMouseListener *AMouseListener::get()
 
 void AMouseListener::free()
 {
-    delete instance;
+    if(instance) delete instance;
     printf("AMouseListener deleted\n");
 }
 
@@ -85,6 +89,26 @@ float AMouseListener::getX()
 float AMouseListener::getY()
 {
     return (float)get()->yPos;
+}
+
+float AMouseListener::getOrthoX()
+{
+    float normalizeMouseX = (float)getX() / (float)AWindow::getWidth();
+    normalizeMouseX = normalizeMouseX * 2 - 1;
+    glm::vec4 position = glm::vec4(normalizeMouseX, 0, 0, 1);
+    ACamera *camera = AWindow::getScene()->getCamera();
+    position = camera->getInvViewMatrix() * camera->getInvProjMatrix() * position;
+    return position.x;
+}
+
+float AMouseListener::getOrthoY()
+{
+    float normalizeMouseY = ((float)AWindow::getHeight() - (float)getY()) / (float)AWindow::getHeight();
+    normalizeMouseY = normalizeMouseY * 2 - 1;
+    glm::vec4 position = glm::vec4(0, normalizeMouseY, 0, 1);
+    ACamera *camera = AWindow::getScene()->getCamera();
+    position = camera->getInvViewMatrix() * camera->getInvProjMatrix() * position;
+    return position.y;
 }
 
 float AMouseListener::getDx()

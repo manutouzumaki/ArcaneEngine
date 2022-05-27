@@ -1,6 +1,7 @@
 #ifndef ASTRING_H
 #define ASTRING_H
 
+void StringCopy(char *dest, int size, const char *src);
 int StringLength(const char *string);
 bool StringCompare(const char *A, const char *B, int Size);
 

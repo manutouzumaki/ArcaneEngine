@@ -16,7 +16,10 @@
 #define Mi(a, i) ((int *)&(a))[i]
 #define Mu(a, i) ((unsigned int *)&(a))[i]
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
+
+#define GRID_WIDTH 32
+#define GRID_HEIGHT 32
 
 #endif

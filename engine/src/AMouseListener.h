@@ -24,6 +24,8 @@ public:
 
     static float getX();
     static float getY();
+    static float getOrthoX();
+    static float getOrthoY();
     static float getDx();
     static float getDy();
     static float getScrollX();

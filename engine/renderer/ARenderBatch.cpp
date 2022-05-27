@@ -1,10 +1,10 @@
 #include "ARenderBatch.h"
+#include <glad/glad.h>
 
 #include "../src/AWindow.h"
 #include "../util/ADefines.h"
 #include "../util/AAssetPool.h"
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <malloc.h>
 

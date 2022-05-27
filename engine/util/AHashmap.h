@@ -110,7 +110,7 @@ void AHashmap<T>::grow()
         if(hashValue)
         {
             unsigned int hashIndex = (unsigned int)(hashValue->id & mask);
-            if(!tmpValues[i])
+            if(!tmpValues[hashIndex])
             {
                 tmpValues[hashIndex] = new AHashValue<T>(hashValue->value, hashValue->id);
             }

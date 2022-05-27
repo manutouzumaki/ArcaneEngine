@@ -22,7 +22,7 @@ AKeyListener *AKeyListener::get()
 
 void AKeyListener::free()
 {
-    delete instance;
+    if(instance) delete instance;
     printf("AKeyListener deleted\n");
 }
 

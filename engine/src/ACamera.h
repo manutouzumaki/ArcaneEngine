@@ -9,11 +9,15 @@ public:
     ACamera(glm::vec3 position);
     glm::mat4 getProjMatrix();
     glm::mat4 getViewMatrix();
+    glm::mat4 getInvProjMatrix();
+    glm::mat4 getInvViewMatrix();
     glm::vec3 position;
+    glm::vec2 projectionSize;
 private:
     glm::mat4 projectionMatrix;
     glm::mat4 viewMatrix;
-
+    glm::mat4 invProjectionMatrix;
+    glm::mat4 invViewMatrix;
 };
 
 #endif

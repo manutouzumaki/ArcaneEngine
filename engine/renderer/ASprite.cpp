@@ -41,3 +41,29 @@ void ASprite::setTileSheet(const char *tileSheet)
 {
     this->tileSheet = tileSheet;
 }
+
+int ASprite::getWidth()
+{
+    return width; 
+}
+
+int ASprite::getHeight()
+{
+    return height;
+}
+
+int ASprite::getTexID()
+{
+    return texture->getID();
+}
+
+void ASprite::setWidth(int width)
+{
+    this->width = width;
+}
+
+void ASprite::setHeight(int height)
+{
+    this->height = height;
+}
+

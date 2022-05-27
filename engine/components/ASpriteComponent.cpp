@@ -49,10 +49,8 @@ void ASpriteComponent::serialize(TiXmlElement *parent)
 {
     TiXmlElement *root = new TiXmlElement("ASpriteComponent");
     parent->LinkEndChild(root);
-    
     TiXmlText *type = new TiXmlText("ASpriteComponent");
     root->LinkEndChild(type);
-
     TiXmlElement *color = new TiXmlElement("Color");
     color->SetDoubleAttribute("r", this->color.r);
     color->SetDoubleAttribute("g", this->color.g);
@@ -104,6 +102,11 @@ void ASpriteComponent::setSprite(ASprite *sprite)
 {
     this->sprite = sprite; 
     isDirty = true;
+}
+
+ASprite *ASpriteComponent::getSprite()
+{
+    return this->sprite;
 }
 
 

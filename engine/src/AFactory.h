@@ -7,7 +7,8 @@
 class AFactory
 {
 public:
-    static AGameObject *CreateGameObject();
+    static AGameObject *CreateGameObject(TiXmlElement *gameObject);
+private:
     static AComponent *CreateComponent(TiXmlElement *component);
 };
 

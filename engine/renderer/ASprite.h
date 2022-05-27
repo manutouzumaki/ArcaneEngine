@@ -14,7 +14,14 @@ public:
     int getIndex();
     const char *getTileSheet();
     void setTileSheet(const char *tileSheet);
+    int getWidth();
+    int getHeight();
+    int getTexID();
+    void setWidth(int width);
+    void setHeight(int height);
 private:
+    int width;
+    int height;
     int index;
     const char *tileSheet;
     ATexture *texture;

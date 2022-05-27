@@ -1,6 +1,14 @@
 #include "AString.h"
 #include "AHash.h"
 
+void StringCopy(char *dest, int size, const char *src)
+{
+    for(int i = 0; i < size; ++i)
+    {
+        dest[i] = src[i];
+    }
+}
+
 int StringLength(const char *string)
 {
     int counter = 0;

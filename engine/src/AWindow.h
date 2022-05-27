@@ -3,7 +3,6 @@
 
 #include "AScene.h" 
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 class AWindow
@@ -26,6 +25,8 @@ public:
     static void changeScene(int index);
     static AScene *getScene();
     void run();
+    static int getWidth();
+    static int getHeight();
     static void setWidth(int width);
     static void setHeight(int height);
 };
