@@ -5,6 +5,8 @@
 #include "../util/ADefines.h"
 #include <malloc.h>
 
+#include <glm/gtx/rotate_vector.hpp>
+
 int ADebugDraw::linesCount = 0;
 ALine **ADebugDraw::lines = nullptr;
 float *ADebugDraw::vertexArray = nullptr;
@@ -148,4 +150,34 @@ void ADebugDraw::addLine(glm::vec2 from, glm::vec2 to, glm::vec3 color)
 void ADebugDraw::addLine(glm::vec2 from, glm::vec2 to)
 {
     addLine(from, to, glm::vec3(0, 1, 0), 1);
+}
+
+void ADebugDraw::addBox(glm::vec2 center, glm::vec2 dimension, float rotation, glm::vec3 color, int lifeTime)
+{
+    glm::vec2 radius = dimension * 0.5f;
+    glm::vec2 a = glm::rotate((center + radius) - center, rotation) + center;
+    glm::vec2 b = glm::rotate((center + glm::vec2(-radius.x, radius.y)) - center, rotation) + center;
+    glm::vec2 c = glm::rotate((center - radius) - center, rotation) + center;
+    glm::vec2 d = glm::rotate((center + glm::vec2(radius.x, -radius.y)) - center, rotation) + center;
+    addLine(a, b, color, lifeTime);
+    addLine(b, c, color, lifeTime);
+    addLine(c, d, color, lifeTime);
+    addLine(d, a, color, lifeTime);
+}
+
+void ADebugDraw::addCircle(glm::vec2 center, float radius, glm::vec3 color, int lifeTime)
+{
+    glm::vec2 segments[NUM_DEBUG_CIRCLE_SEGMENT];
+    float angle = 0;
+    float angleIncrement = 360 / NUM_DEBUG_CIRCLE_SEGMENT;
+    for(int i = 0; i < NUM_DEBUG_CIRCLE_SEGMENT; ++i)
+    {
+        segments[i] = glm::rotate(glm::vec2(radius, 0), glm::radians(angle)) + center; 
+        angle += angleIncrement;
+        if(i > 0)
+        {
+            addLine(segments[i - 1], segments[i], color, lifeTime);
+        }
+    }
+    addLine(segments[NUM_DEBUG_CIRCLE_SEGMENT - 1], segments[0], color, lifeTime);
 }

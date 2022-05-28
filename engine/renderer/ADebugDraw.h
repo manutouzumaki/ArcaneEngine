@@ -15,10 +15,11 @@ public:
     static void start();
     static void beginFrame();
     static void draw();
-
     static void addLine(glm::vec2 from, glm::vec2 to, glm::vec3 color, int lifeTime);
     static void addLine(glm::vec2 from, glm::vec2 to, glm::vec3 color);
     static void addLine(glm::vec2 from, glm::vec2 to);
+    static void addBox(glm::vec2 center, glm::vec2 dimension, float rotation, glm::vec3 color, int lifeTime);
+    static void addCircle(glm::vec2 center, float radius, glm::vec3 color, int lifeTime);
 private:
     static int linesCount;
     static ALine **lines;
@@ -28,7 +29,6 @@ private:
     static unsigned int VBO;
     static bool started;
     static bool initialized;
-
 };
 
 #endif

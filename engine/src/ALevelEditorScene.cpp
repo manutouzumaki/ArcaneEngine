@@ -1,9 +1,9 @@
+#include "../util/AAssetPool.h"
 #include "ALevelEditorScene.h"
 #include "AFactory.h"
 #include "AMouseListener.h"
 #include "APrefabs.h"
 #include "../util/ADefines.h"
-#include "../util/AAssetPool.h"
 #include "../renderer/ADebugDraw.h"
 #include "../components/AGridLines.h"
 
@@ -21,9 +21,11 @@ public:
     float x, y;
 };
 
+
+
 ALevelEditorScene::ALevelEditorScene()
 {
-    printf("Level Editor Scene\n");
+    printf("Level Editor Loading\n"); 
 }
 
 ALevelEditorScene::~ALevelEditorScene()
@@ -53,18 +55,18 @@ void loadResources()
 
 void ALevelEditorScene::init()
 {
-     camera = new ACamera(glm::vec3(-250, 0, 20));
+    camera = new ACamera(glm::vec3(-250, 0, 20));
     
-     levelEditor = new AGameObject("LevelEditor");
-     levelEditor->addComponent("AMouseControlComponent", new AMouseControlComponent());
-     levelEditor->addComponent("AGridLines", new AGridLines());
-
+    levelEditor = new AGameObject("LevelEditor");
+    levelEditor->addComponent("AMouseControlComponent", new AMouseControlComponent());
+    levelEditor->addComponent("AGridLines", new AGridLines());
+    
     loadResources();
     
     ADebugDraw::init();
 
     sprites[0] = AAssetPool::getSpritesheet("blocksSpritesheet");
-    sprites[1] = AAssetPool::getSpritesheet("characterSpritesheet");
+    sprites[1] = AAssetPool::getSpritesheet("characterSpritesheet");    
 
     TiXmlDocument doc( "../assets/saves/tinyXmlTest.xml");
     doc.LoadFile();
@@ -79,11 +81,26 @@ void ALevelEditorScene::init()
     }
     activeGameObject = gameObjects[0];
 
+
 }
 
 void ALevelEditorScene::update(float dt)
 {
     levelEditor->update(dt); 
+
+    static float angle = 0.0f;
+    ADebugDraw::addBox(glm::vec2(128 - 16, (128 * 2) - 16),
+                       glm::vec2(32, 64),
+                       glm::radians(angle),
+                       glm::vec3(1, 0,0),
+                       1);
+
+    ADebugDraw::addCircle(glm::vec2(128 * 2, 128 * 2),
+                          64,
+                          glm::vec3(0, 0, 1),
+                          1);
+    angle += dt * 40;
+
     for(int i = 0; i < gameObjects.size(); ++i)
     {
         gameObjects[i]->update(dt);

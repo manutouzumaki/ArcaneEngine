@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "AAssetPool.h"
 
 AHashmap<AShader *> AAssetPool::shaders;
@@ -21,7 +22,8 @@ void AAssetPool::addTexture(AString resourceName, const char *path)
 
 ATexture *AAssetPool::getTexture(AString resourceName)
 {
-    return textures[resourceName];
+    ATexture *tex = textures[resourceName];
+    return tex;
 }
 
 void AAssetPool::addSpritesheet(AString resourceName, ASpritesheet *spritesheet)

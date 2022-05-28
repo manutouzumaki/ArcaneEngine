@@ -5,6 +5,11 @@
 #include "AString.h"
 #include "ADefines.h"
 
+#include <stdio.h>
+
+// TODO: impove Hashmap code to work out side of visual studio
+
+
 #include <malloc.h>
 
 template <class T>
@@ -12,16 +17,18 @@ class AHashValue
 {
 public:
     AHashValue() {}
-    AHashValue(T value, unsigned long long id);
+    AHashValue(T value, unsigned long long id, const char *name);
     T value;
     unsigned long long id;
+    const char *name;
 };
 
 template <class T>
-AHashValue<T>::AHashValue(T value, unsigned long long id)
+AHashValue<T>::AHashValue(T value, unsigned long long id, const char *name)
 {
     this->value = value;
-    this->id = id; 
+    this->id = id;
+    this->name = name; 
 }
 
 template <class T>
@@ -37,7 +44,7 @@ public:
 private:
     size_t occupied;
     size_t capacity;
-    size_t mask;
+    unsigned long long mask;
     AHashValue<T> **values;
 };
 
@@ -73,17 +80,17 @@ void AHashmap<T>::add(AString key, T value)
     unsigned int hashIndex = (unsigned int)(key.getID() & mask);
     if(!values[hashIndex])
     {
-        values[hashIndex] = new AHashValue<T>(value, key.getID());
+        values[hashIndex] = new AHashValue<T>(value, key.getID(), key.get());
         occupied = occupied + 1;
     }
     else
     {
         unsigned int nextIndex = hashIndex + 1; 
-        while(values[nextIndex])
+        while(values[nextIndex] || nextIndex >= capacity)
         {
             nextIndex = (nextIndex + 1) % capacity;
         }
-        values[nextIndex] = new AHashValue<T>(value, key.getID());
+        values[nextIndex] = new AHashValue<T>(value, key.getID(), key.get());
         occupied = occupied + 1;
     }
 
@@ -112,19 +119,20 @@ void AHashmap<T>::grow()
             unsigned int hashIndex = (unsigned int)(hashValue->id & mask);
             if(!tmpValues[hashIndex])
             {
-                tmpValues[hashIndex] = new AHashValue<T>(hashValue->value, hashValue->id);
+                tmpValues[hashIndex] = new AHashValue<T>(hashValue->value, hashValue->id, hashValue->name);
             }
             else
             { 
                 unsigned int nextIndex = hashIndex + 1; 
-                while(tmpValues[nextIndex])
+                while(tmpValues[nextIndex] || nextIndex >= capacity)
                 {
                     nextIndex = (nextIndex + 1) % capacity;
                 }
-                tmpValues[nextIndex] = new AHashValue<T>(hashValue->value, hashValue->id);
+                tmpValues[nextIndex] = new AHashValue<T>(hashValue->value, hashValue->id, hashValue->name);
             }
         }
         delete values[i];
+        values[i] = nullptr;
     }
     free(values);
     values = tmpValues;
@@ -138,7 +146,6 @@ T &AHashmap<T>::operator[](AString key)
     {
         hashIndex = (hashIndex + 1) % capacity;
     }
-
     if(values[hashIndex])
     {
         return values[hashIndex]->value;
