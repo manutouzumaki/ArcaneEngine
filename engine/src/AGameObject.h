@@ -23,10 +23,13 @@ public:
     void removeComponent(AString componentName);
     ATransform transform;
 
+    int getUID();
     int getZIndex();
     void imgui();
-    void serialize(TiXmlElement *parent);
+    void serialize(TiXmlElement *parent); 
 private:
+    static unsigned int ID_COUNTER;
+    unsigned int UID;
     const char *name;
     AArray<AComponent *> components;
     AHashmap<int> componentIndexMap;

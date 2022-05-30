@@ -10,19 +10,6 @@
 #include <imgui.h>
 #include <stdio.h>
 
-struct Vector2
-{
-public:
-    Vector2(float x, float y)
-    {
-        this->x = x;
-        this->y = y;
-    }
-    float x, y;
-};
-
-
-
 ALevelEditorScene::ALevelEditorScene()
 {
     printf("Level Editor Loading\n"); 
@@ -42,6 +29,7 @@ void loadResources()
 {
     AAssetPool::addShader("default", "../assets/shaders/vertex.glsl", "../assets/shaders/fragment.glsl");
     AAssetPool::addShader("lines", "../assets/shaders/lineVertex.glsl", "../assets/shaders/lineFragment.glsl");
+    AAssetPool::addShader("picking", "../assets/shaders/pickingVertex.glsl", "../assets/shaders/pickingFragment.glsl");
     
     AAssetPool::addTexture("heroTexture", "../assets/textures/poolGuy.png");
     AAssetPool::addTexture("blocksTexture", "../assets/textures/blocks.png");
@@ -79,8 +67,10 @@ void ALevelEditorScene::init()
         AGameObject *obj = AFactory::CreateGameObject(gameObject);
         addGameObject(obj); 
     }
-    activeGameObject = gameObjects[0];
-
+    if(gameObjects.size() > 0)
+    {
+        activeGameObject = gameObjects[0];
+    }
 
 }
 
@@ -105,6 +95,10 @@ void ALevelEditorScene::update(float dt)
     {
         gameObjects[i]->update(dt);
     }
+}
+
+void ALevelEditorScene::render()
+{
     renderer.render();
 }
 

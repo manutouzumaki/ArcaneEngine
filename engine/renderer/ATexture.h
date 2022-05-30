@@ -5,6 +5,7 @@ class ATexture
 {
 public:
     ATexture(const char *filePath);
+    ATexture(int width, int height);
     void bind();
     void unbind();
     unsigned int getID();

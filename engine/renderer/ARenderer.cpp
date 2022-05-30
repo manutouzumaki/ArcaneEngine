@@ -1,5 +1,7 @@
 #include "ARenderer.h"
 
+AShader *ARenderer::currentShader = nullptr;
+
 ARenderer::~ARenderer()
 {
     for(int i = 0; i < batchs.size(); ++i)
@@ -30,7 +32,6 @@ static void SortBatchByZIndex(AArray<ARenderBatch *> *batchs)
     }
 }
 
-
 void ARenderer::add(ASpriteComponent *sprite)
 {
     bool added = false;
@@ -59,8 +60,20 @@ void ARenderer::add(ASpriteComponent *sprite)
 
 void ARenderer::render()
 {
+    currentShader->use();
     for(int i = 0; i < batchs.size(); ++i)
     {
         batchs[i]->render();
     }
+}
+
+
+void ARenderer::bindShader(AShader *shader)
+{
+    currentShader = shader;
+}
+
+AShader *ARenderer::getBindShader()
+{
+    return currentShader;
 }

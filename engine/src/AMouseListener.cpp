@@ -2,7 +2,7 @@
 #include "AWindow.h"
 
 #include "../src/AWindow.h"
-#include <glm/glm.hpp>
+#include "../util/ADefines.h"
 #include <stdio.h>
 
 AMouseListener *AMouseListener::instance = nullptr;
@@ -93,7 +93,7 @@ float AMouseListener::getY()
 
 float AMouseListener::getOrthoX()
 {
-    float normalizeMouseX = (float)getX() / (float)AWindow::getWidth();
+    float normalizeMouseX = ((float)getX() - get()->gameViewportPos.x) / get()->gameViewportSize.x;
     normalizeMouseX = normalizeMouseX * 2 - 1;
     glm::vec4 position = glm::vec4(normalizeMouseX, 0, 0, 1);
     ACamera *camera = AWindow::getScene()->getCamera();
@@ -103,12 +103,28 @@ float AMouseListener::getOrthoX()
 
 float AMouseListener::getOrthoY()
 {
-    float normalizeMouseY = ((float)AWindow::getHeight() - (float)getY()) / (float)AWindow::getHeight();
+    float normalizeMouseY = ((float)getY() - get()->gameViewportPos.y) / get()->gameViewportSize.y;
     normalizeMouseY = normalizeMouseY * 2 - 1;
-    glm::vec4 position = glm::vec4(0, normalizeMouseY, 0, 1);
+    glm::vec4 position = glm::vec4(0, -normalizeMouseY, 0, 1);
     ACamera *camera = AWindow::getScene()->getCamera();
     position = camera->getInvViewMatrix() * camera->getInvProjMatrix() * position;
     return position.y;
+}
+
+// TODO: fix this...
+float AMouseListener::getScreenX()
+{
+    float normalizeMouseX = ((float)getX() - get()->gameViewportPos.x) / get()->gameViewportSize.x;
+    normalizeMouseX = normalizeMouseX * (float)WINDOW_WIDTH;
+    return normalizeMouseX;
+}
+
+// TODO: fix this...
+float AMouseListener::getScreenY()
+{
+    float normalizeMouseY = ((float)getY() - get()->gameViewportPos.y) / get()->gameViewportSize.y;
+    normalizeMouseY = (float)WINDOW_HEIGHT - (normalizeMouseY * (float)WINDOW_HEIGHT);
+    return normalizeMouseY;
 }
 
 float AMouseListener::getDx()
@@ -143,5 +159,15 @@ bool AMouseListener::mouseButtonDown(int button)
         return get()->mouseButtonPressed[button];
     }
     return false;
+}
+
+void AMouseListener::setGameViewportPos(glm::vec2 gameViewportPos)
+{
+    get()->gameViewportPos = gameViewportPos;
+}
+
+void AMouseListener::setGameViewportSize(glm::vec2 gameViewportSize)
+{
+    get()->gameViewportSize = gameViewportSize;
 }
 

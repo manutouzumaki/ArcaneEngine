@@ -2,8 +2,9 @@
 #define AWINDOW_H
 
 #include "AScene.h" 
-
 #include <GLFW/glfw3.h>
+#include "../renderer/AFramebuffer.h"
+#include "../editor/AMousePicking.h"
 
 class AWindow
 {
@@ -19,6 +20,9 @@ private:
     AWindow() {}
     static AWindow *instance;
     static AScene *currentScene;
+
+    AFramebuffer *framebuffer;
+    AMousePicking *mousePicking;
 public:
     static AWindow *get();
     static void free();
@@ -29,6 +33,9 @@ public:
     static int getHeight();
     static void setWidth(int width);
     static void setHeight(int height);
+    static AFramebuffer *getFramebuffer();
+    static float getTargetAspectRatio();
+    static AMousePicking *getMousePicking();
 };
 
 #endif

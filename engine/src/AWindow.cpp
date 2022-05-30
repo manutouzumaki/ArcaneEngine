@@ -5,10 +5,13 @@
 #include "AKeyListener.h"
 #include "../util/ATime.h"
 #include "../util/ADefines.h"
+#include "../util/AAssetPool.h"
 #include "../renderer/ADebugDraw.h"
 
 #include "ALevelEditorScene.h"
 #include "ALevelScene.h"
+
+#include "../editor/AGameViewWindow.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -18,6 +21,26 @@
 
 AWindow *AWindow::instance = nullptr;
 AScene *AWindow::currentScene = nullptr;
+
+static bool condition = true;
+void setupDockSpace()
+{
+    ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::SetNextWindowViewport(viewport->ID);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+    windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+    ImGui::Begin("Dockspace demo", &condition, windowFlags);
+    ImGui::PopStyleVar();
+    ImGui::PopStyleVar();
+
+    ImGui::DockSpace(ImGui::GetID("Dockspace"));
+}
 
 void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
 
@@ -32,6 +55,8 @@ AWindow *AWindow::get()
 
 void AWindow::free()
 {
+    delete instance->mousePicking;
+    delete instance->framebuffer;
     delete currentScene;
     delete instance;
     printf("window deleted\n");
@@ -93,7 +118,7 @@ void AWindow::init()
     glfwDefaultWindowHints();
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-    glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
+    glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
     window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "test", nullptr, nullptr);
     // FULL SCREEN
@@ -112,7 +137,7 @@ void AWindow::init()
     glfwSetMouseButtonCallback(window, AMouseListener::mouseButtonCallback);
     glfwSetScrollCallback(window, AMouseListener::mouseScrollCallback);
     glfwSetKeyCallback(window, AKeyListener::keyCallback);
-    glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
+    //glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
@@ -128,15 +153,18 @@ void AWindow::init()
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-    // TODO: Imgui Test
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImGui::StyleColorsClassic();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    ImGui::StyleColorsLight();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
-    
+    framebuffer = new AFramebuffer(WINDOW_WIDTH, WINDOW_HEIGHT);
+    mousePicking = new AMousePicking(WINDOW_WIDTH, WINDOW_HEIGHT);
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+     
     changeScene(0);
 
 }
@@ -148,32 +176,64 @@ void AWindow::loop()
     float endTime = ATime::getTime();
     float dt = -1.0f;
 
+    AShader *defaultShader = AAssetPool::getShader("default");
+    AShader *pickingShader = AAssetPool::getShader("picking");
+
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
 
-        ADebugDraw::beginFrame();
+        // Render pass 1 mouse picking
+        glDisable(GL_BLEND);
+        mousePicking->enableWritting();
+        glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        glClearColor(0, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        ARenderer::bindShader(pickingShader);
+        currentScene->render();
 
+        if(AMouseListener::mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        {
+            int x = (int)AMouseListener::getScreenX();
+            int y = (int)AMouseListener::getScreenY();
+            printf("mouse ScreenX: %d\n", (int)AMouseListener::getScreenX());
+            printf("mouse ScreenY: %d\n", (int)AMouseListener::getScreenY());
+            printf("ID %d\n", mousePicking->readPixel(x, y));
+        }
+
+        mousePicking->disableWritting();
+        glEnable(GL_BLEND);
+
+        // Render pass 2 actual game
+        ADebugDraw::beginFrame();
+        framebuffer->bind();
         glClearColor(0.9f, 0.9f, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);
-
+        
         if(dt >= 0.0f)
         {
             ADebugDraw::draw();
+            ARenderer::bindShader(defaultShader);
             currentScene->update(dt);
+            currentScene->render();
         }
+        framebuffer->unbind();
 
-
-        // TODO: ImGui Test
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+
+        setupDockSpace();
+
         currentScene->sceneImgui();
         bool show_demo_window = true;
         if (show_demo_window)
         {
             ImGui::ShowDemoWindow(&show_demo_window);
         } 
+        AGameViewWindow::imgui();
+        ImGui::End();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -204,6 +264,20 @@ void AWindow::setHeight(int height)
     get()->height = height;
 }
 
+AFramebuffer *AWindow::getFramebuffer()
+{
+    return get()->framebuffer;
+}
+
+float AWindow::getTargetAspectRatio()
+{
+    return 16.0f / 9.0f;
+}
+
+AMousePicking *AWindow::getMousePicking()
+{
+    return get()->mousePicking;
+}
 
 static void frameBufferSizeCallback(GLFWwindow *window, int width, int height)
 {

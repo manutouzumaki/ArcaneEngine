@@ -8,6 +8,7 @@ class ALevelScene : public AScene
 public:
     ALevelScene();
     void update(float dt) override;
+    void render() override;
 };
 
 #endif

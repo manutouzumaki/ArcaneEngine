@@ -2,6 +2,7 @@
 #define AMOUSELISTENER_H
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #define MOUSE_MAX_BUTTONS 3
 
@@ -14,6 +15,10 @@ private:
     double xPos, yPos, lastX, lastY;
     bool mouseButtonPressed[MOUSE_MAX_BUTTONS];
     bool dragging;
+    
+    glm::vec2 gameViewportPos;
+    glm::vec2 gameViewportSize;
+    
 public:
     static AMouseListener *get();
     static void free();
@@ -26,12 +31,16 @@ public:
     static float getY();
     static float getOrthoX();
     static float getOrthoY();
+    static float getScreenX();
+    static float getScreenY();
     static float getDx();
     static float getDy();
     static float getScrollX();
     static float getScrollY();
     static bool isDragging();
     static bool mouseButtonDown(int button);
+    static void setGameViewportPos(glm::vec2 gameViewportPos);
+    static void setGameViewportSize(glm::vec2 gameViewportSize);
 };
 
 #endif

@@ -11,3 +11,8 @@ void ALevelScene::update(float dt)
 {
  
 }
+
+void ALevelScene::render()
+{
+
+}

@@ -4,6 +4,7 @@
 #include "../src/AWindow.h"
 #include "../util/ADefines.h"
 #include "../util/AAssetPool.h"
+#include "ARenderer.h"
 
 #include <glm/glm.hpp>
 #include <malloc.h>
@@ -30,7 +31,6 @@ static void generateIndices(unsigned int *indices)
 
 ARenderBatch::ARenderBatch(int zIndex)
 {
-    shader = AAssetPool::getShader("default");
     numSprites = 0;
     hasRoom = true;
     sprites = (ASpriteComponent **)malloc(sizeof(ASpriteComponent *) * MAX_BATCH_SIZE);
@@ -69,6 +69,8 @@ void ARenderBatch::start()
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(3, TEX_ID_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE_BYTES, (void *)TEX_ID_OFFSET);
     glEnableVertexAttribArray(3);
+    glVertexAttribPointer(4, OBJ_ID_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE_BYTES, (void *)OBJ_ID_OFFSET);
+    glEnableVertexAttribArray(4);
 
     free(indices);
 }
@@ -91,7 +93,7 @@ void ARenderBatch::render()
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, MAX_BATCH_SIZE * (4 * VERTEX_SIZE_BYTES), vertices);
     }
-    shader->use();
+    AShader *shader = ARenderer::getBindShader();
     shader->updateMat4f("uProj", AWindow::getScene()->getCamera()->getProjMatrix());
     shader->updateMat4f("uView", AWindow::getScene()->getCamera()->getViewMatrix());
     
@@ -187,6 +189,7 @@ void ARenderBatch::loadVertexProperties(int index)
 
         // TODO: load texture ID
         vertices[offset + 8] = (float)texID;
+        vertices[offset + 9] = (float)sprite->gameObject->getUID() + 1;
 
         offset += VERTEX_SIZE;
     }

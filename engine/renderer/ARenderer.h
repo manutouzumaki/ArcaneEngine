@@ -12,8 +12,11 @@ public:
     void add(AGameObject *gameObject);
     void add(ASpriteComponent *sprite);
     void render();
+    static void bindShader(AShader *shader);
+    static AShader *getBindShader();
 private:
     AArray<ARenderBatch *> batchs;
+    static AShader *currentShader;
 };
 
 #endif

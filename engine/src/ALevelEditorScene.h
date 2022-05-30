@@ -11,6 +11,7 @@ public:
     ALevelEditorScene();
     void init() override;
     void update(float dt) override;
+    void render() override;
     void close() override;
     void imgui() override;
     ~ALevelEditorScene() override;

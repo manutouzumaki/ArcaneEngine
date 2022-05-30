@@ -1,10 +1,14 @@
 #include "AGameObject.h"
 #include <tinyxml.h>
 
+unsigned int AGameObject::ID_COUNTER = 0;
+
 AGameObject::AGameObject(const char *name)
 {
     this->name = name;
     this->zIndex = 0;
+    // TODO: temp...
+    //this->UID = ID_COUNTER++;
 }
 
 AGameObject::AGameObject(const char *name, ATransform transform, int zIndex)
@@ -12,6 +16,7 @@ AGameObject::AGameObject(const char *name, ATransform transform, int zIndex)
     this->name = name;
     this->transform = transform;
     this->zIndex = zIndex;
+    this->UID = ID_COUNTER++;
 }
 
 AGameObject::~AGameObject()
@@ -65,6 +70,10 @@ void AGameObject::update(float dt)
     }
 }
 
+int AGameObject::getUID()
+{
+    return UID;
+}
 
 int AGameObject::getZIndex()
 {
@@ -106,5 +115,8 @@ void AGameObject::serialize(TiXmlElement *parent)
     zIndex->SetAttribute("value", this->zIndex);
     root->LinkEndChild(zIndex);    
 }
+
+
+
 
 
