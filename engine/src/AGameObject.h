@@ -27,6 +27,9 @@ public:
     int getZIndex();
     void imgui();
     void serialize(TiXmlElement *parent); 
+
+    void setZIndex(int zIndex);
+    void setSerializable(bool value);
 private:
     static unsigned int ID_COUNTER;
     unsigned int UID;
@@ -34,6 +37,7 @@ private:
     AArray<AComponent *> components;
     AHashmap<int> componentIndexMap;
     int zIndex;
+    bool serializable;
 };
 
 #endif

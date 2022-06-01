@@ -7,11 +7,14 @@ ACamera::ACamera(glm::vec3 position)
 {
     this->position = position;
     this->projectionSize = glm::vec2(32 * 40, 32 * 21);
+    this->zoom = 1.0f;
 }
 
 glm::mat4 ACamera::getProjMatrix()
 {
-    projectionMatrix = glm::ortho(0.0f, projectionSize.x, 0.0f, projectionSize.y, 0.0f, 100.0f);
+    projectionMatrix = glm::ortho(0.0f, projectionSize.x * zoom,
+                                  0.0f, projectionSize.y * zoom,
+                                  0.0f, 100.0f);
     invProjectionMatrix = glm::inverse(projectionMatrix);
     return projectionMatrix;
 }
@@ -33,4 +36,19 @@ glm::mat4 ACamera::getInvProjMatrix()
 glm::mat4 ACamera::getInvViewMatrix()
 {
     return invViewMatrix;
+}
+
+float ACamera::getZoom()
+{
+    return this->zoom;
+}
+
+void ACamera::setZoom(float zoom)
+{
+    this->zoom = zoom;
+}
+
+void ACamera::addZoom(float value)
+{
+    this->zoom += value;
 }

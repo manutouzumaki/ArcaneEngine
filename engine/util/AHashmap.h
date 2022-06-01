@@ -142,7 +142,7 @@ template <class T>
 T &AHashmap<T>::operator[](AString key)
 {
     unsigned int hashIndex = (unsigned int)(key.getID() & mask);
-    while(values[hashIndex] && values[hashIndex]->id != key.getID())
+    while((values[hashIndex] && values[hashIndex]->id != key.getID()) || values[hashIndex] == nullptr)
     {
         hashIndex = (hashIndex + 1) % capacity;
     }
@@ -161,7 +161,7 @@ template <class T>
 void AHashmap<T>::remove(AString key)
 {
     unsigned int hashIndex = (unsigned int)(key.getID() & mask);
-    while(values[hashIndex] && values[hashIndex]->id != key.getID())
+    while((values[hashIndex] && values[hashIndex]->id != key.getID()) || values[hashIndex] == nullptr)
     {
         hashIndex = (hashIndex + 1) % capacity;
     }

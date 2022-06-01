@@ -1,11 +1,14 @@
 #include "../util/AAssetPool.h"
 #include "ALevelEditorScene.h"
+#include "AWindow.h"
 #include "AFactory.h"
 #include "AMouseListener.h"
 #include "APrefabs.h"
 #include "../util/ADefines.h"
 #include "../renderer/ADebugDraw.h"
 #include "../components/AGridLines.h"
+#include "../components/AEditorCameraComponent.h"
+#include "../components/ATranslateGizmo.h"
 
 #include <imgui.h>
 #include <stdio.h>
@@ -34,22 +37,31 @@ void loadResources()
     AAssetPool::addTexture("heroTexture", "../assets/textures/poolGuy.png");
     AAssetPool::addTexture("blocksTexture", "../assets/textures/blocks.png");
     AAssetPool::addTexture("characterTexture", "../assets/textures/character.png");
+    AAssetPool::addTexture("gizmoTexture", "../assets/textures/gizmos.png");
 
-    AAssetPool::addSpritesheet("blocksSpritesheet",
-                               new ASpritesheet("blocksSpritesheet", AAssetPool::getTexture("blocksTexture"), 16, 16, 81, 0));
     AAssetPool::addSpritesheet("characterSpritesheet",
                                new ASpritesheet("characterSpritesheet", AAssetPool::getTexture("characterTexture"), 77, 77, 32, 0));
+    AAssetPool::addSpritesheet("blocksSpritesheet",
+                               new ASpritesheet("blocksSpritesheet", AAssetPool::getTexture("blocksTexture"), 16, 16, 81, 0));
+    AAssetPool::addSpritesheet("gizmoSpritesheet",
+                               new ASpritesheet("gizmoSpritesheet", AAssetPool::getTexture("gizmoTexture"), 24, 48, 2, 0));
 }
 
 void ALevelEditorScene::init()
 {
-    camera = new ACamera(glm::vec3(-250, 0, 20));
+    loadResources();
+    
+    ASpritesheet *gizmoSpritesheet = AAssetPool::getSpritesheet("gizmoSpritesheet");
+    
+    camera = new ACamera(glm::vec3(0, 0, 20));
     
     levelEditor = new AGameObject("LevelEditor");
     levelEditor->addComponent("AMouseControlComponent", new AMouseControlComponent());
     levelEditor->addComponent("AGridLines", new AGridLines());
-    
-    loadResources();
+    levelEditor->addComponent("AEditorCameraComponent", new AEditorCameraComponent(camera));
+    levelEditor->addComponent("ATranslateGizmo", new ATranslateGizmo(gizmoSpritesheet->getSprite(1),
+                                                                     AWindow::getPropertiesWindow())); 
+    levelEditor->start();
     
     ADebugDraw::init();
 
@@ -67,11 +79,6 @@ void ALevelEditorScene::init()
         AGameObject *obj = AFactory::CreateGameObject(gameObject);
         addGameObject(obj); 
     }
-    if(gameObjects.size() > 0)
-    {
-        activeGameObject = gameObjects[0];
-    }
-
 }
 
 void ALevelEditorScene::update(float dt)

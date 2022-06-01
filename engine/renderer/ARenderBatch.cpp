@@ -7,6 +7,7 @@
 #include "ARenderer.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <malloc.h>
 
 static void loadElementIndices(unsigned *indices, int index)
@@ -148,6 +149,7 @@ void ARenderBatch::addSprite(ASpriteComponent *sprite)
 void ARenderBatch::loadVertexProperties(int index)
 {
     ASpriteComponent *sprite = sprites[index];
+    glm::vec2 *texCoords = sprite->getTexCoords();
 
     int offset = index * 4 * VERTEX_SIZE;
     glm::vec4 color = sprite->getColor();
@@ -164,8 +166,13 @@ void ARenderBatch::loadVertexProperties(int index)
             }
         }
     }
-    glm::vec2 *texCoords = sprite->getTexCoords();
 
+    glm::mat4 transformMat = glm::mat4(1.0f);
+    glm::mat4 translationMat = glm::translate(glm::mat4(1.0f), glm::vec3(sprite->gameObject->transform.position.x, sprite->gameObject->transform.position.y, 0.0f));
+    glm::mat4 rotationMat = glm::rotate(glm::mat4(1.0f), glm::radians(sprite->gameObject->transform.rotation), glm::vec3(0, 0, 1));
+    glm::mat4 scaleMat = glm::scale(glm::mat4(1.0f), glm::vec3(sprite->gameObject->transform.scale.x, sprite->gameObject->transform.scale.y, 0.0f));
+    transformMat = translationMat * rotationMat * scaleMat;
+    
     float x = 1.0f;
     float y = 1.0f; 
     for(int i = 0; i < 4; ++i)
@@ -177,8 +184,9 @@ void ARenderBatch::loadVertexProperties(int index)
         else if(i == 3)
             y = 1.0f;
 
-        vertices[offset] = sprite->gameObject->transform.position.x + (x * sprite->gameObject->transform.scale.x);
-        vertices[offset + 1] = sprite->gameObject->transform.position.y + (y * sprite->gameObject->transform.scale.y);
+        glm::vec4 currentP = transformMat * glm::vec4(x, y, 0, 1);
+        vertices[offset] = currentP.x;
+        vertices[offset + 1] = currentP.y;
         vertices[offset + 2] = color.r;
         vertices[offset + 3] = color.g;
         vertices[offset + 4] = color.b;

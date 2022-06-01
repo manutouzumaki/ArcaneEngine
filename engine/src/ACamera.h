@@ -13,11 +13,15 @@ public:
     glm::mat4 getInvViewMatrix();
     glm::vec3 position;
     glm::vec2 projectionSize;
+    float getZoom();
+    void setZoom(float zoom);
+    void addZoom(float value);
 private:
     glm::mat4 projectionMatrix;
     glm::mat4 viewMatrix;
     glm::mat4 invProjectionMatrix;
     glm::mat4 invViewMatrix;
+    float zoom;
 };
 
 #endif

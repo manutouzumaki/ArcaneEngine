@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include "../renderer/AFramebuffer.h"
 #include "../editor/AMousePicking.h"
+#include "../editor/APropertiesWindow.h"
 
 class AWindow
 {
@@ -23,6 +24,7 @@ private:
 
     AFramebuffer *framebuffer;
     AMousePicking *mousePicking;
+    APropertiesWindow *propertiesWindow;
 public:
     static AWindow *get();
     static void free();
@@ -36,6 +38,7 @@ public:
     static AFramebuffer *getFramebuffer();
     static float getTargetAspectRatio();
     static AMousePicking *getMousePicking();
+    static APropertiesWindow *getPropertiesWindow();
 };
 
 #endif

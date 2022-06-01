@@ -1,6 +1,7 @@
 #ifndef TEST_H
 #define TEST_H
 
+#include "ADefines.h"
 #include <malloc.h>
 
 template <class T>
@@ -82,6 +83,7 @@ size_t AArray<T>::getCapacity()
 template <class T>
 T &AArray<T>::operator[](size_t index)
 {
+    Assert(index < occupied);
     return this->data[index];
 }
 

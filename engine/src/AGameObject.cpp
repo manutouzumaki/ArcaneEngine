@@ -7,6 +7,7 @@ AGameObject::AGameObject(const char *name)
 {
     this->name = name;
     this->zIndex = 0;
+    this->serializable = true;
     // TODO: temp...
     //this->UID = ID_COUNTER++;
 }
@@ -16,6 +17,7 @@ AGameObject::AGameObject(const char *name, ATransform transform, int zIndex)
     this->name = name;
     this->transform = transform;
     this->zIndex = zIndex;
+    this->serializable = true;
     this->UID = ID_COUNTER++;
 }
 
@@ -80,6 +82,15 @@ int AGameObject::getZIndex()
     return zIndex;
 }
 
+void AGameObject::setZIndex(int zIndex)
+{
+    this->zIndex = zIndex;
+}
+
+void AGameObject::setSerializable(bool value)
+{
+    this->serializable = value;
+}
 
 void AGameObject::imgui()
 {
@@ -91,29 +102,32 @@ void AGameObject::imgui()
 
 void AGameObject::serialize(TiXmlElement *parent)
 {
-    TiXmlElement *root = new TiXmlElement("AGameObject");
-    parent->LinkEndChild(root);
-    TiXmlText *name = new TiXmlText(this->name);
-    root->LinkEndChild(name);
-    TiXmlElement *transform = new TiXmlElement("Transform");
-    TiXmlElement *position = new TiXmlElement("Position");
-    position->SetDoubleAttribute("x", this->transform.position.x);
-    position->SetDoubleAttribute("y", this->transform.position.y);
-    transform->LinkEndChild(position);
-    TiXmlElement *scale = new TiXmlElement("Scale");
-    scale->SetDoubleAttribute("x", this->transform.scale.x);
-    scale->SetDoubleAttribute("y", this->transform.scale.y);
-    transform->LinkEndChild(scale);
-    root->LinkEndChild(transform);
-    TiXmlElement *components = new TiXmlElement("Components");
-    for(int i = 0; i < this->components.size(); ++i)
+    if(serializable)
     {
-        this->components[i]->serialize(components);
-    }
-    root->LinkEndChild(components);
-    TiXmlElement *zIndex = new TiXmlElement("ZIndex");
-    zIndex->SetAttribute("value", this->zIndex);
-    root->LinkEndChild(zIndex);    
+        TiXmlElement *root = new TiXmlElement("AGameObject");
+        parent->LinkEndChild(root);
+        TiXmlText *name = new TiXmlText(this->name);
+        root->LinkEndChild(name);
+        TiXmlElement *transform = new TiXmlElement("Transform");
+        TiXmlElement *position = new TiXmlElement("Position");
+        position->SetDoubleAttribute("x", this->transform.position.x);
+        position->SetDoubleAttribute("y", this->transform.position.y);
+        transform->LinkEndChild(position);
+        TiXmlElement *scale = new TiXmlElement("Scale");
+        scale->SetDoubleAttribute("x", this->transform.scale.x);
+        scale->SetDoubleAttribute("y", this->transform.scale.y);
+        transform->LinkEndChild(scale);
+        root->LinkEndChild(transform);
+        TiXmlElement *components = new TiXmlElement("Components");
+        for(int i = 0; i < this->components.size(); ++i)
+        {
+            this->components[i]->serialize(components);
+        }
+        root->LinkEndChild(components);
+        TiXmlElement *zIndex = new TiXmlElement("ZIndex");
+        zIndex->SetAttribute("value", this->zIndex);
+        root->LinkEndChild(zIndex);  
+    }  
 }
 
 

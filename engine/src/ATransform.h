@@ -14,6 +14,7 @@ public:
     bool operator!=(ATransform &a);
     glm::vec2 position;
     glm::vec2 scale;
+    float rotation;
 };
 
 #endif

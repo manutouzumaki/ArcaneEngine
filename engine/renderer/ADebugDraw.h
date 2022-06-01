@@ -5,7 +5,7 @@
 #include "AShader.h"
 #include "../util/AArray.h"
 
-#define MAX_LINES 500
+#define MAX_LINES 1000
 
 class ADebugDraw
 {

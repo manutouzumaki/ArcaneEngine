@@ -7,6 +7,8 @@
 
 #include <glm/gtx/rotate_vector.hpp>
 
+// TODO: fix a Bug in this class...
+
 int ADebugDraw::linesCount = 0;
 ALine **ADebugDraw::lines = nullptr;
 float *ADebugDraw::vertexArray = nullptr;
@@ -20,7 +22,11 @@ void ADebugDraw::init()
 {
     shader = AAssetPool::getShader("lines");
     lines = (ALine **)malloc(MAX_LINES * sizeof(ALine *));
-    vertexArray = (float *)malloc(MAX_LINES * 6 * 2 * sizeof(float)); 
+    vertexArray = (float *)malloc(MAX_LINES * 6 * 2 * sizeof(float));
+    for(int i = 0; i < MAX_LINES; ++i)
+    {
+        lines[i] = nullptr;
+    } 
     initialized = true;
 }
 
@@ -76,7 +82,6 @@ void ADebugDraw::beginFrame()
         start();
         started = true;
     }
-
     for(int i = 0; i < linesCount; ++i)
     {
         if(lines[i] && lines[i]->beginFrame() < 0)

@@ -55,6 +55,7 @@ AWindow *AWindow::get()
 
 void AWindow::free()
 {
+    delete instance->propertiesWindow;
     delete instance->mousePicking;
     delete instance->framebuffer;
     delete currentScene;
@@ -163,6 +164,7 @@ void AWindow::init()
 
     framebuffer = new AFramebuffer(WINDOW_WIDTH, WINDOW_HEIGHT);
     mousePicking = new AMousePicking(WINDOW_WIDTH, WINDOW_HEIGHT);
+    propertiesWindow = new APropertiesWindow();
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
      
     changeScene(0);
@@ -193,22 +195,13 @@ void AWindow::loop()
         ARenderer::bindShader(pickingShader);
         currentScene->render();
 
-        if(AMouseListener::mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
-        {
-            int x = (int)AMouseListener::getScreenX();
-            int y = (int)AMouseListener::getScreenY();
-            printf("mouse ScreenX: %d\n", (int)AMouseListener::getScreenX());
-            printf("mouse ScreenY: %d\n", (int)AMouseListener::getScreenY());
-            printf("ID %d\n", mousePicking->readPixel(x, y));
-        }
-
         mousePicking->disableWritting();
         glEnable(GL_BLEND);
 
         // Render pass 2 actual game
         ADebugDraw::beginFrame();
         framebuffer->bind();
-        glClearColor(0.9f, 0.9f, 1, 1);
+        glClearColor(0.8f, 0.8f, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);
         
         if(dt >= 0.0f)
@@ -226,19 +219,24 @@ void AWindow::loop()
 
         setupDockSpace();
 
-        currentScene->sceneImgui();
+        currentScene->imgui();
         bool show_demo_window = true;
         if (show_demo_window)
         {
             ImGui::ShowDemoWindow(&show_demo_window);
         } 
         AGameViewWindow::imgui();
+        propertiesWindow->update(dt, currentScene);
+        propertiesWindow->imgui();
         ImGui::End();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         
-        glfwSwapBuffers(window); 
+        glfwSwapBuffers(window);
+
+        AMouseListener::endFrame();
+
         endTime = ATime::getTime();
         dt = endTime - beginTime;
         beginTime = endTime;
@@ -277,6 +275,11 @@ float AWindow::getTargetAspectRatio()
 AMousePicking *AWindow::getMousePicking()
 {
     return get()->mousePicking;
+}
+
+APropertiesWindow *AWindow::getPropertiesWindow()
+{
+    return get()->propertiesWindow;
 }
 
 static void frameBufferSizeCallback(GLFWwindow *window, int width, int height)

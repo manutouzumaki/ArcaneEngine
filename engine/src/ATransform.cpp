@@ -19,6 +19,7 @@ void ATransform::init(glm::vec2 position, glm::vec2 scale)
 {
     this->position = position;
     this->scale = scale;
+    this->rotation = 0.0f;
 }
 
 bool ATransform::operator==(ATransform &a)
