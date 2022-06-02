@@ -13,7 +13,7 @@ APropertiesWindow::APropertiesWindow()
 void APropertiesWindow::update(float dt, AScene *currentScene)
 {
     timer -= dt;
-    if(AMouseListener::mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && timer < 0.0f)
+    if(AMouseListener::mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && timer < 0.0f && !AMouseListener::isDragging())
     {
         int x = (int)AMouseListener::getScreenX();
         int y = (int)AMouseListener::getScreenY();
@@ -22,7 +22,11 @@ void APropertiesWindow::update(float dt, AScene *currentScene)
             int index = AWindow::getMousePicking()->readPixel(x, y);
             if(index >= 0)
             {
-                activeGameObject = currentScene->getGameObjectByIndex(index);
+                AGameObject *obj = currentScene->getGameObjectByIndex(index);
+                if(obj->getPickable())
+                {
+                    activeGameObject = obj;
+                }
             }
             else
             {

@@ -30,6 +30,8 @@ public:
 
     void setZIndex(int zIndex);
     void setSerializable(bool value);
+    void setPickable(bool value);
+    bool getPickable();
 private:
     static unsigned int ID_COUNTER;
     unsigned int UID;
@@ -38,6 +40,7 @@ private:
     AHashmap<int> componentIndexMap;
     int zIndex;
     bool serializable;
+    bool pickable;
 };
 
 #endif

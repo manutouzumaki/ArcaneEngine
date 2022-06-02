@@ -13,12 +13,13 @@ private:
     static AMouseListener *instance;
     double scrollX, scrollY;
     double xPos, yPos, lastX, lastY;
+    double lastWorldX, lastWorldY;
     bool mouseButtonPressed[MOUSE_MAX_BUTTONS];
     bool dragging;
+    int mouseButtonsDown;
     
     glm::vec2 gameViewportPos;
-    glm::vec2 gameViewportSize;
-    
+    glm::vec2 gameViewportSize; 
 public:
     static AMouseListener *get();
     static void free();
@@ -35,6 +36,8 @@ public:
     static float getScreenY();
     static float getDx();
     static float getDy();
+    static float getWorldDx();
+    static float getWorldDy();
     static float getScrollX();
     static float getScrollY();
     static bool isDragging();

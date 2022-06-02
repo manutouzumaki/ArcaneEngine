@@ -8,6 +8,7 @@ AGameObject::AGameObject(const char *name)
     this->name = name;
     this->zIndex = 0;
     this->serializable = true;
+    this->pickable = true;
     // TODO: temp...
     //this->UID = ID_COUNTER++;
 }
@@ -18,6 +19,7 @@ AGameObject::AGameObject(const char *name, ATransform transform, int zIndex)
     this->transform = transform;
     this->zIndex = zIndex;
     this->serializable = true;
+    this->pickable = true;
     this->UID = ID_COUNTER++;
 }
 
@@ -90,6 +92,16 @@ void AGameObject::setZIndex(int zIndex)
 void AGameObject::setSerializable(bool value)
 {
     this->serializable = value;
+}
+
+void AGameObject::setPickable(bool value)
+{
+    this->pickable = value;
+}
+
+bool AGameObject::getPickable()
+{
+    return this->pickable;
 }
 
 void AGameObject::imgui()

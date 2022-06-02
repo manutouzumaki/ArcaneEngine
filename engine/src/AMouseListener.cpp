@@ -15,7 +15,10 @@ AMouseListener::AMouseListener()
     yPos = 0.0;
     lastX = 0.0;
     lastY = 0.0;
+    lastWorldX = 0.0f;
+    lastWorldY = 0.0;
     dragging = false;
+    mouseButtonsDown = 0;
     for(int i = 0; i < MOUSE_MAX_BUTTONS; ++i)
     {
         mouseButtonPressed[i] = false;
@@ -39,19 +42,19 @@ void AMouseListener::free()
 
 void AMouseListener::mousePosCallback(GLFWwindow *window, double xPos, double yPos)
 {
-    get()->lastX = get()->xPos;
-    get()->lastY = get()->yPos;
+    if(get()->mouseButtonsDown > 0)
+    {
+        get()->dragging = true;
+    }
     get()->xPos = xPos;
     get()->yPos = yPos;
-    get()->dragging = get()->mouseButtonPressed[0] ||
-                      get()->mouseButtonPressed[1] ||
-                      get()->mouseButtonPressed[2];
 }
 
 void AMouseListener::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
     if(action == GLFW_PRESS)
     {
+        get()->mouseButtonsDown++;
         if(button < MOUSE_MAX_BUTTONS)
         {
             get()->mouseButtonPressed[button] = true;
@@ -59,6 +62,7 @@ void AMouseListener::mouseButtonCallback(GLFWwindow *window, int button, int act
     }
     else if(action == GLFW_RELEASE)
     {
+        get()->mouseButtonsDown--;
         if(button < MOUSE_MAX_BUTTONS)
         {
             get()->mouseButtonPressed[button] = false;
@@ -79,6 +83,8 @@ void AMouseListener::endFrame()
     get()->scrollY = 0;
     get()->lastX = get()->xPos;
     get()->lastY = get()->yPos;
+    get()->lastWorldX = get()->getOrthoX();
+    get()->lastWorldY = get()->getOrthoY();
 }
 
 float AMouseListener::getX()
@@ -101,6 +107,7 @@ float AMouseListener::getOrthoX()
     return position.x;
 }
 
+
 float AMouseListener::getOrthoY()
 {
     float normalizeMouseY = ((float)getY() - get()->gameViewportPos.y) / get()->gameViewportSize.y;
@@ -111,7 +118,6 @@ float AMouseListener::getOrthoY()
     return position.y;
 }
 
-// TODO: fix this...
 float AMouseListener::getScreenX()
 {
     float normalizeMouseX = ((float)getX() - get()->gameViewportPos.x) / get()->gameViewportSize.x;
@@ -119,7 +125,6 @@ float AMouseListener::getScreenX()
     return normalizeMouseX;
 }
 
-// TODO: fix this...
 float AMouseListener::getScreenY()
 {
     float normalizeMouseY = ((float)getY() - get()->gameViewportPos.y) / get()->gameViewportSize.y;
@@ -136,6 +141,17 @@ float AMouseListener::getDy()
 {
     return (float)(get()->yPos - get()->lastY);
 }
+
+float AMouseListener::getWorldDx()
+{
+    return (float)(get()->getOrthoX() - get()->lastWorldX);
+}
+
+float AMouseListener::getWorldDy()
+{
+    return (float)(get()->getOrthoY() - get()->lastWorldY);
+}
+
 
 float AMouseListener::getScrollX()
 {

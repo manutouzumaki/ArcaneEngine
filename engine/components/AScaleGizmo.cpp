@@ -1,9 +1,9 @@
-#include "ATranslateGizmo.h"
+#include "AScaleGizmo.h"
 #include "../src/APrefabs.h"
 #include "../src/AWindow.h"
 #include "../src/AMouseListener.h"
 
-ATranslateGizmo::ATranslateGizmo(ASprite *sprite, APropertiesWindow * propertiesWindow)
+AScaleGizmo::AScaleGizmo(ASprite *sprite, APropertiesWindow * propertiesWindow)
 {
     activeGameObject = nullptr;
 
@@ -21,7 +21,6 @@ ATranslateGizmo::ATranslateGizmo(ASprite *sprite, APropertiesWindow * properties
     yAxisObject->setSerializable(false);
     yAxisObject->setPickable(false);
 
-
     xAxisSprite = (ASpriteComponent *)xAxisObject->getComponent("ASpriteComponent");
     yAxisSprite = (ASpriteComponent *)yAxisObject->getComponent("ASpriteComponent");
     AWindow::getScene()->addGameObject(xAxisObject);
@@ -30,16 +29,16 @@ ATranslateGizmo::ATranslateGizmo(ASprite *sprite, APropertiesWindow * properties
 
 }
 
-void ATranslateGizmo::start()
+void AScaleGizmo::start()
 {
     xAxisObject->transform.rotation = 90.0f;
     yAxisObject->transform.rotation = 180.0f;
 }
 
-void ATranslateGizmo::update(float dt)
+void AScaleGizmo::update(float dt)
 {
     if(!inUse) return;
-
+    
     if((size_t)propertiesWindow->getActiveGameObject() !=  (size_t)xAxisObject &&
        (size_t)propertiesWindow->getActiveGameObject() !=  (size_t)yAxisObject)
     {
@@ -76,11 +75,11 @@ void ATranslateGizmo::update(float dt)
     {
         if(xAxisActive)
         {
-            activeGameObject->transform.position.x += AMouseListener::getWorldDx();
+            activeGameObject->transform.scale.x += AMouseListener::getWorldDx();
         }
         else if(yAxisActive)
         {
-            activeGameObject->transform.position.y += AMouseListener::getWorldDy();
+            activeGameObject->transform.scale.y += AMouseListener::getWorldDy();
         }
 
         xAxisObject->transform.position = activeGameObject->transform.position + glm::vec2(64, -5);
@@ -89,19 +88,19 @@ void ATranslateGizmo::update(float dt)
 }
 
 
-void ATranslateGizmo::setActive()
+void AScaleGizmo::setActive()
 {
     xAxisSprite->setColor(xAxisColor);
     yAxisSprite->setColor(yAxisColor);
 }
 
-void ATranslateGizmo::setInactive()
+void AScaleGizmo::setInactive()
 {
     xAxisSprite->setColor(glm::vec4(0, 0, 0, 0));
     yAxisSprite->setColor(glm::vec4(0, 0, 0, 0));
 }
 
-bool ATranslateGizmo::checkXHoverState()
+bool AScaleGizmo::checkXHoverState()
 {
     glm::vec2 mouseP = glm::vec2(AMouseListener::getOrthoX(), AMouseListener::getOrthoY());
     if(mouseP.x <= xAxisObject->transform.position.x &&
@@ -116,7 +115,7 @@ bool ATranslateGizmo::checkXHoverState()
     return false;
 }
 
-bool ATranslateGizmo::checkYHoverState()
+bool AScaleGizmo::checkYHoverState()
 {
     glm::vec2 mouseP = glm::vec2(AMouseListener::getOrthoX(), AMouseListener::getOrthoY());
     if(mouseP.x <= yAxisObject->transform.position.x &&
@@ -131,13 +130,14 @@ bool ATranslateGizmo::checkYHoverState()
     return false;
 }
 
-void ATranslateGizmo::setInUse()
+void AScaleGizmo::setInUse()
 {
     inUse = true;
 }
 
-void ATranslateGizmo::setNotUse()
+void AScaleGizmo::setNotUse()
 {
     inUse = false;
     setInactive();
 }
+

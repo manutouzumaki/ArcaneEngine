@@ -8,7 +8,8 @@
 #include "../renderer/ADebugDraw.h"
 #include "../components/AGridLines.h"
 #include "../components/AEditorCameraComponent.h"
-#include "../components/ATranslateGizmo.h"
+#include "../components/AGizmoManager.h"
+
 
 #include <imgui.h>
 #include <stdio.h>
@@ -44,7 +45,7 @@ void loadResources()
     AAssetPool::addSpritesheet("blocksSpritesheet",
                                new ASpritesheet("blocksSpritesheet", AAssetPool::getTexture("blocksTexture"), 16, 16, 81, 0));
     AAssetPool::addSpritesheet("gizmoSpritesheet",
-                               new ASpritesheet("gizmoSpritesheet", AAssetPool::getTexture("gizmoTexture"), 24, 48, 2, 0));
+                               new ASpritesheet("gizmoSpritesheet", AAssetPool::getTexture("gizmoTexture"), 24, 48, 3, 0));
 }
 
 void ALevelEditorScene::init()
@@ -59,8 +60,7 @@ void ALevelEditorScene::init()
     levelEditor->addComponent("AMouseControlComponent", new AMouseControlComponent());
     levelEditor->addComponent("AGridLines", new AGridLines());
     levelEditor->addComponent("AEditorCameraComponent", new AEditorCameraComponent(camera));
-    levelEditor->addComponent("ATranslateGizmo", new ATranslateGizmo(gizmoSpritesheet->getSprite(1),
-                                                                     AWindow::getPropertiesWindow())); 
+    levelEditor->addComponent("AGizmoManager", new AGizmoManager(gizmoSpritesheet));
     levelEditor->start();
     
     ADebugDraw::init();

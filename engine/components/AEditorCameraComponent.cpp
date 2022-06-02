@@ -46,7 +46,7 @@ void AEditorCameraComponent::update(float dt)
         clickOriginSet = false;
     }
 
-    if(AKeyListener::isKeyPressed(GLFW_KEY_R))
+    if(AKeyListener::isKeyPressed(GLFW_KEY_Q))
     {
         reset = true;
     }

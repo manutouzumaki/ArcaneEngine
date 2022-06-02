@@ -1,5 +1,5 @@
-#ifndef ATRANSLATEGIZMO_H
-#define ATRANSLATEGIZMO_H
+#ifndef ASCALEGIZMO_H
+#define ASCALEGIZMO_H
 
 #include "../src/AComponent.h"
 #include "ASpriteComponent.h"
@@ -7,9 +7,8 @@
 
 #include <glm/glm.hpp>
 
-class AGameObject;
 
-class ATranslateGizmo : public AComponent
+class AScaleGizmo : public AComponent
 {
 private:
     glm::vec4 xAxisColor = glm::vec4(1, 0.3f, 0.3f, 1);
@@ -34,7 +33,7 @@ private:
     
     bool inUse;
 public:
-    ATranslateGizmo(ASprite *sprite, APropertiesWindow *propertiesWindow);
+    AScaleGizmo(ASprite *sprite, APropertiesWindow *propertiesWindow);
     void start() override;
     void update(float dt) override;
     void setActive();
