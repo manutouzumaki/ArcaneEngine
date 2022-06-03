@@ -168,9 +168,9 @@ void ARenderBatch::loadVertexProperties(int index)
     }
 
     glm::mat4 transformMat = glm::mat4(1.0f);
-    glm::mat4 translationMat = glm::translate(glm::mat4(1.0f), glm::vec3(sprite->gameObject->transform.position.x, sprite->gameObject->transform.position.y, 0.0f));
-    glm::mat4 rotationMat = glm::rotate(glm::mat4(1.0f), glm::radians(sprite->gameObject->transform.rotation), glm::vec3(0, 0, 1));
-    glm::mat4 scaleMat = glm::scale(glm::mat4(1.0f), glm::vec3(sprite->gameObject->transform.scale.x, sprite->gameObject->transform.scale.y, 0.0f));
+    glm::mat4 translationMat = glm::translate(glm::mat4(1.0f), glm::vec3(sprite->gameObject->transform->position.x, sprite->gameObject->transform->position.y, 0.0f));
+    glm::mat4 rotationMat = glm::rotate(glm::mat4(1.0f), glm::radians(sprite->gameObject->transform->rotation), glm::vec3(0, 0, 1));
+    glm::mat4 scaleMat = glm::scale(glm::mat4(1.0f), glm::vec3(sprite->gameObject->transform->scale.x, sprite->gameObject->transform->scale.y, 0.0f));
     transformMat = translationMat * rotationMat * scaleMat;
     
     float x = 1.0f;

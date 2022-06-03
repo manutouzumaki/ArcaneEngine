@@ -25,7 +25,7 @@ public:
 private:
     glm::vec4 color;
     ASprite *sprite;
-    ATransform lastTransform;
+    ATransformComponent lastTransform;
 };
 
 #endif

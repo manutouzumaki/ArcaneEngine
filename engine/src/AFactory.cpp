@@ -14,24 +14,23 @@ AGameObject *AFactory::CreateGameObject(TiXmlElement *gameObject)
     StringCopy(name, NameSize, gameObject->GetText());
     name[NameSize] = '\0';
 
-    TiXmlElement *transform = gameObject->FirstChildElement(); 
-    TiXmlElement *components = transform->NextSiblingElement();
-    TiXmlElement *zIndexNode = components->NextSiblingElement();
-
-    TiXmlElement *position = transform->FirstChildElement();
-    TiXmlElement *scale = position->NextSiblingElement();
-    float xPos = (float)atof(position->Attribute("x"));
-    float yPos = (float)atof(position->Attribute("y"));
-    float xSca = (float)atof(scale->Attribute("x"));
-    float ySca = (float)atof(scale->Attribute("y"));
-    int zIndex = (int)atof(zIndexNode->Attribute("value"));
-    
-    AGameObject *obj = new AGameObject((const char *)name, ATransform(glm::vec2(xPos, yPos), glm::vec2(xSca, ySca)), zIndex);
+    TiXmlElement *components = gameObject->FirstChildElement(); 
+ 
+    AGameObject *obj = new AGameObject((const char *)name, true);
     for(TiXmlElement *component = components->FirstChildElement();
         component != nullptr;
         component = component->NextSiblingElement())
     {
-        obj->addComponent(component->GetText(), CreateComponent(component));
+        int componentSize = StringLength(component->GetText());
+        char *componentName = (char *)malloc(componentSize + 1);
+        StringCopy(componentName, componentSize, component->GetText());
+        componentName[componentSize] = '\0';
+
+        obj->addComponent(componentName, CreateComponent(component));
+        if(StringCompare(componentName, "ATransformComponent", StringLength("ATransformComponent")))
+        {
+            obj->transform = (ATransformComponent *)obj->getComponent("ATransformComponent");
+        }
     }
     return obj;
 }
@@ -59,6 +58,20 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
             spriteCom->setColor(colorVec);
             return spriteCom;
         }
+    }
+    else if(StringCompare(component->GetText(), "ATransformComponent", StringLength("ATransformComponent")))
+    {
+        TiXmlElement *position = component->FirstChildElement();
+        TiXmlElement *scale = position->NextSiblingElement();
+        TiXmlElement *rotation = scale->NextSiblingElement();
+        TiXmlElement *zIndexNode = rotation->NextSiblingElement();
+        float xPos = (float)atof(position->Attribute("x"));
+        float yPos = (float)atof(position->Attribute("y"));
+        float xSca = (float)atof(scale->Attribute("x"));
+        float ySca = (float)atof(scale->Attribute("y"));
+        float rotAngle = (float)atof(rotation->Attribute("angle"));
+        int zIndex = (int)atof(zIndexNode->Attribute("value"));
+        return new ATransformComponent(glm::vec2(xPos, yPos), glm::vec2(xSca, ySca), rotAngle, zIndex);
     }
     else
     {

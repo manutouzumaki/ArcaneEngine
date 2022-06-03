@@ -2,6 +2,7 @@
 #include "../src/AScene.h"
 #include "../src/AMouseListener.h"
 #include "../src/AWindow.h"
+#include "../src/APhysics.h"
 #include <imgui.h>
 
 APropertiesWindow::APropertiesWindow()
@@ -41,7 +42,32 @@ void APropertiesWindow::imgui()
 {
     if(activeGameObject)
     {
-        ImGui::Begin("Inspector");
+        ImGui::Begin("Properties");
+        if(ImGui::BeginPopupContextWindow("Commponent Adder"))
+        {
+            if(ImGui::MenuItem("Add ARigidBody"))
+            {
+                if(!activeGameObject->hasComponent("ARigidBody"))
+                {
+                    activeGameObject->addComponent("ARigidBody", new ARigidBody());
+                }
+            }
+            if(ImGui::MenuItem("Add ABoxCollider"))
+            {
+                if(!activeGameObject->hasComponent("ABoxCollider") && !activeGameObject->hasComponent("ACircleCollider"))
+                {
+                    activeGameObject->addComponent("ABoxCollider", new ABoxCollider());
+                }
+            }
+            if(ImGui::MenuItem("Add ACircleCollider"))
+            {
+                if(!activeGameObject->hasComponent("ACircleCollider") && !activeGameObject->hasComponent("ABoxCollider"))
+                {
+                    activeGameObject->addComponent("ACircleCollider", new ACircleCollider());
+                }
+            }
+            ImGui::EndPopup();
+        }
         activeGameObject->imgui();
         ImGui::End();
     }

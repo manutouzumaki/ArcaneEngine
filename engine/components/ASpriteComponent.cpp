@@ -23,18 +23,22 @@ ASpriteComponent::~ASpriteComponent()
     {
         delete sprite;
     }
+    if(name.get())
+    {
+        free((void *)name.get());
+    }
 }
 
 void ASpriteComponent::start()
 {
-    lastTransform = gameObject->transform;
+    lastTransform = *gameObject->transform;
 }
 
 void ASpriteComponent::update(float dt)
 {
     if(lastTransform != gameObject->transform)
     {
-        lastTransform = gameObject->transform;
+        lastTransform = *gameObject->transform;
         isDirty = true;
     } 
 }

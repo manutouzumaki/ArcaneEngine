@@ -37,7 +37,7 @@ void ARenderer::add(ASpriteComponent *sprite)
     bool added = false;
     for(int i = 0; i < batchs.size(); ++i)
     {
-        if(batchs[i]->hasRoom && batchs[i]->getZIndex() == sprite->gameObject->getZIndex())
+        if(batchs[i]->hasRoom && batchs[i]->getZIndex() == sprite->gameObject->transform->zIndex)
         {
             ATexture *texture = sprite->getTexture();
             if(texture == nullptr || (batchs[i]->hasTexture(texture) || batchs[i]->hasTextureRoom()))
@@ -50,7 +50,7 @@ void ARenderer::add(ASpriteComponent *sprite)
     }
     if(!added)
     {
-        ARenderBatch *batch = new ARenderBatch(sprite->gameObject->getZIndex());
+        ARenderBatch *batch = new ARenderBatch(sprite->gameObject->transform->zIndex);
         batch->start();
         batch->addSprite(sprite);
         batchs.add(batch); 

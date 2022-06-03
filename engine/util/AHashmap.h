@@ -41,6 +41,7 @@ public:
     void remove(AString key);
     void grow();
     T &operator[](AString key);
+    bool isKeyInHashmap(AString key);
 private:
     size_t occupied;
     size_t capacity;
@@ -142,11 +143,13 @@ template <class T>
 T &AHashmap<T>::operator[](AString key)
 {
     unsigned int hashIndex = (unsigned int)(key.getID() & mask);
-    while((values[hashIndex] && values[hashIndex]->id != key.getID()) || values[hashIndex] == nullptr)
+    int counter = 0;
+    while(((values[hashIndex] && values[hashIndex]->id != key.getID()) || values[hashIndex] == nullptr) && counter < capacity)
     {
         hashIndex = (hashIndex + 1) % capacity;
+        counter++;
     }
-    if(values[hashIndex])
+    if(values[hashIndex] && counter < capacity)
     {
         return values[hashIndex]->value;
     }
@@ -158,15 +161,37 @@ T &AHashmap<T>::operator[](AString key)
 }
 
 template <class T>
+bool AHashmap<T>::isKeyInHashmap(AString key)
+{
+    unsigned int hashIndex = (unsigned int)(key.getID() & mask);
+    int counter = 0;
+    while(((values[hashIndex] && values[hashIndex]->id != key.getID()) || values[hashIndex] == nullptr) && counter < capacity)
+    {
+        hashIndex = (hashIndex + 1) % capacity;
+        counter++;
+    }
+    if(values[hashIndex] && counter < capacity)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    } 
+}
+
+template <class T>
 void AHashmap<T>::remove(AString key)
 {
     unsigned int hashIndex = (unsigned int)(key.getID() & mask);
-    while((values[hashIndex] && values[hashIndex]->id != key.getID()) || values[hashIndex] == nullptr)
+    int counter = 0;
+    while(((values[hashIndex] && values[hashIndex]->id != key.getID()) || values[hashIndex] == nullptr) && counter < capacity)
     {
         hashIndex = (hashIndex + 1) % capacity;
+        counter++;
     }
 
-    if(values[hashIndex])
+    if(values[hashIndex] && counter < capacity)
     {
         delete values[hashIndex];
         values[hashIndex] = nullptr;

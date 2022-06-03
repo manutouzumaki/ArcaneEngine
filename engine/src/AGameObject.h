@@ -6,13 +6,12 @@
 #include "../util/AString.h"
 
 #include "AComponent.h"
-#include "ATransform.h"
+#include "../components/ATransformComponent.h"
 
 class AGameObject
 {
 public:
-    AGameObject(const char *name);
-    AGameObject(const char *name, ATransform transform, int zIndex);
+    AGameObject::AGameObject(const char *name, bool attachToScene = false);
     ~AGameObject();
 
     void start();
@@ -21,14 +20,13 @@ public:
     void addComponent(AString componentName, AComponent *component);
     AComponent *getComponent(AString componentName);
     void removeComponent(AString componentName);
-    ATransform transform;
+    bool hasComponent(AString componentName);
+    ATransformComponent *transform;
 
     int getUID();
-    int getZIndex();
     void imgui();
     void serialize(TiXmlElement *parent); 
 
-    void setZIndex(int zIndex);
     void setSerializable(bool value);
     void setPickable(bool value);
     bool getPickable();
@@ -38,7 +36,6 @@ private:
     const char *name;
     AArray<AComponent *> components;
     AHashmap<int> componentIndexMap;
-    int zIndex;
     bool serializable;
     bool pickable;
 };

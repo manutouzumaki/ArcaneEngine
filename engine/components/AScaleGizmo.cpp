@@ -13,11 +13,11 @@ AScaleGizmo::AScaleGizmo(ASprite *sprite, APropertiesWindow * propertiesWindow)
     xAxisObject = APrefabs::generateSpriteObject(sprite, gizmoWidth, gizmoHeight);
     yAxisObject = APrefabs::generateSpriteObject(sprite, gizmoWidth, gizmoHeight);
 
-    xAxisObject->setZIndex(100);
+    xAxisObject->transform->zIndex = 100;
     xAxisObject->setSerializable(false);
     xAxisObject->setPickable(false);
 
-    yAxisObject->setZIndex(100);
+    yAxisObject->transform->zIndex = 100;
     yAxisObject->setSerializable(false);
     yAxisObject->setPickable(false);
 
@@ -31,8 +31,8 @@ AScaleGizmo::AScaleGizmo(ASprite *sprite, APropertiesWindow * propertiesWindow)
 
 void AScaleGizmo::start()
 {
-    xAxisObject->transform.rotation = 90.0f;
-    yAxisObject->transform.rotation = 180.0f;
+    xAxisObject->transform->rotation = 90.0f;
+    yAxisObject->transform->rotation = 180.0f;
 }
 
 void AScaleGizmo::update(float dt)
@@ -75,15 +75,15 @@ void AScaleGizmo::update(float dt)
     {
         if(xAxisActive)
         {
-            activeGameObject->transform.scale.x += AMouseListener::getWorldDx();
+            activeGameObject->transform->scale.x += AMouseListener::getWorldDx();
         }
         else if(yAxisActive)
         {
-            activeGameObject->transform.scale.y += AMouseListener::getWorldDy();
+            activeGameObject->transform->scale.y += AMouseListener::getWorldDy();
         }
 
-        xAxisObject->transform.position = activeGameObject->transform.position + glm::vec2(64, -5);
-        yAxisObject->transform.position = activeGameObject->transform.position + glm::vec2(16, 61);
+        xAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(64, -5);
+        yAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(16, 61);
     }
 }
 
@@ -103,10 +103,10 @@ void AScaleGizmo::setInactive()
 bool AScaleGizmo::checkXHoverState()
 {
     glm::vec2 mouseP = glm::vec2(AMouseListener::getOrthoX(), AMouseListener::getOrthoY());
-    if(mouseP.x <= xAxisObject->transform.position.x &&
-       mouseP.x >= xAxisObject->transform.position.x - gizmoHeight &&
-       mouseP.y >= xAxisObject->transform.position.y &&
-       mouseP.y <= xAxisObject->transform.position.y + gizmoWidth)
+    if(mouseP.x <= xAxisObject->transform->position.x &&
+       mouseP.x >= xAxisObject->transform->position.x - gizmoHeight &&
+       mouseP.y >= xAxisObject->transform->position.y &&
+       mouseP.y <= xAxisObject->transform->position.y + gizmoWidth)
     {
         xAxisSprite->setColor(xAxisColorHover);
         return true;
@@ -118,10 +118,10 @@ bool AScaleGizmo::checkXHoverState()
 bool AScaleGizmo::checkYHoverState()
 {
     glm::vec2 mouseP = glm::vec2(AMouseListener::getOrthoX(), AMouseListener::getOrthoY());
-    if(mouseP.x <= yAxisObject->transform.position.x &&
-       mouseP.x >= yAxisObject->transform.position.x - gizmoWidth &&
-       mouseP.y <= yAxisObject->transform.position.y &&
-       mouseP.y >= yAxisObject->transform.position.y - gizmoHeight)
+    if(mouseP.x <= yAxisObject->transform->position.x &&
+       mouseP.x >= yAxisObject->transform->position.x - gizmoWidth &&
+       mouseP.y <= yAxisObject->transform->position.y &&
+       mouseP.y >= yAxisObject->transform->position.y - gizmoHeight)
     {
         yAxisSprite->setColor(yAxisColorHover);
         return true;
