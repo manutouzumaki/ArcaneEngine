@@ -16,6 +16,8 @@ enum EventType
 class AEvent
 {
 public:
+    AEvent();
+    AEvent(EventType type);
     EventType type;
 };
 

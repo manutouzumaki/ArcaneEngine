@@ -1,7 +1,7 @@
 #include "AGameViewWindow.h" 
 #include "../src/AWindow.h"
 #include "../src/AMouseListener.h"
-
+#include "../src/AEventSystem.h"
 #include <imgui.h>
 
 static ImVec2 getLargestSizeForViewport()
@@ -31,10 +31,26 @@ static ImVec2 getCenterPosForViewport(ImVec2 aspectSize)
     return {viewportX + ImGui::GetCursorPosX(), viewportY + ImGui::GetCursorPosY()};
 }
 
+bool AGameViewWindow::isPlaying = false;
+
 void AGameViewWindow::imgui()
 {
     bool condition = true;
-    ImGui::Begin("Game Viewport", &condition, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+    ImGui::Begin("Game Viewport", &condition, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_MenuBar);
+
+    ImGui::BeginMenuBar();
+    if(ImGui::MenuItem("Play", "", isPlaying, !isPlaying))
+    {
+        isPlaying = true;
+        AEventSystem::notify(nullptr, new AEvent(GAME_ENGINE_START_PLAY));
+    }
+    if(ImGui::MenuItem("Stop", "", !isPlaying, isPlaying))
+    {
+        isPlaying = false;
+        AEventSystem::notify(nullptr, new AEvent(GAME_ENGINE_STOP_PLAY));   
+    }
+    ImGui::EndMenuBar();
+
     ImVec2 windowSize = getLargestSizeForViewport();
     ImVec2 windowPos = getCenterPosForViewport(windowSize);
     ImGui::SetCursorPos(windowPos);

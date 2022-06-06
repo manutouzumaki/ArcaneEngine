@@ -1,5 +1,15 @@
 #include "AEventSystem.h"
 
+AEvent::AEvent()
+{
+    this->type = USER_EVENT;
+}
+
+AEvent::AEvent(EventType type)
+{
+    this->type = type;
+}
+
 AArray<AObserver *> AEventSystem::observers;
 
 void AEventSystem::addObserver(AObserver *observer)
@@ -13,4 +23,5 @@ void AEventSystem::notify(AGameObject *obj, AEvent *event)
     {
         observers[i]->onNotify(obj, event);
     }
+    if(event) delete event;
 }

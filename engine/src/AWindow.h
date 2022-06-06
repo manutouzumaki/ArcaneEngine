@@ -6,8 +6,9 @@
 #include "../renderer/AFramebuffer.h"
 #include "../editor/AMousePicking.h"
 #include "../editor/APropertiesWindow.h"
+#include "AEventSystem.h"
 
-class AWindow
+class AWindow : public AObserver
 {
 private:
     int width;
@@ -18,7 +19,7 @@ private:
     void init();
     void loop();
 
-    AWindow() {}
+    AWindow();
     static AWindow *instance;
     static AScene *currentScene;
 
@@ -39,6 +40,8 @@ public:
     static float getTargetAspectRatio();
     static AMousePicking *getMousePicking();
     static APropertiesWindow *getPropertiesWindow();
+
+    void onNotify(AGameObject *obj, AEvent *event) override;
 };
 
 #endif

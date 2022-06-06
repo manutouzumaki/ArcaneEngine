@@ -6,6 +6,7 @@ class AGameViewWindow
 public:
     static void imgui();
 private:
+    static bool isPlaying;
 };
 
 #endif

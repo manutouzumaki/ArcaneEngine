@@ -44,6 +44,11 @@ void setupDockSpace()
 
 void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
 
+AWindow::AWindow() 
+{
+    AEventSystem::addObserver(this);
+}
+
 AWindow *AWindow::get()
 {
     if(instance == nullptr)
@@ -288,5 +293,20 @@ static void frameBufferSizeCallback(GLFWwindow *window, int width, int height)
     AWindow::setWidth(width);
     AWindow::setHeight(height);
     glViewport(0, 0, width, height);
+}
+
+void AWindow::onNotify(AGameObject *obj, AEvent *event)
+{
+    switch(event->type)
+    {
+        case GAME_ENGINE_START_PLAY:
+        {
+            printf("starting play\n"); 
+        }break;
+        case GAME_ENGINE_STOP_PLAY:
+        {
+            printf("ending play\n");  
+        }break;
+    }
 }
 
