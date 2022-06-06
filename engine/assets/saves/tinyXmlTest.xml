@@ -1,29 +1,15 @@
 <?xml version="1.0f" ?>
 <GameObjects>
-    <AGameObject>hero
+    <AGameObject>Hero
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="513.503" y="284.295" />
-                <Scale x="64" y="64" />
+                <Position x="447.211" y="384.143" />
+                <Scale x="32" y="32" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
-                <Color r="0.992643" g="1" b="0.610063" a="1" />
-                <Sprite index="0">characterSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="479.979" y="256.706" />
-                <Scale x="32" y="30.7" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="0.738115" g="0.84375" b="0.729492" a="1" />
+                <Color r="1" g="1" b="1" a="1" />
                 <Sprite index="14">blocksSpritesheet</Sprite>
             </ASpriteComponent>
         </Components>
@@ -31,133 +17,7 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="450.088" y="256.625" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0.6" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="17">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="608.706" y="256" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="0.982793" b="0.0880503" a="1" />
-                <Sprite index="17">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="449.565" y="288" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="17">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="449.477" y="320.552" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="0.972826" g="0.820822" b="0" a="1" />
-                <Sprite index="17">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="576" y="320" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="576" y="288" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="576" y="256" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="6">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="544" y="256" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="6">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="480.555" y="384.178" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="6">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="512" y="256" />
+                <Position x="480" y="384" />
                 <Scale x="32" y="32" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
@@ -171,56 +31,14 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="448.587" y="384.267" />
+                <Position x="512" y="384" />
                 <Scale x="32" y="32" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="6">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="576.424" y="383.521" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="575.152" y="352.038" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="640.745" y="255.828" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="46">blocksSpritesheet</Sprite>
+                <Sprite index="5">blocksSpritesheet</Sprite>
             </ASpriteComponent>
         </Components>
     </AGameObject>
@@ -234,49 +52,21 @@
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="9">blocksSpritesheet</Sprite>
+                <Sprite index="5">blocksSpritesheet</Sprite>
             </ASpriteComponent>
         </Components>
     </AGameObject>
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="608" y="288" />
+                <Position x="576" y="384" />
                 <Scale x="32" y="32" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="608" y="320" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="608" y="352" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
+                <Sprite index="5">blocksSpritesheet</Sprite>
             </ASpriteComponent>
         </Components>
     </AGameObject>
@@ -290,232 +80,64 @@
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="7">blocksSpritesheet</Sprite>
+                <Sprite index="5">blocksSpritesheet</Sprite>
             </ASpriteComponent>
         </Components>
     </AGameObject>
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="608" y="448" />
+                <Position x="275.444" y="509.417" />
                 <Scale x="32" y="32" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="49">blocksSpritesheet</Sprite>
+                <Color r="0.839777" g="1" b="0.321608" a="1" />
+                <Sprite index="14">blocksSpritesheet</Sprite>
             </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="7.7" />
+                <BodyType value="1" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="16" y="16" />
+                <HalfSize x="48" y="48" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
         </Components>
     </AGameObject>
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="640" y="448" />
+                <Position x="343.247" y="418.296" />
                 <Scale x="32" y="32" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="50">blocksSpritesheet</Sprite>
+                <Sprite index="22">blocksSpritesheet</Sprite>
             </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="672" y="448" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="50">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="704" y="448" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="50">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="736" y="448" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="51">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="415.361" y="511.438" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="54">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="416" y="480" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="57">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="384" y="480" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="56">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="352" y="480" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="59">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="320" y="480" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="55">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="320" y="512" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="52">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="352" y="512" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="53">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="384" y="512" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="53">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="480" y="416" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="43">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="448" y="416" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="42">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="512" y="416" />
-                <Scale x="32" y="32" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="44">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
+            <ABoxCollider>ABoxCollider
+                <Offset x="16" y="16" />
+                <HalfSize x="64" y="64" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="1" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+            </ARigidBody>
         </Components>
     </AGameObject>
 </GameObjects>

@@ -13,7 +13,7 @@ AMouseControlComponent::~AMouseControlComponent()
     holdingObject = nullptr;
 }
 
-void AMouseControlComponent::update(float dt)
+void AMouseControlComponent::editorUpdate(float dt)
 {
     if(holdingObject)
     {                                           

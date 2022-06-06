@@ -41,7 +41,9 @@ ARenderBatch::ARenderBatch(int zIndex)
 
 ARenderBatch::~ARenderBatch()
 {
-    printf("deleteing Render Batch\n");
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
     free(vertices);
     free(sprites);
 }
@@ -55,10 +57,11 @@ void ARenderBatch::start()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, (MAX_BATCH_SIZE * (4 * VERTEX_SIZE) * sizeof(float)), 0, GL_DYNAMIC_DRAW);
 
-    unsigned int EBO;
     glGenBuffers(1, &EBO);
+
     unsigned int *indices = (unsigned int *)malloc((6 * MAX_BATCH_SIZE) * sizeof(unsigned int));
     generateIndices(indices);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, (6 * MAX_BATCH_SIZE) * sizeof(unsigned int), indices, GL_STATIC_DRAW); 
 
@@ -144,6 +147,24 @@ void ARenderBatch::addSprite(ASpriteComponent *sprite)
     {
         hasRoom = false;
     }
+}
+
+bool ARenderBatch::destroyIfExist(ASpriteComponent *sprite)
+{
+    for(int i = 0; i < numSprites; ++i)
+    {
+        if(sprites[i] == sprite)
+        {
+            for(int j = i; j < numSprites - 1; ++j)
+            {
+                sprites[j] = sprites[j + 1];
+                sprites[j]->isDirty = true;
+            }
+            numSprites--;
+            return true;
+        }
+    }
+    return false;
 }
 
 void ARenderBatch::loadVertexProperties(int index)

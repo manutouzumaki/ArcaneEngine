@@ -19,3 +19,14 @@ AGameObject *APrefabs::generateSpriteObject(ASprite *sprite, int sizeX, int size
     block->addComponent("ASpriteComponent", new ASpriteComponent(sprite));
     return block;
 }
+
+AGameObject *APrefabs::generateObject()
+{
+    int NameSize = StringLength("Object_Gen");
+    char *name = (char *)malloc(NameSize + 1);
+    StringCopy(name, NameSize, "Object_Gen");
+    name[NameSize] = '\0';
+
+    AGameObject *block = new AGameObject(name);
+    return block;
+}

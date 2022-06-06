@@ -3,6 +3,7 @@
 #include "../util/AString.h"
 #include "../util/AAssetPool.h"
 #include "../components/ASpriteComponent.h"
+#include "APhysics.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -72,6 +73,47 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
         float rotAngle = (float)atof(rotation->Attribute("angle"));
         int zIndex = (int)atof(zIndexNode->Attribute("value"));
         return new ATransformComponent(glm::vec2(xPos, yPos), glm::vec2(xSca, ySca), rotAngle, zIndex);
+    }
+    else if(StringCompare(component->GetText(), "ARigidBody", StringLength("ARigidBody")))
+    {
+        TiXmlElement *velocityXml = component->FirstChildElement();
+        TiXmlElement *angularDampingXml = velocityXml->NextSiblingElement();
+        TiXmlElement *linearDampingXml = angularDampingXml->NextSiblingElement();
+        TiXmlElement *massXml = linearDampingXml->NextSiblingElement();
+        TiXmlElement *bodyTypeXml = massXml->NextSiblingElement();
+        TiXmlElement *fixedRotationXml = bodyTypeXml->NextSiblingElement();
+        TiXmlElement *continuousCollisionXml = fixedRotationXml->NextSiblingElement();
+        float xVel = (float)atof(velocityXml->Attribute("x"));
+        float yVel = (float)atof(velocityXml->Attribute("y"));
+        float angularDamping = (float)atof(angularDampingXml->Attribute("value"));
+        float linearDamping = (float)atof(linearDampingXml->Attribute("value"));
+        float mass = (float)atof(massXml->Attribute("value"));
+        int bodyType = (int)atof(bodyTypeXml->Attribute("value"));
+        int fixedRotation = (int)atof(fixedRotationXml->Attribute("value"));
+        int continuousCollision = (int)atof(continuousCollisionXml->Attribute("value"));
+        return new ARigidBody(glm::vec2(xVel, yVel), angularDamping, linearDamping, mass, (BodyType)bodyType, fixedRotation, continuousCollision);
+    }
+    else if(StringCompare(component->GetText(), "ABoxCollider", StringLength("ABoxCollider")))
+    {
+        TiXmlElement *offsetXml = component->FirstChildElement();
+        TiXmlElement *halfSizeXml = offsetXml->NextSiblingElement();
+        TiXmlElement *originXml = halfSizeXml->NextSiblingElement(); 
+        float xOff = (float)atof(offsetXml->Attribute("x"));
+        float yOff = (float)atof(offsetXml->Attribute("y"));
+        float xHalf = (float)atof(halfSizeXml->Attribute("x"));
+        float yHalf = (float)atof(halfSizeXml->Attribute("y"));
+        float xOri = (float)atof(originXml->Attribute("x"));
+        float yOri = (float)atof(originXml->Attribute("y"));
+        return new ABoxCollider(glm::vec2(xOff, yOff), glm::vec2(xHalf, yHalf), glm::vec2(xOri, yOri));
+    }
+    else if(StringCompare(component->GetText(), "ACircleCollider", StringLength("ACircleCollider")))
+    {
+        TiXmlElement *offsetXml = component->FirstChildElement();
+        TiXmlElement *radiusXml = offsetXml->NextSiblingElement();
+        float xOff = (float)atof(offsetXml->Attribute("x"));
+        float yOff = (float)atof(offsetXml->Attribute("y"));
+        float radius = (float)atof(radiusXml->Attribute("value"));
+        return new ACircleCollider(glm::vec2(xOff, yOff), radius);
     }
     else
     {

@@ -5,7 +5,7 @@
 class AGridLines : public AComponent
 {
 public:
-    void update(float dt) override;
+    void editorUpdate(float dt) override;
 };
 
 #endif

@@ -7,26 +7,34 @@
 #include "../util/AArray.h"
 #include "../renderer/ARenderer.h"
 
+#include "ASceneInitializer.h"
+#include "APhysics.h"
+
 class AScene
 {
-protected:
-    ARenderer renderer;
+private:
+    ARenderer *renderer;
+    APhysics *physics;
     ACamera *camera;
     bool isRunning;
     AArray<AGameObject *> gameObjects;
+    ASceneInitializer *sceneInitializer;
 public:
-    AScene();
-    virtual void init();
-    virtual void start();
-    virtual void update(float dt) = 0;
-    virtual void render() = 0;
-    virtual void close() {};
-    virtual ~AScene() {}
+    AScene(ASceneInitializer *sceneInitializer);
+    void init();
+    void start();
+    void update(float dt);
+    void editorUpdate(float dt);
+    void render();
+    void imgui();
+    void save();
+    void destroy();
+    ~AScene();
 
     void addGameObject(AGameObject *gameObject);
     AGameObject *getGameObjectByIndex(int index);
     ACamera *getCamera();
-    virtual void imgui() {}
+    APhysics *getPhysics();
 };
 
 #endif

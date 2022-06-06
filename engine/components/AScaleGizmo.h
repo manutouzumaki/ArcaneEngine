@@ -35,6 +35,7 @@ private:
 public:
     AScaleGizmo(ASprite *sprite, APropertiesWindow *propertiesWindow);
     void start() override;
+    void editorUpdate(float dt) override;
     void update(float dt) override;
     void setActive();
     void setInactive();

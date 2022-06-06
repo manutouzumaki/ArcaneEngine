@@ -16,7 +16,7 @@ private:
     float lerpTime; 
 public:
     AEditorCameraComponent(ACamera *camera);
-    void update(float dt) override;
+    void editorUpdate(float dt) override;
 };
 
 #endif

@@ -14,6 +14,7 @@ public:
     void update(float dt, AScene *currentScene);
     void imgui();
     AGameObject *getActiveGameObject();
+    void setActiveGameObject(AGameObject *activeGameObject);
 };
 
 #endif

@@ -12,6 +12,7 @@ public:
     void add(AGameObject *gameObject);
     void add(ASpriteComponent *sprite);
     void render();
+    void destroyGameObject(AGameObject *gameObject);
     static void bindShader(AShader *shader);
     static AShader *getBindShader();
 private:

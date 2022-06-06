@@ -15,7 +15,7 @@ AEditorCameraComponent::AEditorCameraComponent(ACamera *camera)
     lerpTime = 0.0f;
 }
 
-void AEditorCameraComponent::update(float dt)
+void AEditorCameraComponent::editorUpdate(float dt)
 {
     int x = (int)AMouseListener::getScreenX();
     int y = (int)AMouseListener::getScreenY();

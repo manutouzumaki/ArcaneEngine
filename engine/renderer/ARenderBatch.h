@@ -29,6 +29,7 @@ public:
     void start();
     void render();
     void addSprite(ASpriteComponent *sprite);
+    bool destroyIfExist(ASpriteComponent *sprite);
     bool hasRoom;
     bool hasTextureRoom();
     bool hasTexture(ATexture *texture);
@@ -41,6 +42,7 @@ private:
     int texSlots[8] = {0, 1, 2, 3, 4, 5, 6, 7};
     unsigned int VAO;
     unsigned int VBO;
+    unsigned int EBO;
     AArray<ATexture *> textures;
     int zIndex;
 };

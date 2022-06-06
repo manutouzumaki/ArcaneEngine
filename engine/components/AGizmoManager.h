@@ -17,7 +17,7 @@ private:
 public:
     AGizmoManager(ASpritesheet *spritesheet);
     void start() override;
-    void update(float dt) override;
+    void editorUpdate(float dt) override;
 }; 
 
 #endif

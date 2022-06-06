@@ -35,7 +35,7 @@ void ATranslateGizmo::start()
     yAxisObject->transform->rotation = 180.0f;
 }
 
-void ATranslateGizmo::update(float dt)
+void ATranslateGizmo::editorUpdate(float dt)
 {
     if(!inUse) return;
 
@@ -87,6 +87,13 @@ void ATranslateGizmo::update(float dt)
     }
 }
 
+void ATranslateGizmo::update(float dt)
+{
+    if(inUse)
+    {
+        setInactive();
+    }
+}
 
 void ATranslateGizmo::setActive()
 {

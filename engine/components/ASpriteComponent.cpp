@@ -43,6 +43,16 @@ void ASpriteComponent::update(float dt)
     } 
 }
 
+void ASpriteComponent::editorUpdate(float dt)
+{
+    if(lastTransform != gameObject->transform)
+    {
+        lastTransform = *gameObject->transform;
+        isDirty = true;
+    } 
+
+}
+
 void ASpriteComponent::imgui()
 {
     ImGui::ColorPicker4("Color Picker", (float*)&color, 0);

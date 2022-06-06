@@ -27,10 +27,11 @@ private:
     glm::vec2 origin;
 public:
     ABoxCollider();
+    ABoxCollider(glm::vec2 offset, glm::vec2 halfSize, glm::vec2 origin);
     glm::vec2 getHalfSize();
     void setHalfSize(glm::vec2 halfSize);
     glm::vec2 getOrigin();
-
+    void editorUpdate(float dt) override;
     void imgui() override;
     void serialize(TiXmlElement *parent) override;
 };
@@ -41,6 +42,7 @@ private:
     float radius;
 public:
     ACircleCollider();
+    ACircleCollider(glm::vec2 offset, float radius);
     float getRadius();
     void setRadius(float radius);
 
@@ -61,6 +63,13 @@ private:
     b2Body *rawBody;
 public:
     ARigidBody();
+    ARigidBody(glm::vec2 velocity,
+               float angularDamping,
+               float linearDamping,
+               float mass,
+               BodyType bodyType,
+               bool fixedRotation,
+               bool continuousCollision);
     glm::vec2 getVelocity();
     void setVelocity(glm::vec2 velocity);
     float getAngularDamping();
@@ -96,6 +105,7 @@ public:
     APhysics();
     ~APhysics();
     void addGameObject(AGameObject *go);
+    void destroyGameObject(AGameObject *go);
     void update(float dt);
 };
 

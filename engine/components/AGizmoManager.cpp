@@ -16,7 +16,7 @@ void AGizmoManager::start()
     gizmoInUse = 0;
 }
 
-void AGizmoManager::update(float dt)
+void AGizmoManager::editorUpdate(float dt)
 {
     if(gizmoInUse == 0)
     {

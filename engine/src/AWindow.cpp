@@ -8,8 +8,7 @@
 #include "../util/AAssetPool.h"
 #include "../renderer/ADebugDraw.h"
 
-#include "ALevelEditorScene.h"
-#include "ALevelScene.h"
+#include "ALevelEditorSceneInitializer.h"
 
 #include "../editor/AGameViewWindow.h"
 
@@ -47,6 +46,7 @@ void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
 AWindow::AWindow() 
 {
     AEventSystem::addObserver(this);
+    runTimePlaying = false;
 }
 
 AWindow *AWindow::get()
@@ -60,6 +60,7 @@ AWindow *AWindow::get()
 
 void AWindow::free()
 {
+    delete instance->menuBar;
     delete instance->propertiesWindow;
     delete instance->mousePicking;
     delete instance->framebuffer;
@@ -68,31 +69,18 @@ void AWindow::free()
     printf("window deleted\n");
 }
 
-void AWindow::changeScene(int index)
+void AWindow::changeScene(ASceneInitializer *sceneInitializer)
 {
     if(currentScene)
     {
+        currentScene->destroy();
         delete currentScene;
     }
-    switch(index)
-    {
-        case 0:
-        {
-            currentScene = new ALevelEditorScene();
-            currentScene->init();
-            currentScene->start();
-        }break;
-        case 1:
-        {
-            currentScene = new ALevelScene();
-            currentScene->init();
-            currentScene->start();
-        }break;
-        default:
-        {
-            currentScene = nullptr;
-        }break;
-    }
+    get()->propertiesWindow->setActiveGameObject(nullptr);
+    AGameObject::resetUIDCounter();
+    currentScene = new AScene(sceneInitializer);
+    currentScene->init();
+    currentScene->start();
 }
 
 AScene *AWindow::getScene()
@@ -105,7 +93,7 @@ void AWindow::run()
     init();
     loop();
     
-    currentScene->close();
+    //currentScene->close();
 
     ADebugDraw::shutDown();
 
@@ -171,9 +159,11 @@ void AWindow::init()
     framebuffer = new AFramebuffer(WINDOW_WIDTH, WINDOW_HEIGHT);
     mousePicking = new AMousePicking(WINDOW_WIDTH, WINDOW_HEIGHT);
     propertiesWindow = new APropertiesWindow();
+    menuBar = new AMenuBar();
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-     
-    changeScene(0);
+    
+    loadResources(); 
+    changeScene(new ALevelEditorSceneInitializer());
 
 }
 
@@ -187,6 +177,8 @@ void AWindow::loop()
     AShader *defaultShader = AAssetPool::getShader("default");
     AShader *pickingShader = AAssetPool::getShader("picking");
 
+    ADebugDraw::init();
+    
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -214,7 +206,14 @@ void AWindow::loop()
         {
             ADebugDraw::draw();
             ARenderer::bindShader(defaultShader);
-            currentScene->update(dt);
+            if(runTimePlaying)
+            {
+                currentScene->update(dt);
+            }
+            else
+            {
+                currentScene->editorUpdate(dt);
+            }
             currentScene->render();
         }
         framebuffer->unbind();
@@ -234,6 +233,7 @@ void AWindow::loop()
         AGameViewWindow::imgui();
         propertiesWindow->update(dt, currentScene);
         propertiesWindow->imgui();
+        menuBar->imgui();
         ImGui::End();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -295,17 +295,47 @@ static void frameBufferSizeCallback(GLFWwindow *window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+void AWindow::loadResources()
+{
+    AAssetPool::addShader("default", "../assets/shaders/vertex.glsl", "../assets/shaders/fragment.glsl");
+    AAssetPool::addShader("lines", "../assets/shaders/lineVertex.glsl", "../assets/shaders/lineFragment.glsl");
+    AAssetPool::addShader("picking", "../assets/shaders/pickingVertex.glsl", "../assets/shaders/pickingFragment.glsl");
+    
+    AAssetPool::addTexture("heroTexture", "../assets/textures/poolGuy.png");
+    AAssetPool::addTexture("blocksTexture", "../assets/textures/blocks.png");
+    AAssetPool::addTexture("characterTexture", "../assets/textures/character.png");
+    AAssetPool::addTexture("gizmoTexture", "../assets/textures/gizmos.png");
+
+    AAssetPool::addSpritesheet("characterSpritesheet",
+                               new ASpritesheet("characterSpritesheet", AAssetPool::getTexture("characterTexture"), 77, 77, 32, 0));
+    AAssetPool::addSpritesheet("blocksSpritesheet",
+                               new ASpritesheet("blocksSpritesheet", AAssetPool::getTexture("blocksTexture"), 16, 16, 81, 0));
+    AAssetPool::addSpritesheet("gizmoSpritesheet",
+                               new ASpritesheet("gizmoSpritesheet", AAssetPool::getTexture("gizmoTexture"), 24, 48, 3, 0));
+}
+
 void AWindow::onNotify(AGameObject *obj, AEvent *event)
 {
     switch(event->type)
     {
         case GAME_ENGINE_START_PLAY:
         {
-            printf("starting play\n"); 
+            runTimePlaying = true;
+            currentScene->save();
+            AWindow::changeScene(new ALevelEditorSceneInitializer()); 
         }break;
         case GAME_ENGINE_STOP_PLAY:
         {
-            printf("ending play\n");  
+            runTimePlaying = false;
+            AWindow::changeScene(new ALevelEditorSceneInitializer()); 
+        }break;
+        case LOAD_LEVEL:
+        {
+            AWindow::changeScene(new ALevelEditorSceneInitializer()); 
+        }break;
+        case SAVE_LEVEL:
+        {
+            currentScene->save();
         }break;
     }
 }

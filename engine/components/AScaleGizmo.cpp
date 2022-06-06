@@ -35,7 +35,7 @@ void AScaleGizmo::start()
     yAxisObject->transform->rotation = 180.0f;
 }
 
-void AScaleGizmo::update(float dt)
+void AScaleGizmo::editorUpdate(float dt)
 {
     if(!inUse) return;
     
@@ -87,6 +87,13 @@ void AScaleGizmo::update(float dt)
     }
 }
 
+void AScaleGizmo::update(float dt)
+{
+    if(inUse)
+    {
+        setInactive();
+    }
+}
 
 void AScaleGizmo::setActive()
 {
@@ -96,6 +103,7 @@ void AScaleGizmo::setActive()
 
 void AScaleGizmo::setInactive()
 {
+    activeGameObject = nullptr;
     xAxisSprite->setColor(glm::vec4(0, 0, 0, 0));
     yAxisSprite->setColor(glm::vec4(0, 0, 0, 0));
 }

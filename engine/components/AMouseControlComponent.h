@@ -8,7 +8,7 @@ class AMouseControlComponent : public AComponent
 public:
     AMouseControlComponent();
     ~AMouseControlComponent();
-    void update(float dt) override;
+    void editorUpdate(float dt) override;
     void pickupObject(AGameObject *go);
     void place();
 private:

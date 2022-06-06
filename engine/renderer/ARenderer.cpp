@@ -12,8 +12,11 @@ ARenderer::~ARenderer()
 
 void ARenderer::add(AGameObject *gameObject)
 {
-    ASpriteComponent *sprite = (ASpriteComponent *)gameObject->getComponent("ASpriteComponent");
-    add(sprite);
+    if(gameObject->hasComponent("ASpriteComponent"))
+    {
+        ASpriteComponent *sprite = (ASpriteComponent *)gameObject->getComponent("ASpriteComponent");
+        add(sprite);
+    }
 }
 
 
@@ -64,6 +67,22 @@ void ARenderer::render()
     for(int i = 0; i < batchs.size(); ++i)
     {
         batchs[i]->render();
+    }
+}
+
+void ARenderer::destroyGameObject(AGameObject *gameObject)
+{
+    if(gameObject->hasComponent("ASpriteComponent"))
+    {
+        ASpriteComponent *sprite = (ASpriteComponent *)gameObject->getComponent("ASpriteComponent");
+        for(int i = 0; i < batchs.size(); ++i)
+        {
+            if(batchs[i]->destroyIfExist(sprite))
+            {
+                return;
+            }
+        }
+
     }
 }
 

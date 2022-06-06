@@ -12,6 +12,7 @@ public:
     AArray(size_t capacity);
     ~AArray();
     void add(T element);
+    void remove(int index);
     size_t size();
     size_t getCapacity();
     T &operator[](size_t index);
@@ -66,6 +67,16 @@ void AArray<T>::add(T element)
         this->data = (T *)realloc(this->data, this->capacity * sizeof(T));
         this->data[this->occupied++] = element;
     }
+}
+
+template <class T>
+void AArray<T>::remove(int index)
+{
+    for(int i = index; i < this->occupied - 1; ++i)
+    {
+        this->data[i] = this->data[i + 1];
+    }
+    this->occupied--;
 }
 
 template <class T>

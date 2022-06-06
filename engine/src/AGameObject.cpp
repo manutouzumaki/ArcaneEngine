@@ -4,8 +4,14 @@
 
 unsigned int AGameObject::ID_COUNTER = 0;
 
+void AGameObject::resetUIDCounter()
+{
+    ID_COUNTER = 0;
+}
+
 AGameObject::AGameObject(const char *name, bool attachToScene)
 {
+    this->isDead = false;
     if(attachToScene)
     {
         this->name = name;
@@ -16,8 +22,9 @@ AGameObject::AGameObject(const char *name, bool attachToScene)
     else
     {
         this->name = name;
-        this->serializable = true;
-        this->pickable = true;
+        this->serializable = false;
+        this->pickable = false;
+        this->UID = ID_COUNTER++;
     }
 }
 
@@ -29,6 +36,7 @@ AGameObject::~AGameObject()
         delete components[i];
     }
 }
+
 
 void AGameObject::addComponent(AString componentName, AComponent *component)
 {
@@ -77,6 +85,24 @@ void AGameObject::update(float dt)
     }
 }
 
+void AGameObject::editorUpdate(float dt)
+{
+    for(int i = 0; i < components.size(); ++i)
+    {
+        components[i]->editorUpdate(dt);
+    }
+}
+
+void AGameObject::destroy()
+{
+    this->isDead = true;
+    for(int i = 0; i < components.size(); ++i)
+    {
+        components[i]->destroy();
+    }
+
+}
+
 int AGameObject::getUID()
 {
     return UID;
@@ -95,6 +121,11 @@ void AGameObject::setPickable(bool value)
 bool AGameObject::getPickable()
 {
     return this->pickable;
+}
+
+bool AGameObject::getIsDead()
+{
+    return this->isDead;
 }
 
 void AGameObject::imgui()

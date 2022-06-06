@@ -4,7 +4,7 @@
 #include "../renderer/ADebugDraw.h"
 #include <glm/glm.hpp>
 
-void AGridLines::update(float dt)
+void AGridLines::editorUpdate(float dt)
 {
     ACamera *camera = AWindow::getScene()->getCamera();
     glm::vec2 cameraPos = camera->position;

@@ -13,6 +13,7 @@ public:
     ~ASpriteComponent();
     void start() override;
     void update(float dt) override;
+    void editorUpdate(float dt) override;
     void imgui() override;
     void serialize(TiXmlElement *parent) override;
     glm::vec4 getColor();

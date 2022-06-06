@@ -1,6 +1,6 @@
 #include "APhysics.h"
 #include "AGameObject.h"
-
+#include "../renderer/ADebugDraw.h"
 #include "../editor/AImGui.h"
 #include <glm/gtx/rotate_vector.hpp>
 
@@ -15,6 +15,13 @@ ABoxCollider::ABoxCollider()
     : halfSize(1.0f), origin(0.0f)
 {
 
+}
+
+ABoxCollider::ABoxCollider(glm::vec2 offset, glm::vec2 halfSize, glm::vec2 origin)
+{
+    this->offset = offset;
+    this->halfSize = halfSize;
+    this->origin = origin;
 }
 
 glm::vec2 ABoxCollider::getHalfSize()
@@ -32,6 +39,12 @@ glm::vec2 ABoxCollider::getOrigin()
     return origin;
 }
 
+void ABoxCollider::editorUpdate(float dt)
+{
+    glm::vec2 center = gameObject->transform->position + offset;
+    ADebugDraw::addBox(center, halfSize, gameObject->transform->rotation, glm::vec3(0, 1, 0), 1);
+}
+
 void ABoxCollider::imgui()
 {
     ImGuiVector2("HalfSize", &halfSize, 1.0f);
@@ -41,7 +54,22 @@ void ABoxCollider::imgui()
 
 void ABoxCollider::serialize(TiXmlElement *parent)
 {
-
+    TiXmlElement *root = new TiXmlElement("ABoxCollider");
+    parent->LinkEndChild(root);
+    TiXmlText *type = new TiXmlText("ABoxCollider");
+    root->LinkEndChild(type);
+    TiXmlElement *offset = new TiXmlElement("Offset");
+    offset->SetDoubleAttribute("x", this->offset.x);
+    offset->SetDoubleAttribute("y", this->offset.y);
+    root->LinkEndChild(offset);  
+    TiXmlElement *halfSize = new TiXmlElement("HalfSize");
+    halfSize->SetDoubleAttribute("x", this->halfSize.x);
+    halfSize->SetDoubleAttribute("y", this->halfSize.y);
+    root->LinkEndChild(halfSize); 
+    TiXmlElement *origin = new TiXmlElement("Origin");
+    origin->SetDoubleAttribute("x", this->origin.x);
+    origin->SetDoubleAttribute("y", this->origin.y);
+    root->LinkEndChild(origin); 
 }
 ////////////////////////////////////////////////////////////
 
@@ -51,6 +79,12 @@ void ABoxCollider::serialize(TiXmlElement *parent)
 ACircleCollider::ACircleCollider()
 {
     radius = 1.0f;
+}
+
+ACircleCollider::ACircleCollider(glm::vec2 offset, float radius)
+{
+    this->offset = offset;
+    this->radius = radius;
 }
 
 float ACircleCollider::getRadius()
@@ -71,7 +105,17 @@ void ACircleCollider::imgui()
 
 void ACircleCollider::serialize(TiXmlElement *parent)
 {
-
+    TiXmlElement *root = new TiXmlElement("ACircleCollider");
+    parent->LinkEndChild(root);
+    TiXmlText *type = new TiXmlText("ACircleCollider");
+    root->LinkEndChild(type);
+    TiXmlElement *offset = new TiXmlElement("Offset");
+    offset->SetDoubleAttribute("x", this->offset.x);
+    offset->SetDoubleAttribute("y", this->offset.y);
+    root->LinkEndChild(offset);  
+    TiXmlElement *radius = new TiXmlElement("Radius");
+    radius->SetDoubleAttribute("value", this->radius);
+    root->LinkEndChild(radius);
 }
 ////////////////////////////////////////////////////////////
 
@@ -87,6 +131,24 @@ ARigidBody::ARigidBody()
     fixedRotation = false;
     continuousCollision = true;
     rawBody = nullptr;
+}
+    
+ARigidBody::ARigidBody(glm::vec2 velocity,
+               float angularDamping,
+               float linearDamping,
+               float mass,
+               BodyType bodyType,
+               bool fixedRotation,
+               bool continuousCollision)
+{
+    this->velocity = velocity;
+    this->angularDamping = angularDamping;
+    this->linearDamping = linearDamping;
+    this->mass = mass;
+    this->bodyType = bodyType;
+    this->fixedRotation = fixedRotation;
+    this->continuousCollision = continuousCollision;
+    this->rawBody = nullptr;
 }
 
 void ARigidBody::update(float dt)
@@ -109,7 +171,32 @@ void ARigidBody::imgui()
 
 void ARigidBody::serialize(TiXmlElement *parent)
 {
-
+    TiXmlElement *root = new TiXmlElement("ARigidBody");
+    parent->LinkEndChild(root);
+    TiXmlText *type = new TiXmlText("ARigidBody");
+    root->LinkEndChild(type);
+    TiXmlElement *velocity = new TiXmlElement("Velocity");
+    velocity->SetDoubleAttribute("x", this->velocity.x);
+    velocity->SetDoubleAttribute("y", this->velocity.y);
+    root->LinkEndChild(velocity);
+    TiXmlElement *angularDamping = new TiXmlElement("AngularDamping");
+    angularDamping->SetDoubleAttribute("value", this->angularDamping);
+    root->LinkEndChild(angularDamping);
+    TiXmlElement *linearDamping = new TiXmlElement("LinearDamping");
+    linearDamping->SetDoubleAttribute("value", this->linearDamping);
+    root->LinkEndChild(linearDamping);
+    TiXmlElement *mass = new TiXmlElement("Mass");
+    mass->SetDoubleAttribute("value", this->mass);
+    root->LinkEndChild(mass);
+    TiXmlElement *bodyType = new TiXmlElement("BodyType");
+    bodyType->SetAttribute("value", this->bodyType);
+    root->LinkEndChild(bodyType);
+    TiXmlElement *fixedRotation = new TiXmlElement("FixedRotation");
+    fixedRotation->SetAttribute("value", (int)this->fixedRotation);
+    root->LinkEndChild(fixedRotation);
+    TiXmlElement *continuousCollision = new TiXmlElement("ContinuousCollision");
+    continuousCollision->SetAttribute("value", (int)this->continuousCollision);
+    root->LinkEndChild(continuousCollision);    
 }
 
 glm::vec2 ARigidBody::getVelocity()
@@ -203,6 +290,11 @@ APhysics::APhysics()
     positionIterations = 3;
 }
 
+APhysics::~APhysics()
+{
+
+}
+
 void APhysics::addGameObject(AGameObject *go)
 {
     if(go->hasComponent("ARigidBody"))
@@ -251,9 +343,27 @@ void APhysics::addGameObject(AGameObject *go)
                 float yPos = pos.y + offset.y;
                 bodyDef.position.Set(xPos, yPos);
             }
-            b2Body *body = world.CreateBody(&bodyDef);
-            rb->setRawBody(body);
-            body->CreateFixture(&shape, rb->getMass());
+            rb->setRawBody(world.CreateBody(&bodyDef));
+
+            b2FixtureDef fixtureDef;
+            fixtureDef.shape = &shape;
+            fixtureDef.density = 1.0f;
+            fixtureDef.friction = 0.3f;
+            rb->getRawBody()->CreateFixture(&fixtureDef);
+        }
+    }
+}
+
+
+void APhysics::destroyGameObject(AGameObject *go)
+{
+    if(go->hasComponent("ARigidBody"))
+    {
+        ARigidBody *rb = (ARigidBody *)go->getComponent("ARigidBody");
+        if(rb->getRawBody())
+        {
+            world.DestroyBody(rb->getRawBody());
+            rb->setRawBody(nullptr);
         }
     }
 }

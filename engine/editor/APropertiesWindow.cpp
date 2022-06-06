@@ -77,3 +77,8 @@ AGameObject *APropertiesWindow::getActiveGameObject()
 {
     return activeGameObject;
 }
+
+void APropertiesWindow::setActiveGameObject(AGameObject *activeGameObject)
+{
+    this->activeGameObject = activeGameObject;
+}
