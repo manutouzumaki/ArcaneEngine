@@ -7,11 +7,11 @@ void AMenuBar::imgui()
     ImGui::BeginMenuBar();
     if(ImGui::BeginMenu("File"))
     {   
-        if(ImGui::MenuItem("Save", "Ctrl+S"))
+        if(ImGui::MenuItem("Save", ""))
         {
             AEventSystem::notify(nullptr, new AEvent(SAVE_LEVEL)); 
         }
-        if(ImGui::MenuItem("Load", "Ctrl+O"))
+        if(ImGui::MenuItem("Load", ""))
         {
             AEventSystem::notify(nullptr, new AEvent(LOAD_LEVEL)); 
         }

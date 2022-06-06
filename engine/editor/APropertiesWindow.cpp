@@ -42,7 +42,6 @@ void APropertiesWindow::imgui()
 {
     if(activeGameObject)
     {
-        ImGui::Begin("Properties");
         if(ImGui::BeginPopupContextWindow("Commponent Adder"))
         {
             if(ImGui::MenuItem("Add ARigidBody"))
@@ -69,7 +68,6 @@ void APropertiesWindow::imgui()
             ImGui::EndPopup();
         }
         activeGameObject->imgui();
-        ImGui::End();
     }
 }
 

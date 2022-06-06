@@ -225,14 +225,18 @@ void AWindow::loop()
         setupDockSpace();
 
         currentScene->imgui();
-        bool show_demo_window = true;
+        bool show_demo_window = false;
         if (show_demo_window)
         {
             ImGui::ShowDemoWindow(&show_demo_window);
-        } 
+        }
         AGameViewWindow::imgui();
         propertiesWindow->update(dt, currentScene);
+
+        ImGui::Begin("Properties");
         propertiesWindow->imgui();
+        ImGui::End();
+        
         menuBar->imgui();
         ImGui::End();
         ImGui::Render();
