@@ -2,13 +2,14 @@
 #include "../src/APrefabs.h"
 #include "../src/AWindow.h"
 #include "../src/AMouseListener.h"
+#include "../src/AKeyListener.h"
 
 AScaleGizmo::AScaleGizmo(ASprite *sprite, APropertiesWindow * propertiesWindow)
 {
     activeGameObject = nullptr;
 
-    gizmoWidth = 16;
-    gizmoHeight = 48;
+    gizmoWidth = 16.0f / 80.0f;
+    gizmoHeight = 48.0f / 80.0f;
 
     xAxisObject = APrefabs::generateSpriteObject(sprite, gizmoWidth, gizmoHeight);
     yAxisObject = APrefabs::generateSpriteObject(sprite, gizmoWidth, gizmoHeight);
@@ -46,6 +47,22 @@ void AScaleGizmo::editorUpdate(float dt)
         if(activeGameObject)
         {
             setActive();
+            if(AKeyListener::isKeyPressed(GLFW_KEY_LEFT_CONTROL) &&
+               AKeyListener::isKeyBeginPress(GLFW_KEY_D))
+            {
+                AGameObject *newObj = this->activeGameObject->copy();
+                AWindow::getScene()->addGameObject(newObj);
+                newObj->transform->position.x += 0.1f; 
+                propertiesWindow->setActiveGameObject(newObj);
+                return;
+            }
+            else if(AKeyListener::isKeyBeginPress(GLFW_KEY_DELETE))
+            {
+                activeGameObject->destroy();
+                setInactive();
+                propertiesWindow->setActiveGameObject(nullptr);
+                return;
+            }
         }
         else
         {
@@ -82,8 +99,8 @@ void AScaleGizmo::editorUpdate(float dt)
             activeGameObject->transform->scale.y += AMouseListener::getWorldDy();
         }
 
-        xAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(64, -5);
-        yAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(16, 61);
+        xAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(24.0f/80.0f, -6.0f/80.0f);
+        yAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(-7.0f/80.0f, 21.0f/80.0f);
     }
 }
 

@@ -54,7 +54,7 @@ void ALevelEditorSceneInitializer::imgui()
         ImGui::PushID(i);
         if(ImGui::ImageButton((ImTextureID)id, size, uv0, uv1, itemSpacing, bgColor, tintColor))
         {
-            AGameObject *obj = APrefabs::generateSpriteObject(sprite, sprite->getWidth() * 2, sprite->getHeight() * 2);
+            AGameObject *obj = APrefabs::generateSpriteObject(sprite, 0.25f, 0.25f);
             AMouseControlComponent *mouseControls = (AMouseControlComponent *)levelEditor->getComponent("AMouseControlComponent");
             mouseControls->pickupObject(obj);    
         }

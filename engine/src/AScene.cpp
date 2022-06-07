@@ -79,11 +79,8 @@ void AScene::editorUpdate(float dt)
 
         if(gameObjects[i]->getIsDead())
         {
-            delete gameObjects[i];
-            gameObjects.remove(i);
             this->renderer->destroyGameObject(gameObjects[i]);
             this->physics->destroyGameObject(gameObjects[i]);
-            i--;
         }
     }
 }

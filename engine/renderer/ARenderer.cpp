@@ -53,7 +53,7 @@ void ARenderer::add(ASpriteComponent *sprite)
     }
     if(!added)
     {
-        ARenderBatch *batch = new ARenderBatch(sprite->gameObject->transform->zIndex);
+        ARenderBatch *batch = new ARenderBatch(sprite->gameObject->transform->zIndex, this);
         batch->start();
         batch->addSprite(sprite);
         batchs.add(batch); 

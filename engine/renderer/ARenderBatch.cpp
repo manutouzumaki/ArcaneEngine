@@ -30,13 +30,14 @@ static void generateIndices(unsigned int *indices)
     }
 }
 
-ARenderBatch::ARenderBatch(int zIndex)
+ARenderBatch::ARenderBatch(int zIndex, ARenderer *renderer)
 {
     numSprites = 0;
     hasRoom = true;
     sprites = (ASpriteComponent **)malloc(sizeof(ASpriteComponent *) * MAX_BATCH_SIZE);
     vertices = (float *)malloc(MAX_BATCH_SIZE * (4 * VERTEX_SIZE) * sizeof(float));
     this->zIndex = zIndex;
+    this->renderer = renderer;
 }
 
 ARenderBatch::~ARenderBatch()
@@ -90,6 +91,13 @@ void ARenderBatch::render()
             loadVertexProperties(i);
             sprite->isDirty = false;
             rebufferData = true;
+        }
+
+        if(sprite->gameObject->transform->zIndex != this->zIndex)
+        {
+            destroyIfExist(sprite);
+            renderer->add(sprite->gameObject);
+            i++;
         }
     }
     if(rebufferData)
@@ -194,16 +202,16 @@ void ARenderBatch::loadVertexProperties(int index)
     glm::mat4 scaleMat = glm::scale(glm::mat4(1.0f), glm::vec3(sprite->gameObject->transform->scale.x, sprite->gameObject->transform->scale.y, 0.0f));
     transformMat = translationMat * rotationMat * scaleMat;
     
-    float x = 1.0f;
-    float y = 1.0f; 
+    float x = 0.5f;
+    float y = 0.5f; 
     for(int i = 0; i < 4; ++i)
     {
         if(i == 1)
-            y = 0.0f;   
+            y = -0.5f;   
         else if(i == 2)
-            x = 0.0f;
+            x = -0.5f;
         else if(i == 3)
-            y = 1.0f;
+            y = 0.5f;
 
         glm::vec4 currentP = transformMat * glm::vec4(x, y, 0, 1);
         vertices[offset] = currentP.x;

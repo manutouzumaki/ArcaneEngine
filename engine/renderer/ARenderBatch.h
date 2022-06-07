@@ -21,10 +21,12 @@
 #define VERTEX_SIZE 10
 #define VERTEX_SIZE_BYTES (VERTEX_SIZE * sizeof(float))
 
+class ARenderer;
+
 class ARenderBatch
 {
 public:
-    ARenderBatch(int zIndex);
+    ARenderBatch(int zIndex, ARenderer *renderer);
     ~ARenderBatch();
     void start();
     void render();
@@ -45,6 +47,7 @@ private:
     unsigned int EBO;
     AArray<ATexture *> textures;
     int zIndex;
+    ARenderer *renderer;
 };
 
 #endif

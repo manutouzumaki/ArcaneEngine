@@ -23,15 +23,15 @@ private:
     AGameObject *activeGameObject;
     APropertiesWindow *propertiesWindow;
 
-    int gizmoWidth;
-    int gizmoHeight;
+    float gizmoWidth;
+    float gizmoHeight;
     bool checkXHoverState();
     bool checkYHoverState();
 
     bool xAxisActive = false;
     bool yAxisActive = false;
     
-    bool inUse;
+    bool inUse = true;
 public:
     AScaleGizmo(ASprite *sprite, APropertiesWindow *propertiesWindow);
     void start() override;

@@ -2,13 +2,14 @@
 #include "../src/APrefabs.h"
 #include "../src/AWindow.h"
 #include "../src/AMouseListener.h"
+#include "../src/AKeyListener.h"
 
 ATranslateGizmo::ATranslateGizmo(ASprite *sprite, APropertiesWindow * propertiesWindow)
 {
     activeGameObject = nullptr;
 
-    gizmoWidth = 16;
-    gizmoHeight = 48;
+    gizmoWidth = 16.0f / 80.0f;
+    gizmoHeight = 48 / 80.0f;
 
     xAxisObject = APrefabs::generateSpriteObject(sprite, gizmoWidth, gizmoHeight);
     yAxisObject = APrefabs::generateSpriteObject(sprite, gizmoWidth, gizmoHeight);
@@ -46,6 +47,22 @@ void ATranslateGizmo::editorUpdate(float dt)
         if(activeGameObject)
         {
             setActive();
+            if(AKeyListener::isKeyPressed(GLFW_KEY_LEFT_CONTROL) &&
+               AKeyListener::isKeyBeginPress(GLFW_KEY_D))
+            {
+                AGameObject *newObj = this->activeGameObject->copy();
+                AWindow::getScene()->addGameObject(newObj);
+                newObj->transform->position.x += 0.1f; 
+                propertiesWindow->setActiveGameObject(newObj);
+                return;
+            }
+            else if(AKeyListener::isKeyBeginPress(GLFW_KEY_DELETE))
+            {
+                activeGameObject->destroy();
+                setInactive();
+                propertiesWindow->setActiveGameObject(nullptr);
+                return;
+            }
         }
         else
         {
@@ -82,8 +99,8 @@ void ATranslateGizmo::editorUpdate(float dt)
             activeGameObject->transform->position.y += AMouseListener::getWorldDy();
         }
 
-        xAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(64, -5);
-        yAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(16, 61);
+        xAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(24.0f/80.0f, -6.0f/80.0f);
+        yAxisObject->transform->position = activeGameObject->transform->position + glm::vec2(-7.0f/80.0f, 21.0f/80.0f);
     }
 }
 
@@ -110,10 +127,10 @@ void ATranslateGizmo::setInactive()
 bool ATranslateGizmo::checkXHoverState()
 {
     glm::vec2 mouseP = glm::vec2(AMouseListener::getOrthoX(), AMouseListener::getOrthoY());
-    if(mouseP.x <= xAxisObject->transform->position.x &&
-       mouseP.x >= xAxisObject->transform->position.x - gizmoHeight &&
-       mouseP.y >= xAxisObject->transform->position.y &&
-       mouseP.y <= xAxisObject->transform->position.y + gizmoWidth)
+    if(mouseP.x <= xAxisObject->transform->position.x + (gizmoHeight*0.5f) &&
+       mouseP.x >= xAxisObject->transform->position.x - (gizmoWidth*0.5f)  &&
+       mouseP.y >= xAxisObject->transform->position.y - (gizmoHeight*0.5f) &&
+       mouseP.y <= xAxisObject->transform->position.y + (gizmoWidth*0.5f))
     {
         xAxisSprite->setColor(xAxisColorHover);
         return true;
@@ -125,10 +142,10 @@ bool ATranslateGizmo::checkXHoverState()
 bool ATranslateGizmo::checkYHoverState()
 {
     glm::vec2 mouseP = glm::vec2(AMouseListener::getOrthoX(), AMouseListener::getOrthoY());
-    if(mouseP.x <= yAxisObject->transform->position.x &&
-       mouseP.x >= yAxisObject->transform->position.x - gizmoWidth &&
-       mouseP.y <= yAxisObject->transform->position.y &&
-       mouseP.y >= yAxisObject->transform->position.y - gizmoHeight)
+    if(mouseP.x <= yAxisObject->transform->position.x + (gizmoWidth*0.5f) &&
+       mouseP.x >= yAxisObject->transform->position.x - (gizmoWidth*0.5f) &&
+       mouseP.y <= yAxisObject->transform->position.y + (gizmoHeight*0.5f) &&
+       mouseP.y >= yAxisObject->transform->position.y - (gizmoHeight*0.5f))
     {
         yAxisSprite->setColor(yAxisColorHover);
         return true;

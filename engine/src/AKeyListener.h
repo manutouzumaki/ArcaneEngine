@@ -11,11 +11,13 @@ private:
     AKeyListener();
     static AKeyListener *instance;
     bool keyPressed[KEYBOARD_MAX_BUTTONS];
+    bool keyBeginPress[KEYBOARD_MAX_BUTTONS];
 public:
     static AKeyListener *get();
     static void free();
     static void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
     static bool isKeyPressed(int key);
+    static bool isKeyBeginPress(int key);
 };
 
 #endif

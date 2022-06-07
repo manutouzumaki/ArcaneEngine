@@ -26,6 +26,7 @@ public:
     ATransformComponent *transform;
     
     int getUID();
+    void setUID(int value);
     void imgui();
     void serialize(TiXmlElement *parent); 
 
@@ -35,6 +36,7 @@ public:
     bool getIsDead();
 
     static void resetUIDCounter();
+    AGameObject *copy();
 private:
     static unsigned int ID_COUNTER;
     unsigned int UID;

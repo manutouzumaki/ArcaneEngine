@@ -1,4 +1,5 @@
 #include "AGameObject.h"
+#include "AFactory.h"
 #include <imgui.h>
 #include <tinyxml.h>
 
@@ -108,6 +109,11 @@ int AGameObject::getUID()
     return UID;
 }
 
+void AGameObject::setUID(int value)
+{
+    this->UID = value;
+}
+
 void AGameObject::setSerializable(bool value)
 {
     this->serializable = value;
@@ -128,6 +134,25 @@ bool AGameObject::getIsDead()
     return this->isDead;
 }
 
+AGameObject *AGameObject::copy()
+{
+    // TODO: come up with cleaner solution
+    TiXmlDocument doc;
+    TiXmlDeclaration *decl = new TiXmlDeclaration("1.0f", "", "");
+    doc.LinkEndChild(decl);
+    TiXmlElement *root = new TiXmlElement("GameObjects");
+    doc.LinkEndChild(root);
+    this->serialize(root);
+    TiXmlElement *gameObjectsNode = doc.FirstChildElement();
+    for(TiXmlElement *gameObject = gameObjectsNode->FirstChildElement();
+        gameObject != nullptr;
+        gameObject = gameObject->NextSiblingElement())
+    {
+        return AFactory::CreateGameObject(gameObject);
+    }
+    return nullptr;
+}
+
 void AGameObject::imgui()
 {
     for(int i = 0; i < components.size(); ++i)
@@ -141,7 +166,7 @@ void AGameObject::imgui()
 
 void AGameObject::serialize(TiXmlElement *parent)
 {
-    if(serializable)
+    if(serializable && !isDead)
     {
         TiXmlElement *root = new TiXmlElement("AGameObject");
         parent->LinkEndChild(root);

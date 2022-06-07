@@ -7,7 +7,7 @@
 class APrefabs
 {
 public:
-    static AGameObject *generateSpriteObject(ASprite *sprite, int sizeX, int sizeY);
+    static AGameObject *generateSpriteObject(ASprite *sprite, float sizeX, float sizeY);
     static AGameObject *generateObject();
 };
 

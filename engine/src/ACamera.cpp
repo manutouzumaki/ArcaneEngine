@@ -6,7 +6,7 @@
 ACamera::ACamera(glm::vec3 position)
 {
     this->position = position;
-    this->projectionSize = glm::vec2(32 * 40, 32 * 21);
+    this->projectionSize = glm::vec2(6, 3);
     this->zoom = 1.0f;
 }
 

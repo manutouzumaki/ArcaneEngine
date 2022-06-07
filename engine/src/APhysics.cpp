@@ -167,6 +167,19 @@ void ARigidBody::imgui()
     ImGuiDragFloat("AngularDamping", &angularDamping);    
     ImGuiDragFloat("LinearDamping", &linearDamping);
     ImGuiDragFloat("Mass", &mass);
+    const char *enumValues[3] = 
+    {
+        "STATIC",
+        "DYNAMIC",
+        "KINEMATIC"
+    };
+    int index = (BodyType)bodyType;
+    if(ImGui::Combo("bodyType", &index, enumValues, 3))
+    {
+        bodyType = (BodyType)index; 
+    }
+    ImGui::Checkbox("fixedRotation", &fixedRotation);
+    ImGui::Checkbox("ContinuousCollision", &continuousCollision);
 }
 
 void ARigidBody::serialize(TiXmlElement *parent)

@@ -8,6 +8,7 @@ AKeyListener::AKeyListener()
     for(int i = 0; i < KEYBOARD_MAX_BUTTONS; ++i)
     {
         keyPressed[i] = false;
+        keyBeginPress[i] = false;
     }
 }
 
@@ -31,14 +32,26 @@ void AKeyListener::keyCallback(GLFWwindow *window, int key, int scancode, int ac
     if(action == GLFW_PRESS)
     {
         get()->keyPressed[key] = true;
+        get()->keyBeginPress[key] = true;
     }
     else if(action == GLFW_RELEASE)
     {
         get()->keyPressed[key] = false;
+        get()->keyBeginPress[key] = false;
     }
 }
 
 bool AKeyListener::isKeyPressed(int key)
 {
     return get()->keyPressed[key];
+}
+
+bool AKeyListener::isKeyBeginPress(int key)
+{
+    bool result = get()->keyBeginPress[key];
+    if(result)
+    {
+        get()->keyBeginPress[key] = false;
+    }
+    return result;
 }

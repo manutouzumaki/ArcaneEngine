@@ -4,7 +4,7 @@
 #include "../components/ATransformComponent.h"
 #include "../util/AString.h"
 
-AGameObject *APrefabs::generateSpriteObject(ASprite *sprite, int sizeX, int sizeY)
+AGameObject *APrefabs::generateSpriteObject(ASprite *sprite, float sizeX, float sizeY)
 {
     int NameSize = StringLength("Sprite_Object_Gen");
     char *name = (char *)malloc(NameSize + 1);
@@ -13,7 +13,7 @@ AGameObject *APrefabs::generateSpriteObject(ASprite *sprite, int sizeX, int size
 
     AGameObject *block = new AGameObject(name, true);
     block->addComponent("ATransformComponent", new ATransformComponent(glm::vec2(0.0f),
-                                                                       glm::vec2((float)sizeX, (float)sizeY),
+                                                                       glm::vec2(sizeX, sizeY),
                                                                        0.0f, 1));
     block->transform = (ATransformComponent *)block->getComponent("ATransformComponent");
     block->addComponent("ASpriteComponent", new ASpriteComponent(sprite));
