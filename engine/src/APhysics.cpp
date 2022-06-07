@@ -42,7 +42,7 @@ glm::vec2 ABoxCollider::getOrigin()
 void ABoxCollider::editorUpdate(float dt)
 {
     glm::vec2 center = gameObject->transform->position + offset;
-    ADebugDraw::addBox(center, halfSize, gameObject->transform->rotation, glm::vec3(0, 1, 0), 1);
+    ADebugDraw::addBox(center, halfSize, glm::radians(gameObject->transform->rotation), glm::vec3(0, 1, 0), 1);
 }
 
 void ABoxCollider::imgui()
@@ -157,7 +157,7 @@ void ARigidBody::update(float dt)
     {
         this->gameObject->transform->position.x = rawBody->GetPosition().x;
         this->gameObject->transform->position.y = rawBody->GetPosition().y;
-        this->gameObject->transform->rotation = glm::degrees(rawBody->GetAngle());
+        this->gameObject->transform->rotation = glm::degrees((float)rawBody->GetAngle());
     }
 }
 

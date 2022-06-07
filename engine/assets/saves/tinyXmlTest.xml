@@ -3,9 +3,9 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="0.859578" y="1.9013" />
+                <Position x="2.93279" y="2.28701" />
                 <Scale x="0.25" y="0.25" />
-                <Rotation angle="0" />
+                <Rotation angle="-44.9" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
@@ -31,7 +31,7 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="0.855195" y="1.3513" />
+                <Position x="2.92403" y="1.3513" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
