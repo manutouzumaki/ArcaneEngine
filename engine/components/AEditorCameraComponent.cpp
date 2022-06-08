@@ -56,8 +56,8 @@ void AEditorCameraComponent::editorUpdate(float dt)
         camera->position = glm::lerp(camera->position, glm::vec3(0.0f), lerpTime);
         camera->setZoom(camera->getZoom() + (1.0f - camera->getZoom()) * lerpTime);
         lerpTime += dt * 0.1f;
-        if(fabs(camera->position.x) <= 5.0f &&
-           fabs(camera->position.x) <= 5.0f)
+        if(fabs(camera->position.x) <= 0.02f &&
+           fabs(camera->position.x) <= 0.02f)
         {
             lerpTime = 0.0f;
             camera->position = glm::vec3(0.0f);

@@ -13,6 +13,7 @@ public:
     void place();
 private:
     AGameObject *holdingObject;
+    float timer;
 };
 
 #endif

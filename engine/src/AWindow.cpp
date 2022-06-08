@@ -60,6 +60,7 @@ AWindow *AWindow::get()
 
 void AWindow::free()
 {
+    delete instance->sceneHeirarchyWindow;
     delete instance->menuBar;
     delete instance->propertiesWindow;
     delete instance->mousePicking;
@@ -160,6 +161,8 @@ void AWindow::init()
     mousePicking = new AMousePicking(WINDOW_WIDTH, WINDOW_HEIGHT);
     propertiesWindow = new APropertiesWindow();
     menuBar = new AMenuBar();
+    sceneHeirarchyWindow = new ASceneHeirarchyWindow();
+
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     
     loadResources(); 
@@ -233,6 +236,8 @@ void AWindow::loop()
         AGameViewWindow::imgui();
         propertiesWindow->update(dt, currentScene);
 
+        sceneHeirarchyWindow->imgui();
+        
         ImGui::Begin("Properties");
         propertiesWindow->imgui();
         ImGui::End();
@@ -309,6 +314,8 @@ void AWindow::loadResources()
     AAssetPool::addTexture("blocksTexture", "../assets/textures/blocks.png");
     AAssetPool::addTexture("characterTexture", "../assets/textures/character.png");
     AAssetPool::addTexture("gizmoTexture", "../assets/textures/gizmos.png");
+    AAssetPool::addTexture("itemsTexture", "../assets/textures/items.png");
+    AAssetPool::addTexture("marioTexture", "../assets/textures/mario.png");
 
     AAssetPool::addSpritesheet("characterSpritesheet",
                                new ASpritesheet("characterSpritesheet", AAssetPool::getTexture("characterTexture"), 77, 77, 32, 0));
@@ -316,6 +323,11 @@ void AWindow::loadResources()
                                new ASpritesheet("blocksSpritesheet", AAssetPool::getTexture("blocksTexture"), 16, 16, 81, 0));
     AAssetPool::addSpritesheet("gizmoSpritesheet",
                                new ASpritesheet("gizmoSpritesheet", AAssetPool::getTexture("gizmoTexture"), 24, 48, 3, 0));
+    AAssetPool::addSpritesheet("itemsSpritesheet",
+                               new ASpritesheet("itemsSpritesheet", AAssetPool::getTexture("itemsTexture"), 16, 16, 35, 0));
+    AAssetPool::addSpritesheet("marioSpritesheet",
+                               new ASpritesheet("marioSpritesheet", AAssetPool::getTexture("marioTexture"), 16, 16, 28, 0));
+
 }
 
 void AWindow::onNotify(AGameObject *obj, AEvent *event)

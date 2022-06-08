@@ -7,5 +7,6 @@
 void ImGuiVector2(const char *lable, glm::vec2 *data, float resetValue);
 void ImGuiDragFloat(const char *lable, float *data);
 void ImGuiDragInt(const char *lable, int *data);
+void ImGuiInputText(const char **name);
 
 #endif

@@ -34,13 +34,14 @@ public:
     void setPickable(bool value);
     bool getPickable();
     bool getIsDead();
+    bool getSerializable();
 
     static void resetUIDCounter();
     AGameObject *copy();
+    const char *name;
 private:
     static unsigned int ID_COUNTER;
     unsigned int UID;
-    const char *name;
     AArray<AComponent *> components;
     AHashmap<int> componentIndexMap;
     bool serializable;

@@ -35,6 +35,7 @@ public:
     AGameObject *getGameObjectByIndex(int index);
     ACamera *getCamera();
     APhysics *getPhysics();
+    AArray<AGameObject *> *getGameObjects();
 };
 
 #endif

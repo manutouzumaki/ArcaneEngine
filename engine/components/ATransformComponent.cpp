@@ -1,6 +1,7 @@
 #include "ATransformComponent.h"
 
 #include "../editor/AImGui.h"
+#include "../src/AGameObject.h"
 
 ATransformComponent::ATransformComponent()
 {
@@ -59,6 +60,7 @@ bool ATransformComponent::operator!=(ATransformComponent *a)
 
 void ATransformComponent::imgui()
 {
+    ImGuiInputText(&gameObject->name);
     ImGuiVector2("Position", &this->position, 0.0f);
     ImGuiVector2("Scale", &this->scale, 32.0f);
     ImGuiDragFloat("Rotation", &this->rotation);

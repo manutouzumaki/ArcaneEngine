@@ -11,7 +11,7 @@ public:
     void imgui() override;
 private:
     AGameObject *hero;
-    ASpritesheet *sprites[2];
+    ASpritesheet *sprites[4];
     AGameObject *levelEditor;
 };
 

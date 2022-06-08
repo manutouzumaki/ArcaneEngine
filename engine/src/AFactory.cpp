@@ -4,6 +4,7 @@
 #include "../util/AAssetPool.h"
 #include "../components/ASpriteComponent.h"
 #include "APhysics.h"
+#include "../components/AStateMachine.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -114,6 +115,40 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
         float yOff = (float)atof(offsetXml->Attribute("y"));
         float radius = (float)atof(radiusXml->Attribute("value"));
         return new ACircleCollider(glm::vec2(xOff, yOff), radius);
+    }
+    else if(StringCompare(component->GetText(), "AStateMachine", StringLength("AStateMachine")))
+    {
+        AStateMachine *stateMachine = new AStateMachine();
+        TiXmlElement *states = component->FirstChildElement();
+        for(TiXmlElement *state = states->FirstChildElement();
+            state != nullptr;
+            state = state->NextSiblingElement())
+        {
+            AAnimationState *animState = new AAnimationState();
+            int NameSize = StringLength(state->GetText());
+            char *name = (char *)malloc(NameSize + 1);
+            StringCopy(name, NameSize, state->GetText());
+            name[NameSize] = '\0';
+            animState->title = name;
+            TiXmlElement *loopXml = state->FirstChildElement();
+            bool loop = (bool)((int)atof(loopXml->Attribute("value")));
+            animState->setLoop(loop); 
+            TiXmlElement *frames = loopXml->NextSiblingElement();
+            for(TiXmlElement *frame = frames->FirstChildElement();
+                frame != nullptr;
+                frame = frame->NextSiblingElement())
+            {
+                ASpritesheet *sprites = AAssetPool::getSpritesheet(frame->GetText());
+                TiXmlElement *spriteIndexXml = frame->FirstChildElement();
+                int spriteIndex = (int)atof(spriteIndexXml->Attribute("value"));
+                TiXmlElement *frameTimeXml = spriteIndexXml->NextSiblingElement();
+                float frameTime = (float)atof(frameTimeXml->Attribute("value"));
+                animState->addFrame(sprites->getSprite(spriteIndex), frameTime);
+            }
+            stateMachine->addState(animState);
+        }
+        stateMachine->setDefaultStateTitle(stateMachine->states[0]->title); 
+        return stateMachine;
     }
     else
     {

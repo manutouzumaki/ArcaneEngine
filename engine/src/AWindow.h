@@ -7,6 +7,7 @@
 #include "../editor/AMousePicking.h"
 #include "../editor/APropertiesWindow.h"
 #include "../editor/AMenuBar.h"
+#include "../editor/ASceneHeirarchyWindow.h"
 #include "AEventSystem.h"
 
 class AWindow : public AObserver
@@ -29,6 +30,7 @@ private:
     AMousePicking *mousePicking;
     APropertiesWindow *propertiesWindow;
     AMenuBar *menuBar;
+    ASceneHeirarchyWindow *sceneHeirarchyWindow;
 public:
     static AWindow *get();
     static void free();

@@ -1,4 +1,7 @@
 #include "AImGui.h"
+#include "../util/AString.h"
+#include <malloc.h>
+#include <stdio.h>
 
 void ImGuiVector2(const char *lable, glm::vec2 *data, float resetValue)
 {
@@ -67,4 +70,33 @@ void ImGuiDragInt(const char *lable, int *data)
 
     ImGui::Columns(1);
     ImGui::PopID();
+}
+
+void ImGuiInputText(const char **name)
+{
+    // TODO: look for BUGS on this code
+    ImGui::PushID("Name");
+    ImGui::Columns(2);
+    ImGui::SetColumnWidth(0, 80);
+    ImGui::Text("Name");
+    ImGui::NextColumn();
+     
+    char buffer[256];
+    StringCopy(buffer, StringLength(*name), *name);
+    if(ImGui::InputText("##Name", buffer, 256))
+    {
+        ImGui::Columns(1);
+        ImGui::PopID();
+        free((void *)(*name));
+        int length = StringLength(buffer);
+        char *src = (char *)malloc(length + 1);
+        StringCopy(src, length, buffer);
+        src[length] = '\0';
+        *name = (const char *)src;
+        return;
+    }
+
+    ImGui::Columns(1);
+    ImGui::PopID();
+ 
 }

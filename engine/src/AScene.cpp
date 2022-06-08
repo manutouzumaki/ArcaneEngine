@@ -146,3 +146,8 @@ APhysics *AScene::getPhysics()
 {
     return physics;
 }
+
+AArray<AGameObject *> *AScene::getGameObjects()
+{
+    return &gameObjects;
+}

@@ -134,6 +134,11 @@ bool AGameObject::getIsDead()
     return this->isDead;
 }
 
+bool AGameObject::getSerializable()
+{
+    return this->serializable;
+}
+
 AGameObject *AGameObject::copy()
 {
     // TODO: come up with cleaner solution
