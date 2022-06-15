@@ -18,28 +18,20 @@ AStateMachine::~AStateMachine()
     }
 }
 
-void AStateMachine::addStateTrigger(AString from, AArray<const char *> *to)
-{
-    stateTransfers.add(from, to); 
-}
-
 void AStateMachine::addState(AAnimationState *state)
 {
     states.add(state);
 }
 
-void AStateMachine::trigger(const char *target, int index)
+void AStateMachine::trigger(const char *target)
 {
     if(currentState)
     {
-        AArray<const char *> *currentTargets = stateTransfers[currentState->title];
-        for(int i = 0; i < currentTargets->size(); ++i)
+        for(int i = 0; i < states.size(); ++i)
         {
-            const char *currentTarget = (*currentTargets)[i];
-            if(StringCompare(target, currentTarget, StringLength(currentTarget)))
+            if(StringCompare(target, states[i]->title, StringLength(target)))
             {
-                currentState = states[index]; 
-                return;
+                currentState = states[i];
             }
         }
     }

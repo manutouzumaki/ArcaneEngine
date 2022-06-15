@@ -4,6 +4,7 @@
 AHashmap<AShader *> AAssetPool::shaders;
 AHashmap<ATexture *> AAssetPool::textures;
 AHashmap<ASpritesheet *> AAssetPool::spritesheets;
+AHashmap<ASound *> AAssetPool::sounds;
 
 void AAssetPool::addShader(AString resourceName, const char *vPath, const char *fPath)
 {
@@ -34,4 +35,14 @@ void AAssetPool::addSpritesheet(AString resourceName, ASpritesheet *spritesheet)
 ASpritesheet *AAssetPool::getSpritesheet(AString resourceName)
 {
     return spritesheets[resourceName];
+}
+
+void AAssetPool::addSound(AString resourceName, ASound *sound)
+{
+    sounds.add(resourceName, sound);
+}
+
+ASound *AAssetPool::getSound(AString resourceName)
+{
+    return sounds[resourceName];
 }

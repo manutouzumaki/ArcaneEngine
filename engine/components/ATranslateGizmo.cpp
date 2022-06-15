@@ -52,7 +52,7 @@ void ATranslateGizmo::editorUpdate(float dt)
             {
                 AGameObject *newObj = this->activeGameObject->copy();
                 AWindow::getScene()->addGameObject(newObj);
-                newObj->transform->position.x += 0.1f; 
+                newObj->transform->position.x += 0.25f; 
                 propertiesWindow->setActiveGameObject(newObj);
                 return;
             }

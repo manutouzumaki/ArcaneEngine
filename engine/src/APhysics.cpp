@@ -1,8 +1,10 @@
 #include "APhysics.h"
+#include "AWindow.h"
 #include "AGameObject.h"
 #include "../renderer/ADebugDraw.h"
 #include "../editor/AImGui.h"
 #include <glm/gtx/rotate_vector.hpp>
+#include "../util/ADefines.h"
 
 glm::vec2 ACollider::getOffset()
 {
@@ -71,8 +73,6 @@ void ABoxCollider::serialize(TiXmlElement *parent)
     origin->SetDoubleAttribute("y", this->origin.y);
     root->LinkEndChild(origin); 
 }
-////////////////////////////////////////////////////////////
-
 
 // ACircleCollider Component
 ////////////////////////////////////////////////////////////
@@ -97,6 +97,12 @@ void ACircleCollider::setRadius(float radius)
     this->radius = radius;
 }
 
+void ACircleCollider::editorUpdate(float dt)
+{
+    glm::vec2 center = gameObject->transform->position + offset;
+    ADebugDraw::addCircle(center, radius, glm::vec3(0, 1, 0), 1);
+}
+
 void ACircleCollider::imgui()
 {
     ImGuiDragFloat("Radius", &radius);
@@ -119,7 +125,9 @@ void ACircleCollider::serialize(TiXmlElement *parent)
 }
 ////////////////////////////////////////////////////////////
 
-// ACircleCollider Component
+////////////////////////////////////////////////////////////
+
+// ARigidBody Component
 ////////////////////////////////////////////////////////////
 ARigidBody::ARigidBody()
     : velocity(0.0f, 0.0f)
@@ -130,6 +138,12 @@ ARigidBody::ARigidBody()
     bodyType = DYNAMIC;
     fixedRotation = false;
     continuousCollision = true;
+    
+    gravityScale = 1.0f;
+    angularVelocity = 0.0f;
+    friction = 0.1f;
+    isSensor = false;
+
     rawBody = nullptr;
 }
     
@@ -139,7 +153,11 @@ ARigidBody::ARigidBody(glm::vec2 velocity,
                float mass,
                BodyType bodyType,
                bool fixedRotation,
-               bool continuousCollision)
+               bool continuousCollision,
+               float gravityScale,
+               float angularVelocity,
+               float friction,
+               bool isSensor)
 {
     this->velocity = velocity;
     this->angularDamping = angularDamping;
@@ -148,6 +166,10 @@ ARigidBody::ARigidBody(glm::vec2 velocity,
     this->bodyType = bodyType;
     this->fixedRotation = fixedRotation;
     this->continuousCollision = continuousCollision;
+    this->gravityScale = gravityScale;
+    this->angularVelocity = angularVelocity;
+    this->friction = friction;
+    this->isSensor = isSensor;
     this->rawBody = nullptr;
 }
 
@@ -178,8 +200,12 @@ void ARigidBody::imgui()
     {
         bodyType = (BodyType)index; 
     }
-    ImGui::Checkbox("fixedRotation", &fixedRotation);
+    ImGui::Checkbox("FixedRotation", &fixedRotation);
     ImGui::Checkbox("ContinuousCollision", &continuousCollision);
+    ImGuiDragFloat("GravityScale", &gravityScale);
+    ImGuiDragFloat("AngularVelocity", &angularVelocity);
+    ImGuiDragFloat("Friction", &friction);
+    ImGui::Checkbox("IsSensor", &isSensor);
 }
 
 void ARigidBody::serialize(TiXmlElement *parent)
@@ -210,6 +236,34 @@ void ARigidBody::serialize(TiXmlElement *parent)
     TiXmlElement *continuousCollision = new TiXmlElement("ContinuousCollision");
     continuousCollision->SetAttribute("value", (int)this->continuousCollision);
     root->LinkEndChild(continuousCollision);    
+    TiXmlElement *gravityScale = new TiXmlElement("GravityScale");
+    gravityScale->SetDoubleAttribute("value", this->gravityScale);
+    root->LinkEndChild(gravityScale);
+    TiXmlElement *angularVelocity = new TiXmlElement("AngularVelocity");
+    angularVelocity->SetDoubleAttribute("value", this->angularVelocity);
+    root->LinkEndChild(angularVelocity);
+    TiXmlElement *friction = new TiXmlElement("Friction");
+    friction->SetDoubleAttribute("value", this->friction);
+    root->LinkEndChild(friction);
+    TiXmlElement *isSensor = new TiXmlElement("IsSensor");
+    isSensor->SetAttribute("value", (int)this->isSensor);
+    root->LinkEndChild(isSensor);  
+}
+
+void ARigidBody::addVelocity(glm::vec2 force)
+{
+    if(rawBody)
+    {
+        rawBody->ApplyForceToCenter(b2Vec2(force.x, force.y), true);
+    }
+}
+
+void ARigidBody::addImpulse(glm::vec2 impulse)
+{
+    if(rawBody)
+    {
+        rawBody->ApplyLinearImpulseToCenter(b2Vec2(impulse.x, impulse.y), true);
+    }
 }
 
 glm::vec2 ARigidBody::getVelocity()
@@ -220,7 +274,48 @@ glm::vec2 ARigidBody::getVelocity()
 void ARigidBody::setVelocity(glm::vec2 velocity)
 {
     this->velocity = velocity;
+    if(rawBody)
+    {
+        rawBody->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+    }
 }
+
+void ARigidBody::setAngularVelocity(float angularVelocity)
+{
+    this->angularVelocity = angularVelocity;
+    if(rawBody)
+    {
+        rawBody->SetAngularVelocity(angularVelocity);
+    }
+}
+
+void ARigidBody::setGravityScale(float gravityScale)
+{
+    this->gravityScale = gravityScale;
+    if(rawBody)
+    {
+        rawBody->SetGravityScale(gravityScale);
+    }
+}
+
+void ARigidBody::setIsSensor(bool value)
+{
+    this->isSensor = true;
+    if(rawBody)
+    {
+        AWindow::getScene()->getPhysics()->setIsSensor(this);
+    }
+}
+
+void ARigidBody::setNotSensor(bool value)
+{
+    this->isSensor = false;
+    if(rawBody)
+    {
+        AWindow::getScene()->getPhysics()->setNotSensor(this);
+    }
+}
+
 
 float ARigidBody::getAngularDamping()
 {
@@ -294,6 +389,32 @@ void ARigidBody::setRawBody(b2Body *body)
 ////////////////////////////////////////////////////////////
 
 
+RaycastInfo::RaycastInfo(AGameObject *go)
+{
+    fixture = nullptr;
+    point = glm::vec2(0.0f);
+    normal = glm::vec2(0.0f);
+    fraction = 0.0f;
+    hit = false;
+    hitObject = nullptr;
+    requestingObject = go;
+}
+
+float RaycastInfo::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float fraction)
+{
+    if((size_t)fixture->GetUserData().pointer == (size_t)requestingObject)
+    {
+        return 1;
+    }
+    this->fixture = fixture;
+    this->point = glm::vec2(point.x, point.y);
+    this->normal = glm::vec2(normal.x, normal.y);
+    this->fraction = fraction;
+    this->hit = fraction != 0.0f;
+    this->hitObject = (AGameObject *)fixture->GetUserData().pointer;
+    return fraction;
+}
+
 APhysics::APhysics()
     : gravity(0.0f, -10.0f), world(gravity)
 {
@@ -301,11 +422,51 @@ APhysics::APhysics()
     physicsTimeStep = 1.0f / 60.0f;
     velocityIterations = 8;
     positionIterations = 3;
+    world.SetContactListener(&contactListener);
 }
 
 APhysics::~APhysics()
 {
 
+}
+
+static void AddBoxCollider(ARigidBody *rb, ABoxCollider *boxCollider)
+{
+    b2Body *body = rb->getRawBody();
+    Assert(body != nullptr);
+
+    b2PolygonShape shape;
+    glm::vec2 halfSize = boxCollider->getHalfSize() * 0.5f;
+    glm::vec2 offset = boxCollider->getOffset();
+    glm::vec2 origin = boxCollider->getOrigin();
+    shape.SetAsBox(halfSize.x, halfSize.y, b2Vec2(offset.x, offset.y), 0);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = rb->friction;
+    fixtureDef.userData.pointer = (size_t)boxCollider->gameObject;
+    fixtureDef.isSensor = rb->isSensor;
+    body->CreateFixture(&fixtureDef);
+
+}
+
+static void AddCircleCollider(ARigidBody *rb, ACircleCollider *circleCollider)
+{
+    b2Body *body = rb->getRawBody();
+    Assert(body != nullptr);
+
+    b2CircleShape shape;
+    shape.m_radius = circleCollider->getRadius();
+    shape.m_p = b2Vec2(circleCollider->getOffset().x, circleCollider->getOffset().y);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = rb->friction;
+    fixtureDef.userData.pointer = (size_t)circleCollider->gameObject;
+    fixtureDef.isSensor = rb->isSensor;
+    body->CreateFixture(&fixtureDef);
 }
 
 void APhysics::addGameObject(AGameObject *go)
@@ -322,47 +483,33 @@ void APhysics::addGameObject(AGameObject *go)
             bodyDef.angularDamping = rb->getAngularDamping();
             bodyDef.linearDamping = rb->getLinearDamping();
             bodyDef.fixedRotation = rb->getFixedRotation();
+            bodyDef.userData.pointer = (size_t)go;
             bodyDef.bullet = rb->getContinuousCollision();
+            bodyDef.gravityScale = rb->gravityScale;
+            bodyDef.angularVelocity = rb->angularVelocity;
             switch (rb->getBodyType())
             {
                 case STATIC: {bodyDef.type = b2_staticBody;} break;
                 case DYNAMIC: {bodyDef.type = b2_dynamicBody;} break;
                 case KINEMATIC: {bodyDef.type = b2_kinematicBody;} break;
             }
-            b2PolygonShape shape;
-            if(go->hasComponent("ACircleCollider"))
-            {
-                ACircleCollider *circleCollider = (ACircleCollider *)go->getComponent("ACircleCollider");
-                b2Vec2 points[20];
-                float angle = 0;
-                float angleIncrement = 360.0f/20.0f;
-                for(int i = 0; i < 20; ++i)
-                {
-                    glm::vec2 point = glm::rotate(glm::vec2(circleCollider->getRadius(), 0.0f), glm::radians(angle));
-                    points[i] = b2Vec2(point.x, point.y);
-                    angle += angleIncrement;
-                }
-                shape.Set(points, 20);
-            }
-            else if(go->hasComponent("ABoxCollider"))
+            b2Body *body = world.CreateBody(&bodyDef);
+            b2MassData massData = {};
+            massData.mass = rb->getMass();
+            massData.center = bodyDef.position;
+            body->SetMassData(&massData);
+            rb->setRawBody(body);
+
+            if(go->hasComponent("ABoxCollider"))
             {
                 ABoxCollider *boxCollider = (ABoxCollider *)go->getComponent("ABoxCollider");
-                glm::vec2 halfSize = boxCollider->getHalfSize() * 0.5f;
-                glm::vec2 offset = boxCollider->getOffset();
-                glm::vec2 origin = boxCollider->getOrigin();
-                shape.SetAsBox(halfSize.x, halfSize.y, b2Vec2(origin.x, origin.y), 0);
-                b2Vec2 pos = bodyDef.position;
-                float xPos = pos.x + offset.x;
-                float yPos = pos.y + offset.y;
-                bodyDef.position.Set(xPos, yPos);
+                AddBoxCollider(rb, boxCollider);
             }
-            rb->setRawBody(world.CreateBody(&bodyDef));
-
-            b2FixtureDef fixtureDef;
-            fixtureDef.shape = &shape;
-            fixtureDef.density = 1.0f;
-            fixtureDef.friction = 0.3f;
-            rb->getRawBody()->CreateFixture(&fixtureDef);
+            else if(go->hasComponent("ACircleCollider"))
+            {
+                ACircleCollider *circleCollider = (ACircleCollider *)go->getComponent("ACircleCollider");
+                AddCircleCollider(rb, circleCollider);
+            }
         }
     }
 }
@@ -390,3 +537,137 @@ void APhysics::update(float dt)
         world.Step(physicsTimeStep, velocityIterations, positionIterations);
     }
 }
+
+RaycastInfo APhysics::raycast(AGameObject *requestingObject, glm::vec2 point1 , glm::vec2 point2)
+{
+    RaycastInfo callback(requestingObject);
+    b2Vec2 start = b2Vec2(point1.x, point1.y);
+    b2Vec2 end = b2Vec2(point2.x, point2.y);
+    world.RayCast(&callback, start, end);
+    return callback;
+}
+
+void APhysics::setIsSensor(ARigidBody *rb)
+{
+    b2Body *body = rb->getRawBody(); 
+    if(body)
+    {
+        b2Fixture *fixture = body->GetFixtureList();
+        while(fixture)
+        {
+            fixture->SetSensor(true);
+            fixture = fixture->GetNext();
+        }
+    }
+}
+
+void APhysics::setNotSensor(ARigidBody *rb)
+{
+    b2Body *body = rb->getRawBody(); 
+    if(body)
+    {
+        b2Fixture *fixture = body->GetFixtureList();
+        while(fixture)
+        {
+            fixture->SetSensor(false);
+            fixture = fixture->GetNext();
+        }
+    }
+}
+
+glm::vec2 APhysics::getGravity()
+{
+    glm::vec2 gravity = glm::vec2(world.GetGravity().x, world.GetGravity().y);
+    return gravity;
+}
+
+void AContactListener::BeginContact(b2Contact *contact)
+{
+    AGameObject *goA = (AGameObject *)contact->GetFixtureA()->GetUserData().pointer;
+    AGameObject *goB = (AGameObject *)contact->GetFixtureB()->GetUserData().pointer;
+    b2WorldManifold worldManifold;
+    contact->GetWorldManifold(&worldManifold);
+    glm::vec2 aNormal = glm::vec2(worldManifold.normal.x, worldManifold.normal.y);
+    glm::vec2 bNormal = -aNormal;
+
+    AArray<AComponent *> *components = goA->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->beginCollision(goB, contact, aNormal);
+    }
+
+    components = goB->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->beginCollision(goA, contact, bNormal);
+    }
+}
+
+void AContactListener::EndContact(b2Contact *contact)
+{
+    AGameObject *goA = (AGameObject *)contact->GetFixtureA()->GetUserData().pointer;
+    AGameObject *goB = (AGameObject *)contact->GetFixtureB()->GetUserData().pointer;
+    b2WorldManifold worldManifold;
+    contact->GetWorldManifold(&worldManifold);
+    glm::vec2 aNormal = glm::vec2(worldManifold.normal.x, worldManifold.normal.y);
+    glm::vec2 bNormal = -aNormal;
+
+    AArray<AComponent *> *components = goA->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->endCollision(goB, contact, aNormal);
+    }
+
+    components = goB->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->endCollision(goA, contact, bNormal);
+    }
+}
+
+void AContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManifold)
+{
+    AGameObject *goA = (AGameObject *)contact->GetFixtureA()->GetUserData().pointer;
+    AGameObject *goB = (AGameObject *)contact->GetFixtureB()->GetUserData().pointer;
+    b2WorldManifold worldManifold;
+    contact->GetWorldManifold(&worldManifold);
+    glm::vec2 aNormal = glm::vec2(worldManifold.normal.x, worldManifold.normal.y);
+    glm::vec2 bNormal = -aNormal;
+
+    AArray<AComponent *> *components = goA->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->preSolve(goB, contact, aNormal);
+    }
+
+    components = goB->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->preSolve(goA, contact, bNormal);
+    }
+}
+
+void AContactListener::PostSolve(b2Contact *contact, const b2ContactImpulse *impulse)
+{
+    AGameObject *goA = (AGameObject *)contact->GetFixtureA()->GetUserData().pointer;
+    AGameObject *goB = (AGameObject *)contact->GetFixtureB()->GetUserData().pointer;
+    b2WorldManifold worldManifold;
+    contact->GetWorldManifold(&worldManifold);
+    glm::vec2 aNormal = glm::vec2(worldManifold.normal.x, worldManifold.normal.y);
+    glm::vec2 bNormal = -aNormal;
+
+    AArray<AComponent *> *components = goA->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->postSolve(goB, contact, aNormal);
+    }
+
+    components = goB->getAllComponents();
+    for(int i = 0; i < components->size(); ++i)
+    {
+        (*components)[i]->postSolve(goA, contact, bNormal);
+    }
+}
+
+
+

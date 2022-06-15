@@ -93,12 +93,12 @@ void AWindow::run()
 {
     init();
     loop();
-    
-    //currentScene->close();
+
+    alcDestroyContext(audioContext);
+    alcCloseDevice(audioDevice); 
 
     ADebugDraw::shutDown();
 
-    // TODO: Imgui Test
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
@@ -147,6 +147,20 @@ void AWindow::init()
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+
+    // setup openAl
+    audioDevice = alcOpenDevice(nullptr);
+    if(audioDevice)
+    {
+        audioContext = alcCreateContext(audioDevice, nullptr);
+        alcMakeContextCurrent(audioContext);
+    }
+    else
+    {
+        printf("Error: Failed to initialize OpenAL\n");
+    }
+    
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -316,6 +330,7 @@ void AWindow::loadResources()
     AAssetPool::addTexture("gizmoTexture", "../assets/textures/gizmos.png");
     AAssetPool::addTexture("itemsTexture", "../assets/textures/items.png");
     AAssetPool::addTexture("marioTexture", "../assets/textures/mario.png");
+    AAssetPool::addTexture("marioRunTexture", "../assets/textures/mario-run.png");
 
     AAssetPool::addSpritesheet("characterSpritesheet",
                                new ASpritesheet("characterSpritesheet", AAssetPool::getTexture("characterTexture"), 77, 77, 32, 0));
@@ -327,7 +342,12 @@ void AWindow::loadResources()
                                new ASpritesheet("itemsSpritesheet", AAssetPool::getTexture("itemsTexture"), 16, 16, 35, 0));
     AAssetPool::addSpritesheet("marioSpritesheet",
                                new ASpritesheet("marioSpritesheet", AAssetPool::getTexture("marioTexture"), 16, 16, 28, 0));
+    AAssetPool::addSpritesheet("marioRunSpritesheet", 
+                               new ASpritesheet("marioRunSpritesheet", AAssetPool::getTexture("marioRunTexture"), 16, 32, 42, 0));
 
+    AAssetPool::addSound("fireball", new ASound("../assets/sounds/fireball.ogg", false, false));
+    AAssetPool::addSound("jump-small", new ASound("../assets/sounds/jump-small.ogg", false, false));
+    AAssetPool::addSound("music", new ASound("../assets/sounds/main-theme-overworld.ogg", true, false));
 }
 
 void AWindow::onNotify(AGameObject *obj, AEvent *event)
@@ -338,11 +358,13 @@ void AWindow::onNotify(AGameObject *obj, AEvent *event)
         {
             runTimePlaying = true;
             currentScene->save();
+            //AAssetPool::getSound("music")->play();
             AWindow::changeScene(new ALevelEditorSceneInitializer()); 
         }break;
         case GAME_ENGINE_STOP_PLAY:
         {
             runTimePlaying = false;
+            //AAssetPool::getSound("music")->stop();
             AWindow::changeScene(new ALevelEditorSceneInitializer()); 
         }break;
         case LOAD_LEVEL:

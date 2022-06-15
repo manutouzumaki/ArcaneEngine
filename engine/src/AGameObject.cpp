@@ -186,6 +186,10 @@ void AGameObject::serialize(TiXmlElement *parent)
     }  
 }
 
+AArray<AComponent *> *AGameObject::getAllComponents()
+{
+    return &this->components;
+}
 
 
 

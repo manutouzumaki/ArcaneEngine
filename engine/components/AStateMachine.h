@@ -11,11 +11,9 @@ class AStateMachine : public AComponent
 public:
     AStateMachine();
     ~AStateMachine();
-    AHashmap<AArray<const char *> *> stateTransfers;
     AArray<AAnimationState *> states;
-    void addStateTrigger(AString from, AArray<const char *> *to);
     void addState(AAnimationState *state);
-    void trigger(const char *target, int index);
+    void trigger(const char *target);
     void start() override;
     void update(float dt) override;
     void editorUpdate(float dt) override;

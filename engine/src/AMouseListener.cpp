@@ -187,3 +187,23 @@ void AMouseListener::setGameViewportSize(glm::vec2 gameViewportSize)
     get()->gameViewportSize = gameViewportSize;
 }
 
+glm::vec2 AMouseListener::screenToOrtho(glm::vec2 screenCoord)
+{
+    glm::vec2 normalizeP = (screenCoord - get()->gameViewportPos) / get()->gameViewportSize;
+    normalizeP = (normalizeP * 2.0f) - glm::vec2(1);
+    glm::vec4 position = glm::vec4(normalizeP.x, -normalizeP.y, 0, 1);
+    ACamera *camera = AWindow::getScene()->getCamera();
+    position = camera->getInvViewMatrix() * camera->getInvProjMatrix() * position;
+    return glm::vec2(position.x, position.y);
+}
+
+glm::vec2 AMouseListener::orthoToScreen(glm::vec2 worldCoord)
+{
+    ACamera *camera = AWindow::getScene()->getCamera();
+    glm::vec4 ndcSpacePos = glm::vec4(worldCoord.x, worldCoord.y, 0, 1);
+    ndcSpacePos = camera->getProjMatrix() * camera->getViewMatrix() * ndcSpacePos;
+    glm::vec2 windowSpace = glm::vec2(ndcSpacePos.x, ndcSpacePos.y) * (1.0f/ndcSpacePos.w);
+    windowSpace = windowSpace + glm::vec2(0.5f);
+    windowSpace = windowSpace * glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT);
+    return windowSpace;
+}

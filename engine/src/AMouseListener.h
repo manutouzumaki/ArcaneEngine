@@ -44,6 +44,8 @@ public:
     static bool mouseButtonDown(int button);
     static void setGameViewportPos(glm::vec2 gameViewportPos);
     static void setGameViewportSize(glm::vec2 gameViewportSize);
+    static glm::vec2 screenToOrtho(glm::vec2 screenCoord);
+    static glm::vec2 orthoToScreen(glm::vec2 worldCoord);
 };
 
 #endif

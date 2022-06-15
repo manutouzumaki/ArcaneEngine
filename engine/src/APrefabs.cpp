@@ -3,6 +3,7 @@
 #include "../components/ASpriteComponent.h"
 #include "../components/ATransformComponent.h"
 #include "../components/AStateMachine.h"
+#include "../components/APlayerController.h"
 #include "../util/AAssetPool.h"
 #include "../util/AString.h"
 
@@ -62,20 +63,38 @@ AGameObject *APrefabs::generateMario()
 {
     ASpritesheet *spritesheet = AAssetPool::getSpritesheet("marioSpritesheet");
     AGameObject *mario = generateSpriteObject(spritesheet->getSprite(0), 0.25f, 0.25f);
+
+
+    float defaultFrameTime = 0.23f;
+    AAnimationState *idle = new AAnimationState();
+    idle->title = "idle";
+    idle->addFrame(spritesheet->getSprite(0), defaultFrameTime);
     
     AAnimationState *run = new AAnimationState();
     run->title = "run";
-    float defaultFrameTime = 0.23f;
-    run->addFrame(spritesheet->getSprite(0), defaultFrameTime);
+    run->addFrame(spritesheet->getSprite(1), defaultFrameTime);
     run->addFrame(spritesheet->getSprite(2), defaultFrameTime);
     run->addFrame(spritesheet->getSprite(3), defaultFrameTime);
-    run->addFrame(spritesheet->getSprite(2), defaultFrameTime);
     run->setLoop(true);
-    AStateMachine *stateMachine = new AStateMachine();
-    stateMachine->addState(run);
 
-    stateMachine->setDefaultStateTitle(run->title); 
+    AAnimationState *switchDirection = new AAnimationState();
+    switchDirection->title = "switchDirection";
+    switchDirection->addFrame(spritesheet->getSprite(4), defaultFrameTime);
+
+    AAnimationState *jump = new AAnimationState();
+    jump->title = "jump";
+    jump->addFrame(spritesheet->getSprite(5), defaultFrameTime);
+
+    AStateMachine *stateMachine = new AStateMachine();
+    stateMachine->addState(idle);
+    stateMachine->addState(run);
+    stateMachine->addState(switchDirection);
+    stateMachine->addState(jump);
+    stateMachine->setDefaultStateTitle(idle->title); 
     mario->addComponent("AStateMachine", stateMachine);
+
+    mario->addComponent("APlayerController", new APlayerController());
+
     return mario;
 }
 

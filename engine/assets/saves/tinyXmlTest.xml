@@ -1,121 +1,9 @@
 <?xml version="1.0f" ?>
 <GameObjects>
-    <AGameObject>GreenCube
+    <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="2.59323" y="2.87372" />
-                <Scale x="0.25" y="0.25" />
-                <Rotation angle="-58.1" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="0.925803" b="0.146739" a="1" />
-                <Sprite index="17">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-            <ARigidBody>ARigidBody
-                <Velocity x="0" y="0" />
-                <AngularDamping value="0.8" />
-                <LinearDamping value="0.9" />
-                <Mass value="1" />
-                <BodyType value="1" />
-                <FixedRotation value="0" />
-                <ContinuousCollision value="1" />
-            </ARigidBody>
-            <ABoxCollider>ABoxCollider
-                <Offset x="1.78382e-38" y="0" />
-                <HalfSize x="0.23" y="0.23" />
-                <Origin x="0" y="0" />
-            </ABoxCollider>
-        </Components>
-    </AGameObject>
-    <AGameObject>Floor
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="2.92403" y="1.3513" />
-                <Scale x="0.25" y="0.25" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="14">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-            <ARigidBody>ARigidBody
-                <Velocity x="0" y="0" />
-                <AngularDamping value="0.8" />
-                <LinearDamping value="0.9" />
-                <Mass value="0" />
-                <BodyType value="0" />
-                <FixedRotation value="0" />
-                <ContinuousCollision value="1" />
-            </ARigidBody>
-            <ABoxCollider>ABoxCollider
-                <Offset x="1.78461e-38" y="0" />
-                <HalfSize x="0.23" y="0.23" />
-                <Origin x="0" y="0" />
-            </ABoxCollider>
-        </Components>
-    </AGameObject>
-    <AGameObject>Floor
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="3.17224" y="1.3513" />
-                <Scale x="0.25" y="0.25" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="14">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-            <ARigidBody>ARigidBody
-                <Velocity x="0" y="0" />
-                <AngularDamping value="0.8" />
-                <LinearDamping value="0.9" />
-                <Mass value="0" />
-                <BodyType value="0" />
-                <FixedRotation value="0" />
-                <ContinuousCollision value="1" />
-            </ARigidBody>
-            <ABoxCollider>ABoxCollider
-                <Offset x="1.78461e-38" y="0" />
-                <HalfSize x="0.23" y="0.23" />
-                <Origin x="0" y="0" />
-            </ABoxCollider>
-        </Components>
-    </AGameObject>
-    <AGameObject>BrownCube
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="2.67631" y="1.3513" />
-                <Scale x="0.25" y="0.25" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="14">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-            <ARigidBody>ARigidBody
-                <Velocity x="0" y="0" />
-                <AngularDamping value="0.8" />
-                <LinearDamping value="0.9" />
-                <Mass value="0" />
-                <BodyType value="0" />
-                <FixedRotation value="0" />
-                <ContinuousCollision value="1" />
-            </ARigidBody>
-            <ABoxCollider>ABoxCollider
-                <Offset x="1.78461e-38" y="0" />
-                <HalfSize x="0.23" y="0.23" />
-                <Origin x="0" y="0" />
-            </ABoxCollider>
-        </Components>
-    </AGameObject>
-    <AGameObject>Cube
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="2.5024" y="1.97402" />
+                <Position x="0.125" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
@@ -128,14 +16,18 @@
                 <Velocity x="0" y="0" />
                 <AngularDamping value="0.8" />
                 <LinearDamping value="0.9" />
-                <Mass value="1" />
-                <BodyType value="2" />
+                <Mass value="0" />
+                <BodyType value="0" />
                 <FixedRotation value="0" />
                 <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
             </ARigidBody>
             <ABoxCollider>ABoxCollider
-                <Offset x="1.90452e-38" y="0" />
-                <HalfSize x="0.3" y="0.3" />
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
                 <Origin x="0" y="0" />
             </ABoxCollider>
         </Components>
@@ -143,35 +35,7 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="3.10851" y="1.69891" />
-                <Scale x="0.25" y="0.25" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="17">blocksSpritesheet</Sprite>
-            </ASpriteComponent>
-            <ARigidBody>ARigidBody
-                <Velocity x="0" y="0" />
-                <AngularDamping value="0.8" />
-                <LinearDamping value="0.9" />
-                <Mass value="0" />
-                <BodyType value="0" />
-                <FixedRotation value="0" />
-                <ContinuousCollision value="1" />
-            </ARigidBody>
-            <ABoxCollider>ABoxCollider
-                <Offset x="2.30003e-38" y="0" />
-                <HalfSize x="0.23" y="0.23" />
-                <Origin x="0" y="0" />
-            </ABoxCollider>
-        </Components>
-    </AGameObject>
-    <AGameObject>Cube
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="3.17278" y="2.5832" />
+                <Position x="0.375" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
@@ -184,29 +48,33 @@
                 <Velocity x="0" y="0" />
                 <AngularDamping value="0.8" />
                 <LinearDamping value="0.9" />
-                <Mass value="1" />
-                <BodyType value="2" />
+                <Mass value="0" />
+                <BodyType value="0" />
                 <FixedRotation value="0" />
                 <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
             </ARigidBody>
             <ABoxCollider>ABoxCollider
-                <Offset x="1.90452e-38" y="0" />
-                <HalfSize x="0.3" y="0.3" />
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
                 <Origin x="0" y="0" />
             </ABoxCollider>
         </Components>
     </AGameObject>
-    <AGameObject>BrownCube
+    <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="2.42701" y="1.3513" />
+                <Position x="0.625" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="14">blocksSpritesheet</Sprite>
+                <Sprite index="0">blocksSpritesheet</Sprite>
             </ASpriteComponent>
             <ARigidBody>ARigidBody
                 <Velocity x="0" y="0" />
@@ -216,25 +84,29 @@
                 <BodyType value="0" />
                 <FixedRotation value="0" />
                 <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
             </ARigidBody>
             <ABoxCollider>ABoxCollider
-                <Offset x="1.78461e-38" y="0" />
-                <HalfSize x="0.23" y="0.23" />
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
                 <Origin x="0" y="0" />
             </ABoxCollider>
         </Components>
     </AGameObject>
-    <AGameObject>Floor
+    <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="3.41373" y="1.3513" />
+                <Position x="0.875" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="14">blocksSpritesheet</Sprite>
+                <Sprite index="0">blocksSpritesheet</Sprite>
             </ASpriteComponent>
             <ARigidBody>ARigidBody
                 <Velocity x="0" y="0" />
@@ -244,10 +116,14 @@
                 <BodyType value="0" />
                 <FixedRotation value="0" />
                 <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
             </ARigidBody>
             <ABoxCollider>ABoxCollider
-                <Offset x="1.78461e-38" y="0" />
-                <HalfSize x="0.23" y="0.23" />
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
                 <Origin x="0" y="0" />
             </ABoxCollider>
         </Components>
@@ -255,68 +131,31 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="3.01596" y="3.19415" />
+                <Position x="1.125" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="22">characterSpritesheet</Sprite>
+                <Sprite index="0">blocksSpritesheet</Sprite>
             </ASpriteComponent>
-            <AStateMachine>AStateMachine
-                <States>
-                    <State>run
-                        <Loop value="1" />
-                        <Frames>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="16" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="17" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="18" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="19" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="20" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="21" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="22" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="23" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                        </Frames>
-                    </State>
-                </States>
-            </AStateMachine>
             <ARigidBody>ARigidBody
                 <Velocity x="0" y="0" />
                 <AngularDamping value="0.8" />
                 <LinearDamping value="0.9" />
-                <Mass value="1" />
-                <BodyType value="1" />
+                <Mass value="0" />
+                <BodyType value="0" />
                 <FixedRotation value="0" />
                 <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
             </ARigidBody>
             <ABoxCollider>ABoxCollider
-                <Offset x="3.43218e-38" y="0" />
-                <HalfSize x="0.1" y="0.25" />
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
                 <Origin x="0" y="0" />
             </ABoxCollider>
         </Components>
@@ -324,68 +163,31 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="3.11069" y="2.12579" />
+                <Position x="1.375" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="22">characterSpritesheet</Sprite>
+                <Sprite index="0">blocksSpritesheet</Sprite>
             </ASpriteComponent>
-            <AStateMachine>AStateMachine
-                <States>
-                    <State>run
-                        <Loop value="1" />
-                        <Frames>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="16" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="17" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="18" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="19" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="20" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="21" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="22" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="23" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                        </Frames>
-                    </State>
-                </States>
-            </AStateMachine>
             <ARigidBody>ARigidBody
                 <Velocity x="0" y="0" />
                 <AngularDamping value="0.8" />
                 <LinearDamping value="0.9" />
-                <Mass value="1" />
-                <BodyType value="1" />
+                <Mass value="0" />
+                <BodyType value="0" />
                 <FixedRotation value="0" />
                 <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
             </ARigidBody>
             <ABoxCollider>ABoxCollider
-                <Offset x="3.43218e-38" y="0" />
-                <HalfSize x="0.1" y="0.25" />
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
                 <Origin x="0" y="0" />
             </ABoxCollider>
         </Components>
@@ -393,77 +195,1423 @@
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="2.375" y="1.625" />
+                <Position x="1.625" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="22">characterSpritesheet</Sprite>
+                <Sprite index="0">blocksSpritesheet</Sprite>
             </ASpriteComponent>
-            <AStateMachine>AStateMachine
-                <States>
-                    <State>run
-                        <Loop value="1" />
-                        <Frames>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="16" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="17" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="18" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="19" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="20" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="21" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="22" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                            <Frame>characterSpritesheet
-                                <SpriteIndex value="23" />
-                                <FrameTime value="0.15" />
-                            </Frame>
-                        </Frames>
-                    </State>
-                </States>
-            </AStateMachine>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
         </Components>
     </AGameObject>
     <AGameObject>Sprite_Object_Gen
         <Components>
             <ATransformComponent>ATransformComponent
-                <Position x="3.375" y="1.625" />
+                <Position x="1.875" y="0.375" />
                 <Scale x="0.25" y="0.25" />
                 <Rotation angle="0" />
                 <ZIndex value="1" />
             </ATransformComponent>
             <ASpriteComponent>ASpriteComponent
                 <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="2">marioSpritesheet</Sprite>
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.125" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.375" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.625" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.875" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.125" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.375" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.625" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.875" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.125" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.375" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.625" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.875" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.125" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.375" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.625" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.875" y="0.375" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="0.125" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="0.375" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="0.625" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="0.875" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="1.125" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="1.375" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="1.625" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="1.875" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.125" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.375" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.625" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.875" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.125" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.375" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.625" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.875" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.125" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.375" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.625" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.875" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.125" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.375" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.625" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="5.875" y="0.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.125" y="0.622227" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.375" y="0.622227" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.625" y="0.622227" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.875" y="0.622227" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.125" y="0.622227" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.375" y="0.622227" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.6209" y="0.873557" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="2.8709" y="0.873557" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.625" y="0.622227" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.52805e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.38663" y="1.625" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="49">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.70992e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.62317" y="1.625" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="50">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.71037e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="3.87317" y="1.625" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="50">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.71037e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.12317" y="1.625" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="50">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.71037e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.37317" y="1.625" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="50">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.71037e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="4.61951" y="1.625" />
+                <Scale x="-0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="49">blocksSpritesheet</Sprite>
+            </ASpriteComponent>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="0" />
+                <FixedRotation value="0" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="1" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ABoxCollider>ABoxCollider
+                <Offset x="1.70992e-38" y="0" />
+                <HalfSize x="0.25" y="0.25" />
+                <Origin x="0" y="0" />
+            </ABoxCollider>
+        </Components>
+    </AGameObject>
+    <AGameObject>Sprite_Object_Gen
+        <Components>
+            <ATransformComponent>ATransformComponent
+                <Position x="0.875" y="1.125" />
+                <Scale x="0.25" y="0.25" />
+                <Rotation angle="0" />
+                <ZIndex value="1" />
+            </ATransformComponent>
+            <ASpriteComponent>ASpriteComponent
+                <Color r="1" g="1" b="1" a="1" />
+                <Sprite index="0">marioSpritesheet</Sprite>
             </ASpriteComponent>
             <AStateMachine>AStateMachine
                 <States>
+                    <State>idle
+                        <Loop value="0" />
+                        <Frames>
+                            <Frame>marioSpritesheet
+                                <SpriteIndex value="0" />
+                                <FrameTime value="0.23" />
+                            </Frame>
+                        </Frames>
+                    </State>
                     <State>run
                         <Loop value="1" />
                         <Frames>
                             <Frame>marioSpritesheet
-                                <SpriteIndex value="0" />
+                                <SpriteIndex value="1" />
                                 <FrameTime value="0.23" />
                             </Frame>
                             <Frame>marioSpritesheet
@@ -474,49 +1622,46 @@
                                 <SpriteIndex value="3" />
                                 <FrameTime value="0.23" />
                             </Frame>
-                            <Frame>marioSpritesheet
-                                <SpriteIndex value="2" />
-                                <FrameTime value="0.23" />
-                            </Frame>
                         </Frames>
                     </State>
-                </States>
-            </AStateMachine>
-        </Components>
-    </AGameObject>
-    <AGameObject>Sprite_Object_Gen
-        <Components>
-            <ATransformComponent>ATransformComponent
-                <Position x="3.375" y="2.125" />
-                <Scale x="0.25" y="0.25" />
-                <Rotation angle="0" />
-                <ZIndex value="1" />
-            </ATransformComponent>
-            <ASpriteComponent>ASpriteComponent
-                <Color r="1" g="1" b="1" a="1" />
-                <Sprite index="2">itemsSpritesheet</Sprite>
-            </ASpriteComponent>
-            <AStateMachine>AStateMachine
-                <States>
-                    <State>flicker
-                        <Loop value="1" />
+                    <State>switchDirection
+                        <Loop value="0" />
                         <Frames>
-                            <Frame>itemsSpritesheet
-                                <SpriteIndex value="0" />
-                                <FrameTime value="0.57" />
-                            </Frame>
-                            <Frame>itemsSpritesheet
-                                <SpriteIndex value="1" />
+                            <Frame>marioSpritesheet
+                                <SpriteIndex value="4" />
                                 <FrameTime value="0.23" />
                             </Frame>
-                            <Frame>itemsSpritesheet
-                                <SpriteIndex value="2" />
+                        </Frames>
+                    </State>
+                    <State>jump
+                        <Loop value="0" />
+                        <Frames>
+                            <Frame>marioSpritesheet
+                                <SpriteIndex value="5" />
                                 <FrameTime value="0.23" />
                             </Frame>
                         </Frames>
                     </State>
                 </States>
             </AStateMachine>
+            <APlayerController>APlayerController</APlayerController>
+            <ARigidBody>ARigidBody
+                <Velocity x="0" y="0" />
+                <AngularDamping value="0.8" />
+                <LinearDamping value="0.9" />
+                <Mass value="0" />
+                <BodyType value="1" />
+                <FixedRotation value="1" />
+                <ContinuousCollision value="1" />
+                <GravityScale value="0" />
+                <AngularVelocity value="0" />
+                <Friction value="0.1" />
+                <IsSensor value="0" />
+            </ARigidBody>
+            <ACircleCollider>ACircleCollider
+                <Offset x="1.82171e-38" y="0" />
+                <Radius value="0.11" />
+            </ACircleCollider>
         </Components>
     </AGameObject>
 </GameObjects>

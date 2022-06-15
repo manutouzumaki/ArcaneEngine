@@ -5,6 +5,7 @@
 #include "../components/ASpriteComponent.h"
 #include "APhysics.h"
 #include "../components/AStateMachine.h"
+#include "../components/APlayerController.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -84,6 +85,10 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
         TiXmlElement *bodyTypeXml = massXml->NextSiblingElement();
         TiXmlElement *fixedRotationXml = bodyTypeXml->NextSiblingElement();
         TiXmlElement *continuousCollisionXml = fixedRotationXml->NextSiblingElement();
+        TiXmlElement *gravityScaleXml = continuousCollisionXml->NextSiblingElement();
+        TiXmlElement *angularVelocityXml = gravityScaleXml->NextSiblingElement();
+        TiXmlElement *frictionXml = angularVelocityXml->NextSiblingElement();
+        TiXmlElement *isSensorXml = frictionXml->NextSiblingElement();
         float xVel = (float)atof(velocityXml->Attribute("x"));
         float yVel = (float)atof(velocityXml->Attribute("y"));
         float angularDamping = (float)atof(angularDampingXml->Attribute("value"));
@@ -92,7 +97,11 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
         int bodyType = (int)atof(bodyTypeXml->Attribute("value"));
         int fixedRotation = (int)atof(fixedRotationXml->Attribute("value"));
         int continuousCollision = (int)atof(continuousCollisionXml->Attribute("value"));
-        return new ARigidBody(glm::vec2(xVel, yVel), angularDamping, linearDamping, mass, (BodyType)bodyType, fixedRotation, continuousCollision);
+        float gravityScale = (float)atof(gravityScaleXml->Attribute("value"));
+        float angularVelocity = (float)atof(angularVelocityXml->Attribute("value"));
+        float friction = (float)atof(frictionXml->Attribute("value"));
+        int isSensor = (int)atof(isSensorXml->Attribute("value"));
+        return new ARigidBody(glm::vec2(xVel, yVel), angularDamping, linearDamping, mass, (BodyType)bodyType, fixedRotation, continuousCollision, gravityScale, angularVelocity, friction, isSensor);
     }
     else if(StringCompare(component->GetText(), "ABoxCollider", StringLength("ABoxCollider")))
     {
@@ -149,6 +158,11 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
         }
         stateMachine->setDefaultStateTitle(stateMachine->states[0]->title); 
         return stateMachine;
+    }
+    else if(StringCompare(component->GetText(), "APlayerController", StringLength("APlayerController")))
+    {
+        APlayerController *playerController = new APlayerController();
+        return playerController; 
     }
     else
     {

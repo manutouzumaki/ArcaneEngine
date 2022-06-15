@@ -3,6 +3,8 @@
 
 #include "AScene.h" 
 #include <GLFW/glfw3.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 #include "../renderer/AFramebuffer.h"
 #include "../editor/AMousePicking.h"
 #include "../editor/APropertiesWindow.h"
@@ -31,6 +33,10 @@ private:
     APropertiesWindow *propertiesWindow;
     AMenuBar *menuBar;
     ASceneHeirarchyWindow *sceneHeirarchyWindow;
+
+    ALCdevice *audioDevice;
+    ALCcontext *audioContext;
+
 public:
     static AWindow *get();
     static void free();

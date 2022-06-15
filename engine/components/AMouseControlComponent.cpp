@@ -4,7 +4,7 @@
 #include "../src/AKeyListener.h"
 #include "../util/ADefines.h"
 
-#define TIMER_COUNT 0.1F;
+#define TIMER_COUNT 0.15F;
 
 AMouseControlComponent::AMouseControlComponent()
 {
@@ -59,3 +59,4 @@ void AMouseControlComponent::place()
     AGameObject *newObj = holdingObject->copy();
     AWindow::getScene()->addGameObject(newObj);
 }
+

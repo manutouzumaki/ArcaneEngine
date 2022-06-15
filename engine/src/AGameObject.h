@@ -39,6 +39,8 @@ public:
     static void resetUIDCounter();
     AGameObject *copy();
     const char *name;
+
+    AArray<AComponent *> *getAllComponents();
 private:
     static unsigned int ID_COUNTER;
     unsigned int UID;
