@@ -6,6 +6,7 @@
 #include "../editor/AImGui.h"
 #include "../renderer/ADebugDraw.h"
 #include "../util/AAssetPool.h"
+#include "../src/APhysics.h"
 
 
 APlayerController::APlayerController()
@@ -56,12 +57,22 @@ void APlayerController::update(float dt)
         acceleration.x = walkSpeed;
         if(velocity.x < 0)
         {
-            stateMachine->trigger("switchDirection"); 
+            switch(playerState)
+            {
+                case SMALL: stateMachine->trigger("switchDirection"); break;
+                case BIG: stateMachine->trigger("bigSwitchDirection"); break;
+                case FIRE: stateMachine->trigger("fireSwitchDirection"); break;
+            }
             velocity.x += slowDownForce;
         } 
         else
         {
-            stateMachine->trigger("run");
+            switch(playerState)
+            {
+                case SMALL: stateMachine->trigger("run"); break;
+                case BIG: stateMachine->trigger("bigRun"); break;
+                case FIRE: stateMachine->trigger("fireRun"); break;
+            }
         }
     }
     else if(AKeyListener::isKeyPressed(GLFW_KEY_LEFT) || AKeyListener::isKeyPressed(GLFW_KEY_A))
@@ -70,12 +81,22 @@ void APlayerController::update(float dt)
         acceleration.x = -walkSpeed;
         if(velocity.x > 0)
         {
-            stateMachine->trigger("switchDirection"); 
+            switch(playerState)
+            {
+                case SMALL: stateMachine->trigger("switchDirection"); break;
+                case BIG: stateMachine->trigger("bigSwitchDirection"); break;
+                case FIRE: stateMachine->trigger("fireSwitchDirection"); break;
+            }
             velocity.x -= slowDownForce;
         } 
         else
         {
-            stateMachine->trigger("run");
+            switch(playerState)
+            {
+                case SMALL: stateMachine->trigger("run"); break;
+                case BIG: stateMachine->trigger("bigRun"); break;
+                case FIRE: stateMachine->trigger("fireRun"); break;
+            }
         }
     }
     else
@@ -92,7 +113,12 @@ void APlayerController::update(float dt)
 
         if(velocity.x == 0.0f)
         {
-            stateMachine->trigger("idle");
+            switch(playerState)
+            {
+                case SMALL: stateMachine->trigger("idle"); break;
+                case BIG: stateMachine->trigger("bigIdle"); break;
+                case FIRE: stateMachine->trigger("fireIdle"); break;
+            }
         }
     }
     
@@ -143,7 +169,13 @@ void APlayerController::update(float dt)
 
     if(!onGround)
     {
-        stateMachine->trigger("jump");
+        switch(playerState)
+        {
+            case SMALL: stateMachine->trigger("jump"); break;
+            case BIG: stateMachine->trigger("bigJump"); break;
+            case FIRE: stateMachine->trigger("fireJump"); break;
+        }
+
     }
 }
 
@@ -151,7 +183,7 @@ void APlayerController::checkOnGround()
 {
     APhysics *physics = AWindow::getScene()->getPhysics();
     float innerPlayerWidth = playerWidth * 0.6f;
-    float yVal = (playerState == SMALL) ? -0.14f : -0.24f;
+    float yVal = -0.30f;//(playerState == SMALL) ? -0.14f : -0.24f;
     
     glm::vec2 raycastBeing = gameObject->transform->position;
     raycastBeing = raycastBeing - glm::vec2(innerPlayerWidth *0.5f, 0.0f);
@@ -170,39 +202,38 @@ void APlayerController::checkOnGround()
 void APlayerController::beginCollision(AGameObject *go, b2Contact *contact, glm::vec2 normal)
 {
     if(isDead) return;
-
-    if(fabsf(normal.x) > 0.8f)
+    
+    if(go->hasComponent("AGroundComponent"))
     {
-        velocity.x = 0;
+        if(fabsf(normal.x) > 0.8f)
+        {
+            velocity.x = 0;
+        }
+        else if(normal.y > 0.8f)
+        {
+            velocity.y = 0;
+            acceleration.y = 0;
+            jumpTime = 0;
+
+        }
     }
-    else if(normal.y > 0.8f)
+}
+
+void APlayerController::powerup()
+{
+    if(playerState == SMALL)
     {
-        velocity.y = 0;
-        acceleration.y = 0;
-        jumpTime = 0;
-
+        playerState = BIG;
+        AAssetPool::getSound("powerup")->play();
+        jumpBoost *= bigJumBoostFactor;
+        walkSpeed *= bigJumBoostFactor;
     }
-}
-#if 0
-void APlayerController::endCollision(AGameObject *go, b2Contact *contact, glm::vec2 normal)
-{
-
-}
-
-void APlayerController::preSolve(AGameObject *go, b2Contact *contact, glm::vec2 normal)
-{
-
-}
-
-void APlayerController::postSolve(AGameObject *go, b2Contact *contact, glm::vec2 normal)
-{
-
-}
-#endif
-
-void APlayerController::imgui()
-{
-    ImGui::Text("APlayerController");
+    else if(playerState == BIG)
+    {
+        playerState = FIRE;
+        AAssetPool::getSound("powerup")->play();
+    }
+    stateMachine->trigger("powerup");
 }
 
 void APlayerController::serialize(TiXmlElement *parent)

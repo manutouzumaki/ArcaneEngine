@@ -331,6 +331,7 @@ void AWindow::loadResources()
     AAssetPool::addTexture("itemsTexture", "../assets/textures/items.png");
     AAssetPool::addTexture("marioTexture", "../assets/textures/mario.png");
     AAssetPool::addTexture("marioRunTexture", "../assets/textures/mario-run.png");
+    AAssetPool::addTexture("marioAnimsTexture", "../assets/textures/mario-anims.png");
 
     AAssetPool::addSpritesheet("characterSpritesheet",
                                new ASpritesheet("characterSpritesheet", AAssetPool::getTexture("characterTexture"), 77, 77, 32, 0));
@@ -344,10 +345,17 @@ void AWindow::loadResources()
                                new ASpritesheet("marioSpritesheet", AAssetPool::getTexture("marioTexture"), 16, 16, 28, 0));
     AAssetPool::addSpritesheet("marioRunSpritesheet", 
                                new ASpritesheet("marioRunSpritesheet", AAssetPool::getTexture("marioRunTexture"), 16, 32, 42, 0));
+    AAssetPool::addSpritesheet("marioAnimsSpritesheet", 
+                               new ASpritesheet("marioAnimsSpritesheet", AAssetPool::getTexture("marioAnimsTexture"), 16, 32, 18, 0));
 
     AAssetPool::addSound("fireball", new ASound("../assets/sounds/fireball.ogg", false, false));
     AAssetPool::addSound("jump-small", new ASound("../assets/sounds/jump-small.ogg", false, false));
     AAssetPool::addSound("music", new ASound("../assets/sounds/main-theme-overworld.ogg", true, false));
+    AAssetPool::addSound("bump", new ASound("../assets/sounds/bump.ogg", false, false));
+    AAssetPool::addSound("breakBlock", new ASound("../assets/sounds/break_block.ogg", false, false));
+    AAssetPool::addSound("coin", new ASound("../assets/sounds/coin.ogg", false, false));
+    AAssetPool::addSound("powerup-appears", new ASound("../assets/sounds/powerup_appears.ogg", false, false));
+    AAssetPool::addSound("powerup", new ASound("../assets/sounds/powerup.ogg", false, false));
 }
 
 void AWindow::onNotify(AGameObject *obj, AEvent *event)

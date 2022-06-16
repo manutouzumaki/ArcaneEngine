@@ -23,24 +23,19 @@ public:
     float jumpImpulse;
     float slowDownForce;
     glm::vec2 terminalVelocity;
+    PlayerState playerState;
     APlayerController();
     ~APlayerController();
 
     void start() override;
     void update(float dt) override;
     void serialize(TiXmlElement *parent) override;
-    void imgui() override;
 
     void beginCollision(AGameObject *go, b2Contact *contact, glm::vec2 normal) override;
-#if 0
-    void endCollision(AGameObject *go, b2Contact *contact, glm::vec2 normal) override;
-    void preSolve(AGameObject *go, b2Contact *contact, glm::vec2 normal) override;
-    void postSolve(AGameObject *go, b2Contact *contact, glm::vec2 normal) override;
-#endif
+    void powerup();
     void checkOnGround();
 
 private:
-    PlayerState playerState;
     bool onGround;
     float groundDebounce;
     float groundDebounceTime;

@@ -18,6 +18,7 @@ protected:
     glm::vec2 offset;
 public:
     glm::vec2 getOffset();
+    void setOffset(glm::vec2 offset);
 };
 
 class ABoxCollider : public ACollider
@@ -86,8 +87,8 @@ public:
 
     void setAngularVelocity(float angularVelocity);
     void setGravityScale(float gravityScale);
-    void setIsSensor(bool value);
-    void setNotSensor(bool value);
+    void setIsSensor();
+    void setNotSensor();
 
     float getAngularDamping();
     void setAngularDamping(float angularDamping);
@@ -145,6 +146,7 @@ private:
     int velocityIterations;
     int positionIterations;
     AContactListener contactListener;
+    int fixtureListSize(b2Body *body);
 public:
     APhysics();
     ~APhysics();
@@ -155,6 +157,8 @@ public:
     void setIsSensor(ARigidBody *rb);
     void setNotSensor(ARigidBody *rb);
     glm::vec2 getGravity();
+    void resetCircleCollider(ARigidBody *rb, ACircleCollider *circleCollider);
+    void resetBoxCollider(ARigidBody *rb, ABoxCollider *boxCollider);
 };
 
 #endif

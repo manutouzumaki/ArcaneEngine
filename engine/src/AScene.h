@@ -18,6 +18,8 @@ private:
     ACamera *camera;
     bool isRunning;
     AArray<AGameObject *> gameObjects;
+    AArray<AGameObject *> pendingObjects;
+    AArray<AGameObject *> resetColliders;
     ASceneInitializer *sceneInitializer;
 public:
     AScene(ASceneInitializer *sceneInitializer);
@@ -32,6 +34,7 @@ public:
     ~AScene();
 
     void addGameObject(AGameObject *gameObject);
+    void addResetColliders(AGameObject *gameObject);
     AGameObject *getGameObjectByIndex(int index);
     ACamera *getCamera();
     APhysics *getPhysics();

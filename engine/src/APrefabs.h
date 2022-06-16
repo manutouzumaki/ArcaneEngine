@@ -12,6 +12,9 @@ public:
     static AGameObject *generateGuy();
     static AGameObject *generateMario();
     static AGameObject *generateQuestionBlock();
+    static AGameObject *generateBlockCoin();
+    static AGameObject *generateMushroom();
+    static AGameObject *generateFlower();
 };
 
 #endif

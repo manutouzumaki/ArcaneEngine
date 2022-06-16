@@ -11,6 +11,11 @@ glm::vec2 ACollider::getOffset()
     return offset;
 }
 
+void ACollider::setOffset(glm::vec2 offset)
+{
+    this->offset = offset;
+}
+
 // ABoxCollider Component
 ////////////////////////////////////////////////////////////
 ABoxCollider::ABoxCollider() 
@@ -177,9 +182,19 @@ void ARigidBody::update(float dt)
 {
     if(rawBody)
     {
-        this->gameObject->transform->position.x = rawBody->GetPosition().x;
-        this->gameObject->transform->position.y = rawBody->GetPosition().y;
-        this->gameObject->transform->rotation = glm::degrees((float)rawBody->GetAngle());
+        if(bodyType == DYNAMIC || bodyType == KINEMATIC)
+        {
+            this->gameObject->transform->position.x = rawBody->GetPosition().x;
+            this->gameObject->transform->position.y = rawBody->GetPosition().y;
+            this->gameObject->transform->rotation = glm::degrees((float)rawBody->GetAngle());
+            b2Vec2 vel = rawBody->GetLinearVelocity();
+            velocity = glm::vec2(vel.x, vel.y);
+        }
+        else if(bodyType == STATIC)
+        {
+            rawBody->SetTransform(b2Vec2(gameObject->transform->position.x, gameObject->transform->position.y),
+                                  gameObject->transform->rotation);
+        }
     }
 }
 
@@ -298,7 +313,7 @@ void ARigidBody::setGravityScale(float gravityScale)
     }
 }
 
-void ARigidBody::setIsSensor(bool value)
+void ARigidBody::setIsSensor()
 {
     this->isSensor = true;
     if(rawBody)
@@ -307,7 +322,7 @@ void ARigidBody::setIsSensor(bool value)
     }
 }
 
-void ARigidBody::setNotSensor(bool value)
+void ARigidBody::setNotSensor()
 {
     this->isSensor = false;
     if(rawBody)
@@ -579,6 +594,48 @@ glm::vec2 APhysics::getGravity()
 {
     glm::vec2 gravity = glm::vec2(world.GetGravity().x, world.GetGravity().y);
     return gravity;
+}
+
+void APhysics::resetCircleCollider(ARigidBody *rb, ACircleCollider *circleCollider)
+{
+    b2Body *body = rb->getRawBody();
+    if (body == nullptr) return;
+    
+    for(b2Fixture *fixture = body->GetFixtureList();
+        fixture != nullptr;
+        fixture = fixture->GetNext())
+    {
+        body->DestroyFixture(fixture);
+    }
+    AddCircleCollider(rb, circleCollider);
+    body->ResetMassData();
+}
+
+void APhysics::resetBoxCollider(ARigidBody *rb, ABoxCollider *boxCollider)
+{
+    b2Body *body = rb->getRawBody();
+    if (body == nullptr) return;
+
+    for(b2Fixture *fixture = body->GetFixtureList();
+        fixture != nullptr;
+        fixture = fixture->GetNext())
+    {
+        body->DestroyFixture(fixture);
+    }
+
+    AddBoxCollider(rb, boxCollider);
+    body->ResetMassData();
+}
+    
+int APhysics::fixtureListSize(b2Body *body) {
+        int size = 0;
+        b2Fixture *fixture = body->GetFixtureList();
+        while (fixture != nullptr)
+        {
+            size++;
+            fixture = fixture->GetNext();
+        }
+        return size;
 }
 
 void AContactListener::BeginContact(b2Contact *contact)

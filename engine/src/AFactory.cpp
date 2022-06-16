@@ -6,6 +6,12 @@
 #include "APhysics.h"
 #include "../components/AStateMachine.h"
 #include "../components/APlayerController.h"
+#include "../components/AGroundComponent.h"
+#include "../components/ABreakableBrickComponent.h"
+#include "../components/AQuestionBlock.h"
+#include "../components/ABlockCoin.h"
+#include "../components/AMushroomAI.h"
+#include "../components/AFlower.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -163,6 +169,38 @@ AComponent *AFactory::CreateComponent(TiXmlElement *component)
     {
         APlayerController *playerController = new APlayerController();
         return playerController; 
+    }
+    else if(StringCompare(component->GetText(), "AGroundComponent", StringLength("AGroundComponent")))
+    {
+        AGroundComponent *groundComponent = new AGroundComponent();
+        return groundComponent; 
+    }
+    else if(StringCompare(component->GetText(), "ABreakableBrickComponent", StringLength("ABreakableBrickComponent")))
+    {
+        ABreakableBrickComponent *breakBrickComponent = new ABreakableBrickComponent();
+        return breakBrickComponent; 
+    }
+    else if(StringCompare(component->GetText(), "AQuestionBlock", StringLength("AQuestionBlock")))
+    {
+        TiXmlElement *blockTypeXml = component->FirstChildElement();
+        int blockType = (int)atof(blockTypeXml->Attribute("value"));
+        AQuestionBlock *questionBlock = new AQuestionBlock((BlockType)blockType);
+        return questionBlock; 
+    }
+    else if(StringCompare(component->GetText(), "ABlockCoin", StringLength("ABlockCoin")))
+    {
+        ABlockCoin *blockCoin = new ABlockCoin();
+        return blockCoin; 
+    }
+    else if(StringCompare(component->GetText(), "AMushroomAI", StringLength("AMushroomAI")))
+    {
+        AMushroomAI *mushroomAI = new AMushroomAI();
+        return mushroomAI; 
+    }
+    else if(StringCompare(component->GetText(), "AFlower", StringLength("AFlower")))
+    {
+        AFlower *flower = new AFlower();
+        return flower; 
     }
     else
     {

@@ -1,5 +1,6 @@
 #include "AScene.h"
 
+
 AScene::AScene(ASceneInitializer *sceneInitializer)
 {
     camera = nullptr;
@@ -62,12 +63,41 @@ void AScene::update(float dt)
         gameObjects[i]->update(dt);
         if(gameObjects[i]->getIsDead())
         {
-            delete gameObjects[i];
-            gameObjects.remove(i);
             this->renderer->destroyGameObject(gameObjects[i]);
             this->physics->destroyGameObject(gameObjects[i]);
+            delete gameObjects[i];
+            gameObjects.remove(i);
             i--;
         }
+    }
+
+    for(int i = 0; i < pendingObjects.size(); ++i)
+    {
+        AGameObject *gameObject = pendingObjects[i];
+        gameObjects.add(gameObject);
+        gameObject->start();
+        renderer->add(gameObject);
+        physics->addGameObject(gameObject);
+        pendingObjects.remove(i);
+        i--;
+    }
+
+    for(int i = 0; i < resetColliders.size(); ++i)
+    {
+        AGameObject *gameObject = resetColliders[i];
+        ARigidBody *rb = (ARigidBody *)gameObject->getComponent("ARigidBody");
+        if(gameObject->hasComponent("ACircleCollider"))
+        {
+            ACircleCollider *circleCollider = (ACircleCollider *)gameObject->getComponent("ACircleCollider");
+            physics->resetCircleCollider(rb, circleCollider);
+        }
+        else if(gameObject->hasComponent("ABoxCollider"))
+        {
+            ABoxCollider *boxCollider = (ABoxCollider *)gameObject->getComponent("ABoxCollider");
+            physics->resetBoxCollider(rb, boxCollider);
+        }
+        resetColliders.remove(i);
+        i--;
     }
 }
 
@@ -82,6 +112,16 @@ void AScene::editorUpdate(float dt)
             this->renderer->destroyGameObject(gameObjects[i]);
             this->physics->destroyGameObject(gameObjects[i]);
         }
+    }
+    for(int i = 0; i < pendingObjects.size(); ++i)
+    {
+        AGameObject *gameObject = pendingObjects[i];
+        gameObjects.add(gameObject);
+        gameObject->start();
+        renderer->add(gameObject);
+        physics->addGameObject(gameObject);
+        pendingObjects.remove(i);
+        i--;
     }
 }
 
@@ -125,11 +165,14 @@ void AScene::addGameObject(AGameObject *gameObject)
     }
     else
     {
-        gameObjects.add(gameObject);
-        gameObject->start();
-        renderer->add(gameObject);
-        physics->addGameObject(gameObject);
+        pendingObjects.add(gameObject);
+
     }
+}
+
+void AScene::addResetColliders(AGameObject *gameObject)
+{
+    resetColliders.add(gameObject);
 }
 
 AGameObject *AScene::getGameObjectByIndex(int index)

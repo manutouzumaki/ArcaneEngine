@@ -7,6 +7,8 @@
 #include "../components/AEditorCameraComponent.h"
 #include "../components/AGizmoManager.h"
 #include "../components/AMouseControlComponent.h"
+#include "../components/AGroundComponent.h"
+#include "../components/ABreakableBrickComponent.h"
 #include "../renderer/ADebugDraw.h"
 #include <imgui.h>
 
@@ -48,6 +50,9 @@ void ALevelEditorSceneInitializer::imgui()
             float windowX2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
             for (int i = 0; i < sprites[0]->size(); ++i)
             {
+                if(i == 34) continue;
+                if(i >= 38 && i < 61) continue;
+
                 ASprite *sprite = sprites[0]->getSprite(i);
                 size_t id = sprite->getTexID();
                 ImVec2 size = ImVec2((float)sprite->getWidth() * 2, (float)sprite->getHeight() * 2);
@@ -61,6 +66,17 @@ void ALevelEditorSceneInitializer::imgui()
                 if(ImGui::ImageButton((ImTextureID)id, size, uv0, uv1, itemSpacing, bgColor, tintColor))
                 {
                     AGameObject *obj = APrefabs::generateSpriteObject(sprite, 0.25f, 0.25f);
+                    
+                    ARigidBody *rb = new ARigidBody();
+                    rb->setBodyType(STATIC);
+                    ABoxCollider *boxCollider = new ABoxCollider();
+                    boxCollider->setHalfSize(glm::vec2(0.25f, 0.25f));
+                    obj->addComponent("ARigidBody", rb);
+                    obj->addComponent("ABoxCollider", boxCollider);
+                    obj->addComponent("AGroundComponent", new AGroundComponent());
+                    if (i == 12) {
+                        obj->addComponent("ABreakableBrickComponent", new ABreakableBrickComponent());
+                    }
                     AMouseControlComponent *mouseControls = (AMouseControlComponent *)levelEditor->getComponent("AMouseControlComponent");
                     mouseControls->pickupObject(obj);    
                 }
